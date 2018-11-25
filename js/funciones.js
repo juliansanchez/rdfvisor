@@ -34,7 +34,6 @@ function selectFile(){
       // mostramos nombre del archivo seleccionado
 			document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
 	  }// mostramos datos del archivo seleccionado
-
 	  document.getElementById('files').addEventListener('change', handleFileSelect, false);
 }
 // lectura JSON
@@ -97,7 +96,7 @@ function leeXML(){
 	        // +"Nacionalidad: "+data[2].firstChild.nodeValue+"<br/>";
 
           document.getElementById("cont").innerHTML +=
-          "<h1 class='p1'>Título: "+titleTextNodeValue+"</h1><br/>"
+          "<h3>Título: "+titleTextNodeValue+"</h3><br/>"
           +"<br/>"
           +this.responseText;
           // document.getElementById("cont").innerHTML = this.responseText;
