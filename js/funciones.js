@@ -34,6 +34,7 @@ function selectFile(){
       // mostramos nombre del archivo seleccionado
 			document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
 	  }// mostramos datos del archivo seleccionado
+
 	  document.getElementById('files').addEventListener('change', handleFileSelect, false);
 }
 // lectura JSON
@@ -59,7 +60,7 @@ function leerJson(){
       }
     }
   }
-  xmlhttp.open("GET","http://localhost/gitRDF/rdfvisor/DATA"+nombre,true);
+  xmlhttp.open("GET","http://localhost/gitRDF/rdfvisor/DATA/"+nombre,true);
   xmlhttp.send();
 }
 // Lectura del fichero abierto y XML
@@ -88,7 +89,6 @@ function leeXML(){
           }else {
             var titleTextNodeValue = "SIN DATOS";
           }
-
 					// console.log(request.responseText);
 	        // data[1]=request.responseXML.getElementByTagName("edad").item[0];
 	        // data[2]=request.responseXML.getElementByTagName("nacionalidad").item[0];
