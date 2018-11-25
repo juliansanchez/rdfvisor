@@ -3,12 +3,15 @@ function cargar() {
 }
 function mostrarBasico(){
   var endpointUrl = 'https://query.wikidata.org/sparql',
-    sparqlQuery = "SELECT distinct ?itemLabel ?itemDescription ?article ?image WHERE{\n" +
+    sparqlQuery = "SELECT distinct ?item ?itemLabel ?itemDescription ?article ?image ?countryLabel ?categoryLabel ?movementLabel WHERE{\n" +
         "\n" +
         " ?item ?label \"Spanish Golden Age\"@en.  \n" +
         " ?article schema:about ?item .\n" +
         " ?article schema:inLanguage \"en\" .\n" +
         " ?item wdt:P18 ?image .\n" +
+        " ?item wdt:P17 ?country .\n" +
+        " ?item wdt:P373 ?category .\n" +
+        " ?item wdt:P31 ?movement .\n" +
         "  \n" +
         " ?article schema:isPartOf <https://en.wikipedia.org/>.	\n" +
         "\n" +
@@ -24,7 +27,7 @@ function mostrarBasico(){
     // console.log( data );
     // console.log(data.results);
     // console.log(data.results.bindings[0]);
-    document.getElementById("foto").innerHTML += "<img width='150px' src="+data.results.bindings[0].image.value+">";
+    document.getElementById("foto").innerHTML += "<img class='fotobasica' width='auto' height='150px' src="+data.results.bindings[0].image.value+">";
 
     for (var i in data.results.bindings[0]) {
       console.log(data.results.bindings[0]);
