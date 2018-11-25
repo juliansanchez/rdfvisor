@@ -8,7 +8,7 @@ body{
 		font-family: 'Montserrat', sans-serif;
 		padding-bottom: 70px;
 		margin: 0;
-	  margin-bottom: 40px;
+    padding: 0;
 }
 
 header{
@@ -29,6 +29,8 @@ footer {
 	font-size: .9em;
 	font-style: italic;
 	min-height: 50px; padding: 1%; margin-top: 1%;
+
+
 }
 
 li{
