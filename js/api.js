@@ -3,7 +3,7 @@ function cargar() {
 }
 function mostrarBasico(){
   var endpointUrl = 'https://query.wikidata.org/sparql',
-    sparqlQuery = "SELECT distinct ?item ?itemLabel ?itemDescription ?article ?image ?countryLabel ?categoryLabel ?movementLabel WHERE{\n" +
+    sparqlQuery = "SELECT distinct ?item ?itemLabel ?itemDescription ?article ?image ?countryLabel ?categoryLabel ?movementLabel ?movement WHERE{\n" +
         "\n" +
         " ?item ?label \"Spanish Golden Age\"@en.  \n" +
         " ?article schema:about ?item .\n" +
@@ -15,7 +15,7 @@ function mostrarBasico(){
         "  \n" +
         " ?article schema:isPartOf <https://en.wikipedia.org/>.	\n" +
         "\n" +
-        " SERVICE wikibase:label { bd:serviceParam wikibase:language \"es\". }    \n" +
+        " SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }    \n" +
         "}",
       settings = {
           headers: { Accept: 'application/sparql-results+json' },
@@ -27,8 +27,7 @@ function mostrarBasico(){
     // console.log( data );
     // console.log(data.results);
     // console.log(data.results.bindings[0]);
-    document.getElementById("foto").innerHTML += "<img class='fotobasica' width='auto' height='150px' src="+data.results.bindings[0].image.value+">";
-
+    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' src="+data.results.bindings[0].image.value+">";
     for (var i in data.results.bindings[0]) {
       console.log(data.results.bindings[0]);
     // console.log("json como cadena. Propiedad: "+i+" Valor: "+cadenaJSON);

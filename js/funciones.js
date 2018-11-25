@@ -59,7 +59,7 @@ function leerJson(){
       }
     }
   }
-  xmlhttp.open("GET","http://localhost/gitRDF/rdfvisor/DATA"+nombre,true);
+  xmlhttp.open("GET","http://localhost/gitRDF/rdfvisor/DATA/"+nombre,true);
   xmlhttp.send();
 }
 // Lectura del fichero abierto y XML
@@ -88,7 +88,6 @@ function leeXML(){
           }else {
             var titleTextNodeValue = "SIN DATOS";
           }
-
 					// console.log(request.responseText);
 	        // data[1]=request.responseXML.getElementByTagName("edad").item[0];
 	        // data[2]=request.responseXML.getElementByTagName("nacionalidad").item[0];
@@ -97,7 +96,7 @@ function leeXML(){
 	        // +"Nacionalidad: "+data[2].firstChild.nodeValue+"<br/>";
 
           document.getElementById("cont").innerHTML +=
-          "<h1 class='p1'>Título: "+titleTextNodeValue+"</h1><br/>"
+          "<h3>Título: "+titleTextNodeValue+"</h3><br/>"
           +"<br/>"
           +this.responseText;
           // document.getElementById("cont").innerHTML = this.responseText;
