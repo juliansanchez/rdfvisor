@@ -1,6 +1,5 @@
 /* Código para las peticiones de archivos. Visor de datos RDF
    Julián Sánchez García Ingeniería Multimedia - UA 2018 */
-
 var cont; // contenedor para mostrar datos
 var data; // array de datos XML
 var nombre;// nombre del archivo
@@ -12,50 +11,11 @@ function cargar() {
   cont = document.getElementById("cont");
 	opcion = document.getElementById("opcion");
   data = new Array();
-  mostrarBasico();
-}
-
-function mostrarBasico(){
-  var endpointUrl = 'https://query.wikidata.org/sparql',
-      sparqlQuery = "SELECT distinct ?item ?itemLabel ?itemDescription ?article WHERE{\n" +
-          "\n" +
-          " ?item ?label \"Spanish Golden Age\"@en.  \n" +
-          " ?article schema:about ?item .\n" +
-          " ?article schema:inLanguage \"en\" .\n" +
-          " ?article schema:isPartOf <https://en.wikipedia.org/>.	\n" +
-          "\n" +
-          " SERVICE wikibase:label { bd:serviceParam wikibase:language \"es\". }    \n" +
-          "}",
-      settings = {
-          headers: { Accept: 'application/sparql-results+json' },
-          data: { query: sparqlQuery }
-      };
-
-  $.ajax( endpointUrl, settings ).then( function ( data ) {
-      // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-      // console.log( data );
-      // console.log(data.results);
-      // console.log(data.results.bindings[0]);
-
-        for (var i in data.results.bindings[0]) {
-          console.log(data.results.bindings[0]);
-        // console.log("json como cadena. Propiedad: "+i+" Valor: "+cadenaJSON);
-        // document.getElementById("cont").innerHTML += i + ": " + datos[i] + "<br/>";
-
-          document.getElementById("infoBasic").innerHTML += "<div><h5>"+i+"</h5><p>"+data.results.bindings[0][i].value+"</p></div>";
-
-      }
-  } );
-
-
-
-
 }
 
 // Identifica el tipo de archivo seleccionado y lo muestra
 function selectFile(){
 	function handleFileSelect(evt) {
-
 	    var files = evt.target.files; // FileList object
 	    // propiedades de la lista de archivos del objeto
 			nombre = files[0].name;
