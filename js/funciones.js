@@ -99,7 +99,7 @@ function leerJson(){
       }
     }
   }
-  xmlhttp.open("GET","http://localhost/TFG-VisorRDF/DATA/"+nombre,true);
+  xmlhttp.open("GET","http://localhost/gitRDF/rdfvisor/DATA"+nombre,true);
   xmlhttp.send();
 }
 // Lectura del fichero abierto y XML
@@ -151,7 +151,7 @@ function leeXML(){
 		leerJson();
 	}
   // Petición XML
-  request.open("GET","http://localhost/TFG-VisorRDF/DATA/"+nombre,true);
+  request.open("GET","http://localhost/gitRDF/rdfvisor/DATA/"+nombre,true);
 	request.send();
 }
 // peticion ajax
