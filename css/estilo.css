@@ -1,0 +1,81 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+html {
+  min-height: 100%;
+  position: relative;
+}
+body{
+		font-family: 'Montserrat', sans-serif;
+		padding-bottom: 70px;
+		margin: 0;
+	  margin-bottom: 40px;
+}
+
+header{
+	border: 2px solid #339966;
+  background-color: #688797;
+}
+
+nav form{
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+
+
+footer {
+  bottom: 0;
+  background-color: #688797;
+	font-size: .9em;
+	font-style: italic;
+	min-height: 50px; padding: 1%; margin-top: 1%;
+}
+
+li{
+	/* font-weight: bold; */
+	font-size: 1.3em;
+}
+
+section{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%;}
+article{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%; position: relative;}
+
+div{
+	margin: 1%;
+}
+div .col-md-6{
+	min-width: 60%;
+	/* max-width: 60%; */
+	/* min-height: 200px; */
+	border:1px solid #339966;
+}
+div .col-md-4{
+	/* max-width: 40%; */
+	border:1px solid #339966;
+	/* min-height: 200px; */
+}
+
+.slider{
+  border: 1px solid green;
+
+}
+
+.enlaceWiki a{
+  font-weight: bold;
+  margin-left: 1%;
+}
+
+.textoppal{ text-align: justify;}
+
+p {margin: 0 1cm 0 1cm; font-size: .8em;}
+
+input { width:40%;}
+
+.portada{
+	width: 125px;
+	height: auto;
+}
+
+* {
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+}
