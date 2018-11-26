@@ -85,14 +85,26 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
     // console.log(data.results);
     // console.log(data.results.bindings);
     // console.log(data.results.bindings[0].image.value);
-    for (var i in data.results.bindings) {
-      // console.log(data.results.bindings[i]);
-      for (var j in data.results.bindings[i]) {
-        console.log(data.results.bindings[i][j].value);
-        document.getElementById("libros").innerHTML += "<div style='border:1px solid red'<h5>"+j+"</h5><p>"+data.results.bindings[i][j].value+"</p></div>";
+    if (data.results.bindings != null) {
+      for (var i in data.results.bindings) {
+        // console.log(data.results.bindings[i]);
+        if (data.results.bindings[i] != null) {
+          for (var j in data.results.bindings[i]) {
+            if (data.results.bindings[i][j] != null) {
+              if (j=="image" && j != null) {
+                document.getElementById("libros").innerHTML +="<div class='col center-block'><img class='portada'src='"+data.results.bindings[i][j].value+"'></div>";
+
+              }else {
+                console.log(data.results.bindings[i][j].value);
+                document.getElementById("libros").innerHTML +="<h6>"+j+"</h6><p>"+data.results.bindings[i][j].value+"</p>";
+
+              }
+            }
+          }
+
+        }
       }
+
     }
-
   } );
-
 }
