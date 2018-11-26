@@ -67,14 +67,16 @@ div .col-md-4{
 
 
 .textoppal{ text-align: justify;}
-
+.libros div{
+  border: 2px solid #339966;
+}
 p {margin: 0 1cm 0 1cm; font-size: .8em;}
 
 input { width:40%;}
 
 .portada{
-	width: 125px;
-	height: auto;
+	width: 75px;
+	height: 100px;
 }
 
 * {
