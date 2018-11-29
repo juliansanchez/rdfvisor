@@ -92,11 +92,11 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
           for (var j in data.results.bindings[i]) {
             if (data.results.bindings[i][j] != null) {
               if (j !=null && j == "image") {
-                document.getElementById("libros").innerHTML +="<span><img class='portada'src='"+data.results.bindings[i][j].value+"'></span>";
+                document.getElementById("libros").innerHTML +="<div class='col-md-4'><img class='portada'src='"+data.results.bindings[i][j].value+"'></div>";
                 // document.getElementById("libros").innerHTML +="<h6>"+j+"</h6><p>"+data.results.bindings[i][j].value+"</p>";
               }else if(j!="image") {
                 // document.getElementById("libros").innerHTML +="<img class='portada'src='img/default.png'>";
-                document.getElementById("libros").innerHTML +="<div style='display:flex' class='col center-block'><p style='strong'>"+j+": </p><span>"+data.results.bindings[i][j].value+"</span></div>";
+                document.getElementById("libros").innerHTML +="<div class='col-md-4'><p style='strong'></p><span>"+data.results.bindings[i][j].value+"</span></div>";
 
               }
             }
