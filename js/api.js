@@ -25,18 +25,29 @@ function mostrarBasico(){
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
     // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-    // console.log( data );
-    // console.log(data.results);
-    // console.log(data.results.bindings[0]);
-    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' src="+data.results.bindings[0].image.value+">";
-    for (var i in data.results.bindings[0]) {
-      // console.log(data.results.bindings[0]);
-    // console.log("json como cadena. Propiedad: "+i+" Valor: "+cadenaJSON);
-    // document.getElementById("cont").innerHTML += i + ": " + datos[i] + "<br/>";
-      if (i != "image") {
-        document.getElementById("infoBasic").innerHTML += "<div><h5>"+i+"</h5><p>"+data.results.bindings[0][i].value+"</p></div>";
-      }
-    }
+    console.log(data);
+    console.log(data.results);
+    console.log(data.results.bindings);
+
+    var article = data.results.bindings[0].article.value;
+    var categoryLabel = data.results.bindings[0].categoryLabel.value;
+    var countryLabel = data.results.bindings[0].countryLabel.value;
+    var image = data.results.bindings[0].image.value;
+    var item = data.results.bindings[0].item.value;
+    var itemLabel = data.results.bindings[0].itemLabel.value;
+    var itemDescription = data.results.bindings[0].itemDescription.value;
+    var movement = data.results.bindings[0].movement.value;
+    var movementLabel = data.results.bindings[0].movementLabel.value;
+
+    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' src="+image+">";
+    document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Wikipedia</p>";
+    document.getElementById("infoBasic").innerHTML += "<p><a href="+item+" target='_blank'</a>"+categoryLabel+"</p>";
+    document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
+    document.getElementById("infoBasic").innerHTML += "<p>Descripción: "+itemDescription+"</p>";
+    document.getElementById("infoBasic").innerHTML += "<p>Movimiento Literario: <a href="+movement+" target='_blank'</a>"+movementLabel+"</p>";
+
+
+
   });
 }
 
@@ -174,10 +185,10 @@ $(function() {
             for (var j in data.results.bindings[i]) {
               if (data.results.bindings[i][j] != null) {
                 // console.log(data.results.bindings[i][j]);
-                if  (j!=null && j == "image") {
-                  portada=data.results.bindings[i][j].value;
-                  // console.log(data.results.bindings[i][j].value);
-                }
+                // if  (j!=null && j == "image") {
+                //   portada=data.results.bindings[i][j].value;
+                //   // console.log(data.results.bindings[i][j].value);
+                // }
 
                 if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
                     || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)) {
@@ -188,13 +199,11 @@ $(function() {
                   document.getElementById("cont").innerHTML +="<h6>"+data.results.bindings[i].genreLabel.value.toUpperCase()+"</h6>";
 
                 }
-
               }
             }
           }
         }
       }
-
-    } );
+    });
   });
 });

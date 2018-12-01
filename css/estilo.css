@@ -1,6 +1,15 @@
 
 /* Julián Sánchez. Ua 2018 TFG Visor RDF Hoja de estilos */
+
+/* PRINCIPAL */
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+/* QUITAR Borde menu hamb */
+* {
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+}
+
 html {
   min-height: 100%;
   position: relative;
@@ -37,52 +46,46 @@ li{
 	font-size: 1.2em;
 }
 
-section{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%;}
-article{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%; position: relative;}
+/* section{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%;}
+article{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%; position: relative;} */
 
 div{
-	margin: 1%;
+	margin: .7%;
 }
-div .col-md-6{
-	min-width: 60%;
-	/* max-width: 60%; */
-	/* min-height: 200px; */
-	border:1px solid #339966;
-}
-div .col-md-4{
-	/* max-width: 40%; */
-	border:1px solid #339966;
-	/* min-height: 200px; */
-}
+input { width:40%;}
 
-.slider{
-  border: 1px solid green;
-}
 
-.enlaceWiki a{
-  font-weight: bold;
-  margin-left: 1%;
+/* HOME PAGE */
+
+#infoBasic p{
+  margin: .2cm 1cm 0 .5cm;
+  font-size: .9em;
+  /* margin-left: 50%; */
 }
+#foto{
+  max-width: 100px;
+  margin-left: 0;
+
+}
+/* DISEÑO BUSCADOR  */
+
 .listBooks{
   border: 3px solid blue;
 }
-
-.textoppal{ text-align: justify;}
-
-.libros div{
-  border: 2px solid red;
-}
-
-p {margin: 0 1cm 0 1cm; font-size: .8em;}
-
-input { width:40%;}
-
 .portada{
 	width: 75px;
 	height: 100px;
 }
 
-* {
-  border-radius: 0 !important;
-  -moz-border-radius: 0 !important;
+/* DISEÑO PPAL */
+
+/* TEXTOS */
+.textoppal { text-align: justify;  font-size: .9em;}
+
+.slider{
+  border: 1px solid green;
+}
+
+.libros div{
+  border: 2px solid red;
 }
