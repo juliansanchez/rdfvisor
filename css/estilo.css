@@ -63,7 +63,9 @@ div .col-md-4{
   font-weight: bold;
   margin-left: 1%;
 }
-
+.listBooks{
+  border: 3px solid blue;
+}
 
 .textoppal{ text-align: justify;}
 
