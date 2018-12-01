@@ -108,3 +108,87 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
     }
   } );
 }
+
+
+function buscador(){
+  $(function() {
+
+
+    var endpointUrl = 'https://query.wikidata.org/sparql',
+      sparqlQuery = "SELECT ?bookText ?bookTextLabel ?fechaPublicado ?image ?autor ?autorLabel\n" +
+          "WHERE {\n" +
+          "  \n" +
+          "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .  } #libro de texto\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q571 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #libro impreso\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q8261 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #novela\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q35760 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #ensayo #idioma de la obra spaña\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q37484 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #poema épico\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #play\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1088025 . ?bookText wdt:P577 ?fechaPublicado .} #play español antiguo\n" +
+          "  UNION\n" +
+          "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q397 . ?bookText wdt:P577 ?fechaPublicado .} #play latin\n" +
+          "  \n" +
+          "  OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . ?bookText wdt:P50 ?autor .} \n" +
+          "\n" +
+          "\n" +
+          "  \n" +
+          "  #fecha del primer y último libro publicado\n" +
+          "  filter (?fechaPublicado > \"1492-01-01\"^^xsd:dateTime && ?fechaPublicado < \"1681-05-26\"^^xsd:dateTime) \n" +
+          "\n" +
+          "\n" +
+          "  \n" +
+          "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
+          "}\n" +
+          "\n" +
+          "ORDER BY ASC(?fechaPublicado)\n" +
+          "",
+      settings = {
+          headers: { Accept: 'application/sparql-results+json' },
+          data: { query: sparqlQuery }
+      };
+
+  $.ajax( endpointUrl, settings ).then( function ( data ) {
+      // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
+      console.log( data );
+      // console.log(data.results);
+      // console.log(data.results.bindings);
+      // console.log(data.results.bindings[0].image.value);
+
+    } );
+
+
+
+    // enter
+      $("#searchTerm2").keypress(function(e){
+      	if(e.keyCode===13){
+      		var searchTerm = $("#searchTerm2").val();
+          var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&limit=5&format=json&callback=?";
+
+      	}
+      });
+
+
+    // click ajax call
+    $("#search2").on("click", function() {
+  	var searchTerm = $("#searchTerm2").val();
+    if (searchTerm=="") {
+      // swal("No has escrito nada payaso!","");
+      $.alert({
+      title: 'Campo vacío!',
+      content: 'Introduce un texto!',
+      });
+    }
+  	var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&limit=10&format=json&callback=?";
+
+    });
+  });
+
+}

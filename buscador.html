@@ -23,7 +23,7 @@
 		<!-- FAVICON -->
 		<link rel="shortcut icon" type="image/x-icon" href="img/juli.jpg" />
 	</head>
-	<body class="container" onload="mostrarLibros();">
+	<body class="container">
 		<header>
 			<!-- <h1>Interfaz para visualización de datos XML / RDF / JSON</h1> -->
 			<nav class="navbar navbar-default navbar-static-top">
@@ -60,7 +60,11 @@
 
 		<!-- CONTENEDOR DE DATOS -->
 		<h3>Todos los libros <small>Siglo de Oro</small></h3>
-		<article class="libros" id="libros"></article>
+		<form class="form-inline">
+			<input id="searchTerm2" name="search2" class="form-control mr-sm-2" placeholder="Autor" aria-label="Search2">
+			<button id='search2' class="btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button>
+		</form>
+		<article class="libros2" id="libros2"></article>
 
 	<!-- Footer -->
 	<footer class="page-footer font-small blue">
