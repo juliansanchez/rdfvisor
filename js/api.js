@@ -39,7 +39,6 @@ function mostrarBasico(){
     var movement = data.results.bindings[0].movement.value;
     var movementLabel = data.results.bindings[0].movementLabel.value;
 
-    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' src="+image+">";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Wikipedia</p>";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+item+" target='_blank'</a>"+categoryLabel+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
@@ -129,6 +128,7 @@ $(function() {
   document.getElementById("cont").innerHTML +="";
   $("#searchAutor").on("click", function() {
     var searchTermAutor = $("#searchTermAutor").val();
+
     searchTermAutor= searchTermAutor.toUpperCase();
 
     var endpointUrl = 'https://query.wikidata.org/sparql',
@@ -175,29 +175,49 @@ $(function() {
   $.ajax( endpointUrl, settings ).then( function ( data ) {
     document.getElementById("cont").innerHTML="";
       // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-      // console.log( data );
-      // console.log(data.results);
-      // console.log(data.results.bindings);
-      // console.log(data.results.bindings[0].image.value);
-      if (data.results.bindings != null) {
-        for (var i in data.results.bindings) {
-          if (data.results.bindings[i] != null) {
-            for (var j in data.results.bindings[i]) {
-              if (data.results.bindings[i][j] != null) {
-                // console.log(data.results.bindings[i][j]);
-                // if  (j!=null && j == "image") {
-                //   portada=data.results.bindings[i][j].value;
-                //   // console.log(data.results.bindings[i][j].value);
-                // }
+      if (searchTermAutor == "") {
+        // swal("No has escrito nada payaso!","");
+        $.alert({
+        title: 'Campo vacío!',
+        content: 'Introduce un texto!',
+        });
+      }else {
+        if (data.results.bindings != null) {
+          for (var i in data.results.bindings) {
+            if (data.results.bindings[i] != null) {
+              for (var j in data.results.bindings[i]) {
+                if (data.results.bindings[i][j] != null) {
+                  // console.log(data.results.bindings[i][j]);
+                  console.log("dato "+i+" j: "+j+"...."+data.results.bindings[i][j].value);
 
-                if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
-                    || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)) {
+                  if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
+                      || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)) {
+                        
+                        document.getElementById("cont").innerHTML += "<h6>"+data.results.bindings[i][j].value+"</h6>";
 
-                  document.getElementById("cont").innerHTML +="<h4>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
-                  document.getElementById("cont").innerHTML +="<img class='portada' src='"+portada+"'>";
-                  document.getElementById("cont").innerHTML +="<h5>"+data.results.bindings[i].autorLabel.value+"</h5>";
-                  document.getElementById("cont").innerHTML +="<h6>"+data.results.bindings[i].genreLabel.value.toUpperCase()+"</h6>";
+                  }
 
+                  // if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
+                  //     || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)) {
+                  //
+                  //   document.getElementById("cont").innerHTML +="<h4>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
+                  //
+                  //   if  (data.results.bindings[i].image !=null) {
+                  //     portada=data.results.bindings[i].image.value;
+                  //     document.getElementById("cont").innerHTML +="<img class='portada' src='"+portada+"'>";
+                  //
+                  //   }
+                  //
+                  //   if (data.results.bindings[i].autorLabel != null) {
+                  //     document.getElementById("cont").innerHTML +="<h5>"+data.results.bindings[i].autorLabel.value+"</h5>";
+                  //
+                  //   }
+                  //   if (data.results.bindings[i].genreLabel != null) {
+                  //     document.getElementById("cont").innerHTML +="<h6>"+data.results.bindings[i].genreLabel.value.toUpperCase()+"</h6>";
+                  //
+                  //   }
+                  //
+                  // }
                 }
               }
             }
