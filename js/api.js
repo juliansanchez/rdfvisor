@@ -1,7 +1,6 @@
 
 var portada="img/default.png";
 
-
 function mostrarBasico(){
   var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = "SELECT distinct ?item ?itemLabel ?itemDescription ?article ?image ?countryLabel ?categoryLabel ?movementLabel ?movement WHERE{\n" +
@@ -25,9 +24,6 @@ function mostrarBasico(){
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
     // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-    console.log(data);
-    console.log(data.results);
-    console.log(data.results.bindings);
 
     var article = data.results.bindings[0].article.value;
     var categoryLabel = data.results.bindings[0].categoryLabel.value;
@@ -39,15 +35,12 @@ function mostrarBasico(){
     var movement = data.results.bindings[0].movement.value;
     var movementLabel = data.results.bindings[0].movementLabel.value;
 
-    document.getElementById("foto").innerHTML += "<img src="+image+">";
-
+    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' src="+image+">";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Wikipedia</p>";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+item+" target='_blank'</a>"+categoryLabel+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>Descripción: "+itemDescription+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>Movimiento Literario: <a href="+movement+" target='_blank'</a>"+movementLabel+"</p>";
-
-
 
   });
 }
@@ -124,14 +117,13 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
 
 
 
-
 $(function() {
+  var elemento = [];
   // click ajax call
-  document.getElementById("cont").innerHTML +="";
   $("#searchAutor").on("click", function() {
+    // document.getElementById("cont").innerHTML = "";
     var searchTermAutor = $("#searchTermAutor").val();
-
-    searchTermAutor= searchTermAutor.toUpperCase();
+    var searchTermAutorMAY= searchTermAutor.toUpperCase();
 
     var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?fechaPublicado ?image ?autor ?autorLabel ?genreLabel\n" +
@@ -175,10 +167,8 @@ $(function() {
       };
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
-    document.getElementById("cont").innerHTML="";
       // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
       if (searchTermAutor == "") {
-        // swal("No has escrito nada payaso!","");
         $.alert({
         title: 'Campo vacío!',
         content: 'Introduce un texto!',
@@ -189,14 +179,12 @@ $(function() {
             if (data.results.bindings[i] != null) {
               for (var j in data.results.bindings[i]) {
                 if (data.results.bindings[i][j] != null) {
-                  // console.log(data.results.bindings[i][j]);
-                  console.log("dato "+i+" j: "+j+"...."+data.results.bindings[i][j].value);
+                  // console.log("dato "+i+" j: "+j+"...."+data.results.bindings[i][j].value);
 
-                  if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
-                      || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)) {
+                  if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)
+                      || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)) {
 
-                        document.getElementById("cont").innerHTML += "<h6>"+data.results.bindings[i][j].value+"</h6>";
-
+                        elemento.push(data.results.bindings[i]);
                   }
 
                   // if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
@@ -225,6 +213,19 @@ $(function() {
             }
           }
         }
+        // MOSTRAOS INFO de los libros resultantes
+
+
+        for (var i in elemento) {
+          // console.log("ELEMENTO i " +elemento[i]);
+          for (var j in elemento[i]) {
+            document.getElementById("cont").innerHTML += "<p>"+elemento[i][j].value+"</p>";
+          }
+        }
+        while (elemento.length >0) {
+          elemento.pop();
+        }
+
       }
     });
   });
