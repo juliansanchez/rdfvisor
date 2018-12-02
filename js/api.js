@@ -121,7 +121,7 @@ $(function() {
   var elemento = [];
   // click ajax call
   $("#searchAutor").on("click", function() {
-    // document.getElementById("cont").innerHTML = "";
+    document.getElementById("cont").innerHTML = "";
     var searchTermAutor = $("#searchTermAutor").val();
     var searchTermAutorMAY= searchTermAutor.toUpperCase();
 
