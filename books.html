@@ -21,7 +21,7 @@
 		<!-- FAVICON -->
 		<link rel="shortcut icon" type="image/x-icon" href="img/juli.jpg" />
 	</head>
-	<body class="container" onload="mostrarBasico();">
+	<body class="container" onload="mostrarLibros()">
 		<header>
 			<!-- <h1>Interfaz para visualización de datos XML / RDF / JSON</h1> -->
 			<nav class="navbar navbar-default navbar-static-top">
@@ -40,7 +40,7 @@
 			      <ul class="nav navbar-nav">
 							<li><a href="index.html">HOME</a></li>
 			        <li><a href="#">Autores</a></li>
-							<li><a href="books.html">Libros</a></li>
+							<li><a href="#">Libros</a></li>
 							<li><a href="buscador.html">Buscador</a></li>
 							<li><a href="wikipedia.html">Wikipedia</a></li>
 							<li><a href="lector.html">XML-JSON-RDF</a></li>
@@ -59,65 +59,15 @@
 		</header>
 		<!-- CONTENEDOR DE DATOS -->
 		<section id="principal">
-			<h3>Siglo de Oro<small>Literatura Española</small></h3>
-			<div class="row center-block">
-				<div class="col-md-6">
-					<h4>Siglo de Oro</h4>
-					<div class="textoppal">
-						<span>El Siglo de Oro español fue un periodo de florecimiento del arte y la literatura en España,
-							que coincidió con el auge político y posterior declive de la dinastía de los Austrias o Habsburgo
-							españoles. El Siglo de Oro no supone fechas precisas y generalmente se considera que duró más de
-							un siglo. Su inicio no sería antes de 1492, con el fin de la Reconquista, los viajes de Cristóbal
-							Colón al Nuevo Mundo, y la publicación de la Gramática castellana de Antonio de Nebrija.
-							Políticamente terminó en 1659, con el Tratado de los Pirineos, ratificado entre Francia y España.
-							El último gran escritor, Pedro Calderón de la Barca, falleció en 1681. Su muerte es generalmente
-							considerada como el fin del Siglo de Oro español de las artes y las letras. El término 'Siglo de Oro'
-							 fue concebido por el erudito y anticuario dieciochesco Luis José Velázquez, marqués de Valdeflores
-							 (1722-1772), quien lo empleó por primera vez en 1754, en su obra crítica pionera Orígenes de la
-							 poesía castellana,1​ aunque para referirse exclusivamente al siglo XVI. Posteriormente la
-							 definición se amplió, entendiendo toda la época clásica o de apogeo de la cultura española,
-							 esencialmente el Renacimiento del siglo XVI y el Barroco del siglo XVII.2​ Para la historiografía
-							 y los teóricos modernos, pues, y ciñéndose a fechas concretas de acontecimientos clave, el Siglo
-							 de Oro abarca desde la publicación de la Gramática castellana de Nebrija en 1492 hasta la muerte
-							 de Calderón en 1681</span>
-					</div>
-				</div>
+			<h2>Siglo de Oro<small>Literatura Española</small></h2>
+			<h3>Principales Libros del <small>Siglo de Oro</small></h3>
 
-				<div class="col-md-4">
-					<h4>Información básica</h4>
-					<div class="container row">
-						<div class="col-md-4" id="foto"></div>
-						<div class="col-md-4" id="infoBasic"></div>
-					</div>
-				</div>
-			</div>
-			<h3>Principales autores del <small>Siglo de Oro</small></h3>
 
-			<div class="row slider center-block">
-			  <div class="col-xs-6 col-md-3 center-block">
-			    <a href="#" class="thumbnail">
-			      <img class="portada" src="img/juli.jpg" alt="...">
-						<h5>Autor</h5>
-			    </a>
+		 <div class="row slider center-block">
+			  <div id="libros" class="col">
+
+
 			  </div>
-				<div class="col-xs-6 col-md-3 center-block">
-			    <a href="#" class="thumbnail">
-			      <img class="portada" src="img/juli.jpg" alt="...">
-						<h5>Autor</h5>
-			    </a>
-			  </div>
-				<div class="col-xs-6 col-md-3 center-block">
-					<a href="#" class="thumbnail">
-						<img class="portada" src="img/juli.jpg" alt="...">
-						<h5>Autor</h5>
-					</a>
-				</div>
-				<div class="col-xs-6 col-md-3 center-block">
-					<a href="#" class="thumbnail">
-						<img class="portada" src="img/juli.jpg" alt="...">
-						<h5>Autor</h5>
-					</a>
-				</div>
 			</div>
 		</section>
 
