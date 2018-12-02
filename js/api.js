@@ -1,7 +1,6 @@
 
 var portada="img/default.png";
 
-
 function mostrarBasico(){
   var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = "SELECT distinct ?item ?itemLabel ?itemDescription ?article ?image ?countryLabel ?categoryLabel ?movementLabel ?movement WHERE{\n" +
@@ -25,18 +24,24 @@ function mostrarBasico(){
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
     // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-    // console.log( data );
-    // console.log(data.results);
-    // console.log(data.results.bindings[0]);
-    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' src="+data.results.bindings[0].image.value+">";
-    for (var i in data.results.bindings[0]) {
-      // console.log(data.results.bindings[0]);
-    // console.log("json como cadena. Propiedad: "+i+" Valor: "+cadenaJSON);
-    // document.getElementById("cont").innerHTML += i + ": " + datos[i] + "<br/>";
-      if (i != "image") {
-        document.getElementById("infoBasic").innerHTML += "<div><h5>"+i+"</h5><p>"+data.results.bindings[0][i].value+"</p></div>";
-      }
-    }
+
+    var article = data.results.bindings[0].article.value;
+    var categoryLabel = data.results.bindings[0].categoryLabel.value;
+    var countryLabel = data.results.bindings[0].countryLabel.value;
+    var image = data.results.bindings[0].image.value;
+    var item = data.results.bindings[0].item.value;
+    var itemLabel = data.results.bindings[0].itemLabel.value;
+    var itemDescription = data.results.bindings[0].itemDescription.value;
+    var movement = data.results.bindings[0].movement.value;
+    var movementLabel = data.results.bindings[0].movementLabel.value;
+
+    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' src="+image+">";
+    document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Wikipedia</p>";
+    document.getElementById("infoBasic").innerHTML += "<p><a href="+item+" target='_blank'</a>"+categoryLabel+"</p>";
+    document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
+    document.getElementById("infoBasic").innerHTML += "<p>Descripción: "+itemDescription+"</p>";
+    document.getElementById("infoBasic").innerHTML += "<p>Movimiento Literario: <a href="+movement+" target='_blank'</a>"+movementLabel+"</p>";
+
   });
 }
 
@@ -112,13 +117,13 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
 
 
 
-
 $(function() {
+  var elemento = [];
   // click ajax call
-  document.getElementById("cont").innerHTML +="";
   $("#searchAutor").on("click", function() {
+    // document.getElementById("cont").innerHTML = "";
     var searchTermAutor = $("#searchTermAutor").val();
-    searchTermAutor= searchTermAutor.toUpperCase();
+    var searchTermAutorMAY= searchTermAutor.toUpperCase();
 
     var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?fechaPublicado ?image ?autor ?autorLabel ?genreLabel\n" +
@@ -162,39 +167,66 @@ $(function() {
       };
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
-    document.getElementById("cont").innerHTML="";
       // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-      // console.log( data );
-      // console.log(data.results);
-      // console.log(data.results.bindings);
-      // console.log(data.results.bindings[0].image.value);
-      if (data.results.bindings != null) {
-        for (var i in data.results.bindings) {
-          if (data.results.bindings[i] != null) {
-            for (var j in data.results.bindings[i]) {
-              if (data.results.bindings[i][j] != null) {
-                // console.log(data.results.bindings[i][j]);
-                if  (j!=null && j == "image") {
-                  portada=data.results.bindings[i][j].value;
-                  // console.log(data.results.bindings[i][j].value);
+      if (searchTermAutor == "") {
+        $.alert({
+        title: 'Campo vacío!',
+        content: 'Introduce un texto!',
+        });
+      }else {
+        if (data.results.bindings != null) {
+          for (var i in data.results.bindings) {
+            if (data.results.bindings[i] != null) {
+              for (var j in data.results.bindings[i]) {
+                if (data.results.bindings[i][j] != null) {
+                  // console.log("dato "+i+" j: "+j+"...."+data.results.bindings[i][j].value);
+
+                  if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)
+                      || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)) {
+
+                        elemento.push(data.results.bindings[i]);
+                  }
+
+                  // if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
+                  //     || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)) {
+                  //
+                  //   document.getElementById("cont").innerHTML +="<h4>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
+                  //
+                  //   if  (data.results.bindings[i].image !=null) {
+                  //     portada=data.results.bindings[i].image.value;
+                  //     document.getElementById("cont").innerHTML +="<img class='portada' src='"+portada+"'>";
+                  //
+                  //   }
+                  //
+                  //   if (data.results.bindings[i].autorLabel != null) {
+                  //     document.getElementById("cont").innerHTML +="<h5>"+data.results.bindings[i].autorLabel.value+"</h5>";
+                  //
+                  //   }
+                  //   if (data.results.bindings[i].genreLabel != null) {
+                  //     document.getElementById("cont").innerHTML +="<h6>"+data.results.bindings[i].genreLabel.value.toUpperCase()+"</h6>";
+                  //
+                  //   }
+                  //
+                  // }
                 }
-
-                if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
-                    || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)) {
-
-                  document.getElementById("cont").innerHTML +="<h4>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
-                  document.getElementById("cont").innerHTML +="<img class='portada' src='"+portada+"'>";
-                  document.getElementById("cont").innerHTML +="<h5>"+data.results.bindings[i].autorLabel.value+"</h5>";
-                  document.getElementById("cont").innerHTML +="<h6>"+data.results.bindings[i].genreLabel.value.toUpperCase()+"</h6>";
-
-                }
-
               }
             }
           }
         }
-      }
+        // MOSTRAOS INFO de los libros resultantes
 
-    } );
+
+        for (var i in elemento) {
+          // console.log("ELEMENTO i " +elemento[i]);
+          for (var j in elemento[i]) {
+            document.getElementById("cont").innerHTML += "<p>"+elemento[i][j].value+"</p>";
+          }
+        }
+        while (elemento.length >0) {
+          elemento.pop();
+        }
+
+      }
+    });
   });
 });
