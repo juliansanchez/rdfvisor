@@ -39,6 +39,8 @@ function mostrarBasico(){
     var movement = data.results.bindings[0].movement.value;
     var movementLabel = data.results.bindings[0].movementLabel.value;
 
+    document.getElementById("foto").innerHTML += "<img src="+image+">";
+
     document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Wikipedia</p>";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+item+" target='_blank'</a>"+categoryLabel+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
@@ -192,7 +194,7 @@ $(function() {
 
                   if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)
                       || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutor)) {
-                        
+
                         document.getElementById("cont").innerHTML += "<h6>"+data.results.bindings[i][j].value+"</h6>";
 
                   }
