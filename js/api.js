@@ -126,7 +126,7 @@ $(function() {
     var searchTermAutorMAY= searchTermAutor.toUpperCase();
 
     var endpointUrl = 'https://query.wikidata.org/sparql',
-    sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?fechaPublicado ?image ?autor ?autorLabel ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
+    sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
         "WHERE {\n" +
         "  \n" +
         "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicadoLabel .  } #libro de texto\n" +
@@ -159,7 +159,7 @@ $(function() {
         "\n" +
         "\n" +
         "  \n" +
-        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
+        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[ES],es\". }\n" +
         "}\n" +
         "\n" +
         "ORDER BY ASC(?bookTextLabel)\n" +
@@ -184,8 +184,8 @@ $(function() {
                 if (data.results.bindings[i][j] != null) {
                   // console.log("dato "+i+" j: "+j+"...."+data.results.bindings[i][j].value);
 
-                  if (j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)
-                      || j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)) {
+                  if (j == "bookTextLabel" && data.results.bindings[i].bookTextLabel.value.toUpperCase().includes(searchTermAutorMAY)
+                      || j == "autorLabel" && data.results.bindings[i].autorLabel.value.toUpperCase().includes(searchTermAutorMAY)) {
                         elemento.push(data.results.bindings[i]);
                   }
 
@@ -218,15 +218,17 @@ $(function() {
       }
       // MOSTRAOS INFO de los libros resultantes
       // console.log(elemento);
+      function MaysPrimera(string){
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
 
       if (elemento.length > 0) {
         for (var i in elemento) {
-          // console.log("ELEMENTO i " +elemento[i]);
           document.getElementById("cont").innerHTML += "<div class='tarjeta'>";
 
+          // console.log("ELEMENTO i " +elemento[i]);
           for (var j in elemento[i]) {
-            // console.log("entro");
-            // console.log("J : "+j);
+
             console.log(elemento[i]);
 
             if (j=="image" && elemento[i].image != null) {
@@ -236,20 +238,19 @@ $(function() {
               document.getElementById("cont").innerHTML += "<img class='portada' src='img/default.png'</img>";
             }
             if (j=="bookText" && elemento[i].bookText != null) {
-              document.getElementById("cont").innerHTML += "<h5><a target='_blank' href='"+elemento[i].bookText.value+"'</a>"+elemento[i].bookTextLabel.value+"</h5>";
+              document.getElementById("cont").innerHTML += "<h3><a target='_blank' href='"+elemento[i].bookText.value+"'</a>"+elemento[i].bookTextLabel.value+"</h3>";
             }
             if (j=="autor" && elemento[i].autor != null) {
-              document.getElementById("cont").innerHTML += "<h5><a target='_blank' href='"+elemento[i].autor.value+"'</a>"+elemento[i].autorLabel.value+"</h5>";
+              document.getElementById("cont").innerHTML += "<h4><a target='_blank' href='"+elemento[i].autor.value+"'</a>"+elemento[i].autorLabel.value+"</h4>";
             }
             if (j=="genre" && elemento[i].genre != null) {
-              document.getElementById("cont").innerHTML += "<h5><a target='_blank' href='"+elemento[i].genre.value+"'</a>"+elemento[i].genreLabel.value+"</h5>";
+              document.getElementById("cont").innerHTML += "<p><a target='_blank' href='"+elemento[i].genre.value+"'</a>"+MaysPrimera(elemento[i].genreLabel.value)+"</p>";
             }
             if (j=="idioma" && elemento[i].idioma != null) {
-              document.getElementById("cont").innerHTML += "<h5><a target='_blank' href='"+elemento[i].idioma.value+"'</a>"+elemento[i].idiomaLabel.value+"</h5>";
+              document.getElementById("cont").innerHTML += "<p><a target='_blank' href='"+elemento[i].idioma.value+"'</a>"+MaysPrimera(elemento[i].idiomaLabel.value)+"</p>";
             }
             if (j=="fechaPublicado" && elemento[i].fechaPublicado != null) {
               var fecha = elemento[i].fechaPublicado.value.split("-")
-              console.log(fecha[0]);
               document.getElementById("cont").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
             }
 
