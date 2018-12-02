@@ -126,10 +126,10 @@ $(function() {
     var searchTermAutorMAY= searchTermAutor.toUpperCase();
 
     var endpointUrl = 'https://query.wikidata.org/sparql',
-    sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?fechaPublicado ?image ?autor ?autorLabel ?genreLabel\n" +
+    sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?fechaPublicado ?image ?autor ?autorLabel ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
         "WHERE {\n" +
         "  \n" +
-        "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .  } #libro de texto\n" +
+        "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicadoLabel .  } #libro de texto\n" +
         "   UNION\n" +
         "    {?bookText wdt:P31 wd:Q571 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #libro impreso\n" +
         "   UNION\n" +
@@ -139,7 +139,9 @@ $(function() {
         "   UNION\n" +
         "    {?bookText wdt:P31 wd:Q37484 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #poema épico\n" +
         "   UNION\n" +
-        "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria\n" +
+        "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Q5364419\n" +
+        "  UNION\n" +
+        "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q5364419 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Español moderno\n" +
         "   UNION\n" +
         "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #play\n" +
         "   UNION\n" +
@@ -147,7 +149,8 @@ $(function() {
         "  UNION\n" +
         "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q397 . ?bookText wdt:P577 ?fechaPublicado .} #play latin\n" +
         "  \n" +
-        "  OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . ?bookText wdt:P50 ?autor . ?bookText wdt:P136 ?genre .} \n" +
+        "  OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . ?bookText wdt:P50 ?autor . \n" +
+        "            ?bookText wdt:P136 ?genre . ?bookText wdt:P407 ?idioma . } \n" +
         "\n" +
         "\n" +
         "  \n" +
@@ -159,7 +162,7 @@ $(function() {
         "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
         "}\n" +
         "\n" +
-        "ORDER BY ASC(?fechaPublicado)\n" +
+        "ORDER BY ASC(?bookTextLabel)\n" +
         "",
       settings = {
           headers: { Accept: 'application/sparql-results+json' },
@@ -168,7 +171,7 @@ $(function() {
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
       // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-      if (searchTermAutor == "" || searchTermAutor == " ") {
+      if (searchTermAutor == "") {
         $.alert({
         title: 'Campo vacío!',
         content: 'Introduce un texto!',
@@ -181,9 +184,8 @@ $(function() {
                 if (data.results.bindings[i][j] != null) {
                   // console.log("dato "+i+" j: "+j+"...."+data.results.bindings[i][j].value);
 
-                  if (j !=null && j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)
-                      || j !=null && j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)) {
-
+                  if (j == "bookTextLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)
+                      || j == "autorLabel" && data.results.bindings[i][j].value.toUpperCase().includes(searchTermAutorMAY)) {
                         elemento.push(data.results.bindings[i]);
                   }
 
@@ -215,19 +217,50 @@ $(function() {
         }
       }
       // MOSTRAOS INFO de los libros resultantes
-      console.log(elemento);
+      // console.log(elemento);
 
       if (elemento.length > 0) {
         for (var i in elemento) {
           // console.log("ELEMENTO i " +elemento[i]);
+          document.getElementById("cont").innerHTML += "<div class='tarjeta'>";
+
           for (var j in elemento[i]) {
-            if (j=="image") {
-              document.getElementById("cont").innerHTML += "<img class='portada' src='"+elemento[i][j].value+"'</img>";
-            }else {
-              document.getElementById("cont").innerHTML += "<p>"+elemento[i][j].value+"</p>";
+            // console.log("entro");
+            // console.log("J : "+j);
+            console.log(elemento[i]);
+
+            if (j=="image" && elemento[i].image != null) {
+              document.getElementById("cont").innerHTML += "<img class='portada' src='"+elemento[i].image.value+"'</img>";
+            }else if (j=="image" && elemento[i].image.value == null) {
+              console.log("SIN IMAGEN");
+              document.getElementById("cont").innerHTML += "<img class='portada' src='img/default.png'</img>";
             }
+            if (j=="bookText" && elemento[i].bookText != null) {
+              document.getElementById("cont").innerHTML += "<h5><a target='_blank' href='"+elemento[i].bookText.value+"'</a>"+elemento[i].bookTextLabel.value+"</h5>";
+            }
+            if (j=="autor" && elemento[i].autor != null) {
+              document.getElementById("cont").innerHTML += "<h5><a target='_blank' href='"+elemento[i].autor.value+"'</a>"+elemento[i].autorLabel.value+"</h5>";
+            }
+            if (j=="genre" && elemento[i].genre != null) {
+              document.getElementById("cont").innerHTML += "<h5><a target='_blank' href='"+elemento[i].genre.value+"'</a>"+elemento[i].genreLabel.value+"</h5>";
+            }
+            if (j=="idioma" && elemento[i].idioma != null) {
+              document.getElementById("cont").innerHTML += "<h5><a target='_blank' href='"+elemento[i].idioma.value+"'</a>"+elemento[i].idiomaLabel.value+"</h5>";
+            }
+            if (j=="fechaPublicado" && elemento[i].fechaPublicado != null) {
+              var fecha = elemento[i].fechaPublicado.value.split("-")
+              console.log(fecha[0]);
+              document.getElementById("cont").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
+            }
+
+
+
           }
+
         }
+        document.getElementById("cont").innerHTML += "</div>";
+
+
       }else {
         $.alert({
         title: 'No se han encontrado resultados!!!',
@@ -240,8 +273,6 @@ $(function() {
       while (elemento.length >0) {
         elemento.pop();
       }
-
-
 
     });
   });

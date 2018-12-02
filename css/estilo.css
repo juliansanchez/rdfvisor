@@ -76,7 +76,9 @@ input { width:40%;}
 	width: 75px;
 	height: 100px;
 }
-
+.tarjeta{
+  border: 3px solid red;
+}
 /* DISEÑO PPAL */
 
 /* TEXTOS */
