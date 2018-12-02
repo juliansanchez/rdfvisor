@@ -12,8 +12,6 @@
 		<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-		<!-- Buscador Wikipedia -->
-		<script type="text/javascript" src="js/wikisearch.js"></script>
 		<!-- Cargar leer archivos -->
 		<!-- <script type="text/javascript" src="js/funciones.js"></script> -->
 		<!-- API -->
@@ -42,16 +40,10 @@
 			      <ul class="nav navbar-nav">
 							<li><a href="index.html">HOME</a></li>
 			        <li><a href="#">Autores</a></li>
-							<li><a href="#">Libros</a></li>
+							<li><a href="books.html">Libros</a></li>
 							<li><a href="#">Buscador</a></li>
-							<li><a href="#">Wikipedia</a></li>
+							<li><a href="wikipedia.html">Wikipedia</a></li>
 							<li><a href="lector.html">XML-JSON-RDF</a></li>
-			      </ul>
-			      <ul class="nav navbar-nav navbar-right">
-							<form class="form-inline">
-						    <input id="searchTerm" name="search" class="form-control mr-sm-2" placeholder="Buscar en Wikipedia" aria-label="Search">
-						    <button id='search' class="btn btn-outline-success my-2 my-sm-0" type="button">Wikipedia</button>
-			  			</form>
 			      </ul>
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
@@ -62,12 +54,11 @@
 		<h3>Busca por libro o autor del <small>Siglo de Oro</small></h3>
 		<!-- BUSCADOR  -->
 		<form class="form-inline">
-			<input id="searchTermAutor" name="search" class="form-control mr-sm-2" placeholder="Autor" aria-label="Search">
+			<input id="searchTermAutor" name="search" class="form-control mr-sm-2" placeholder="Título o autor" aria-label="Search">
 			<button id='searchAutor' class="btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button>
 		</form>
 
-		<!-- Contenedor de libros -->
-		<article class="libros2" id="libros2"></article>
+		<!-- RESULTADOS DE BUSQUDA -->
 		<div class="container" id="cont"></div>
 
 	<!-- Footer -->

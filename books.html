@@ -12,18 +12,16 @@
 		<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-		<!-- Buscador Wikipedia -->
-		<script type="text/javascript" src="js/wikisearch.js"></script>
 		<!-- Cargar leer archivos -->
-		<script type="text/javascript" src="js/funciones.js"></script>
+		<!-- <script type="text/javascript" src="js/funciones.js"></script> -->
 		<!-- API -->
-		<!-- <script type="text/javascript" src="js/api.js"></script> -->
+		<script type="text/javascript" src="js/api.js"></script>
 		<!--ESTILOS -->
 		<link rel="stylesheet" type="text/css" href="css/estilo.css" media="screen" />
 		<!-- FAVICON -->
 		<link rel="shortcut icon" type="image/x-icon" href="img/juli.jpg" />
 	</head>
-	<body class="container" onload="cargar(); selectFile();">
+	<body class="container" onload="mostrarLibros()">
 		<header>
 			<!-- <h1>Interfaz para visualización de datos XML / RDF / JSON</h1> -->
 			<nav class="navbar navbar-default navbar-static-top">
@@ -42,10 +40,10 @@
 			      <ul class="nav navbar-nav">
 							<li><a href="index.html">HOME</a></li>
 			        <li><a href="#">Autores</a></li>
-							<li><a href="books.html">Libros</a></li>
+							<li><a href="#">Libros</a></li>
 							<li><a href="buscador.html">Buscador</a></li>
 							<li><a href="wikipedia.html">Wikipedia</a></li>
-							<li><a href="#">XML-JSON-RDF</a></li>
+							<li><a href="lector.html">XML-JSON-RDF</a></li>
 			      </ul>
 			      <!-- <ul class="nav navbar-nav navbar-right">
 							<form class="form-inline">
@@ -57,21 +55,26 @@
 			  </div><!-- /.container-fluid -->
 			</nav>
 
-			<div class="container">
-				<form class="form-inline">
-					<input type="file" class="form-control" id="files" name="files[]" multiple  />
-					<button type="button" class ="btn btn-primary" onclick="leeXML();">XML / RDF / JSON</button>
-				</form>
-				<!-- Mostrar FILE seleccionado -->
-				<output id="list"></output>
-			</div>
-		</header>
 
+		</header>
+		<!-- CONTENEDOR DE DATOS -->
+		<section id="principal">
+			<h2>Siglo de Oro<small>Literatura Española</small></h2>
+			<h3>Principales Libros del <small>Siglo de Oro</small></h3>
+
+
+		 <div class="row slider center-block">
+			  <div id="libros">
+
+
+			  </div>
+			</div>
+		</section>
 
 		<!-- CONTENEDOR DE DATOS -->
-		<article id="cont">
-			<h3>Visualiza archivos <small>XML / JSON / RDF</small></h3>
-		</article>
+		<!-- <article id="cont">
+			<h3>Resultados de búsqueda<small>Wikipedia</small></h3>
+		</article> -->
 
 	<!-- Footer -->
 	<footer class="page-footer font-small blue">
