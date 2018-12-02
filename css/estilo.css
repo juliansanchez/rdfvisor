@@ -22,7 +22,8 @@ body{
 }
 
 header{
-	border: 2px solid #339966;
+  margin-top: 1%;
+	border: 1px solid #688797;
   background-color: #688797;
 }
 
@@ -77,7 +78,7 @@ input { width:40%;}
 	height: 100px;
 }
 .tarjeta{
-  border: 2px solid red;
+  border: 1px solid #688797;
 }
 /* DISEÑO PPAL */
 
@@ -85,12 +86,5 @@ input { width:40%;}
 .textoppal { text-align: justify;  font-size: .9em;}
 
 .slider{
-  border: 1px solid green;
+  /* border: 1px solid green; */
 }
-
-.libros div{
-  border: 2px solid red;
-}
-
-
-/* PAGINA WIKIPEDIA */
