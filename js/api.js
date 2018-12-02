@@ -168,7 +168,7 @@ $(function() {
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
       // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-      if (searchTermAutor == "") {
+      if (searchTermAutor == "" || searchTermAutor == " ") {
         $.alert({
         title: 'Campo vacío!',
         content: 'Introduce un texto!',
@@ -213,20 +213,36 @@ $(function() {
             }
           }
         }
-        // MOSTRAOS INFO de los libros resultantes
+      }
+      // MOSTRAOS INFO de los libros resultantes
+      console.log(elemento);
 
-
+      if (elemento.length > 0) {
         for (var i in elemento) {
           // console.log("ELEMENTO i " +elemento[i]);
           for (var j in elemento[i]) {
-            document.getElementById("cont").innerHTML += "<p>"+elemento[i][j].value+"</p>";
+            if (j=="image") {
+              document.getElementById("cont").innerHTML += "<img class='portada' src='"+elemento[i][j].value+"'</img>";
+            }else {
+              document.getElementById("cont").innerHTML += "<p>"+elemento[i][j].value+"</p>";
+            }
           }
         }
-        while (elemento.length >0) {
-          elemento.pop();
-        }
-
+      }else {
+        $.alert({
+        title: 'No se han encontrado resultados!!!',
+        content: 'Introduce un texto!',
+        });
       }
+
+
+      // vaciamos el array de libros
+      while (elemento.length >0) {
+        elemento.pop();
+      }
+
+
+
     });
   });
 });
