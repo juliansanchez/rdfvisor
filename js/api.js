@@ -173,6 +173,7 @@ var combo = document.getElementById("producto");
 var selected = combo.options[combo.selectedIndex].text;
 alert(selected);
 }
+
 /* BUSCADOR*/
 $(function() {
   var elemento = [];
