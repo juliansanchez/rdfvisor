@@ -53,10 +53,23 @@
 		<!-- CONTENEDOR DE DATOS -->
 		<h3>Busca por libro o autor del <small>Siglo de Oro</small></h3>
 		<!-- BUSCADOR  -->
-		<form class="form-inline">
-			<input id="searchTermAutor" name="search" class="form-control mr-sm-2" placeholder="Título o autor" aria-label="Search">
-			<button id='searchAutor' class="btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button>
-		</form>
+		<div class="row">
+			<div class="col-md-8">
+				<form class="form-inline">
+					<input id="searchTermAutor" name="search" class="form-control mr-sm-2" placeholder="Título o autor" aria-label="Search">
+					<button id='searchAutor' class="btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button>
+					<select class="form-control" id="producto" onchange="ShowSelected();" name="producto">
+						<option value="#">Genero</option>
+						<option value="1">Texto One</option>
+						<option value="2">Texto Two</option>
+					</select>
+				</form>
+			</div>
+			<div class="col-md-2">
+			<!-- Selector por genero -->
+
+			</div>
+		</div>
 
 		<!-- RESULTADOS DE BUSQUDA -->
 		<div class="container" id="cont"></div>
