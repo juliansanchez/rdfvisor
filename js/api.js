@@ -58,6 +58,7 @@ function mostrarBasico(){
   });
 }
 
+/* Lista todos los libros */
 function mostrarLibros(){
 
   var endpointUrl = 'https://query.wikidata.org/sparql',
@@ -133,10 +134,10 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
               }
 
               if (j=="bookText" && data.results.bindings[i].bookText != null) {
-                document.getElementById("libros").innerHTML += "<h3><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h3>";
+                document.getElementById("libros").innerHTML += "<h4><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
               }
               if (j=="autor" && data.results.bindings[i].autor != null) {
-                document.getElementById("libros").innerHTML += "<h4><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h4>";
+                document.getElementById("libros").innerHTML += "<h5><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h5>";
               }
               if (j=="genre" && data.results.bindings[i].genre != null) {
                 document.getElementById("libros").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].genre.value+"'</a>"+MaysPrimera(data.results.bindings[i].genreLabel.value)+"</p>";
@@ -151,7 +152,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
               if (j=="bookTextDescription" && data.results.bindings[i].bookTextDescription != null) {
                 document.getElementById("libros").innerHTML += "<p><small>"+MaysPrimera(data.results.bindings[i].bookTextDescription.value)+"</small></p>";
               }
-
             }
           }
         }
@@ -161,7 +161,18 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
   } );
 }
 
+/* FILTRO POR GENERO */
+function ShowSelected()
+{
+/* Para obtener el valor */
+var cod = document.getElementById("producto").value;
+alert(cod);
 
+/* Para obtener el texto */
+var combo = document.getElementById("producto");
+var selected = combo.options[combo.selectedIndex].text;
+alert(selected);
+}
 /* BUSCADOR*/
 $(function() {
   var elemento = [];
