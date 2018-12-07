@@ -6,13 +6,13 @@ function MaysPrimera(string){
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-window.onload = function() {
-      var txt = dataJSON;
-	   document.getElementById('link').onclick = function(code) {
-        this.href = 'data:dataJSON,'
-          + encodeURIComponent(dataJSON.value);
-      };
-    };
+// window.onload = function() {
+//       var txt = dataJSON;
+// 	   document.getElementById('link').onclick = function(code) {
+//         this.href = 'data:dataJSON,'
+//           + encodeURIComponent(dataJSON.value);
+//       };
+//     };
 
 /* INFO HOME PAGE */
 function mostrarBasico(){
@@ -251,9 +251,10 @@ $(function() {
       }
       // MOSTRAOS INFO de los libros resultantes
       // console.log(elemento);
-
+      document.getElementById("cont").innerHTML += "<h4>Resultados <span style='font-weight:bold'>"+elemento.length+"</span></h4>";
       if (elemento.length > 0) {
         for (var i in elemento) {
+
           document.getElementById("cont").innerHTML += "<div class='tarjeta'>";
 
           // console.log("ELEMENTO i " +elemento[i]);
