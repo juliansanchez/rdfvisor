@@ -191,7 +191,6 @@ $(function() {
     document.getElementById("cont").innerHTML = "";
     var searchTermAutor = $("#searchTermAutor").val();
     var searchTermAutorMAY= searchTermAutor.toUpperCase();
-
     var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
         "WHERE {\n" +
