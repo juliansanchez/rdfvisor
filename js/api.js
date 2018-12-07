@@ -1,10 +1,18 @@
 
 var portada="img/default.png";
-
+var dataJSON;
 /* Primera letra en Mayusculas */
 function MaysPrimera(string){
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+// window.onload = function() {
+//       var txt = dataJSON;
+// 	   document.getElementById('link').onclick = function(code) {
+//         this.href = 'data:dataJSON,'
+//           + encodeURIComponent(dataJSON.value);
+//       };
+//     };
 
 /* INFO HOME PAGE */
 function mostrarBasico(){
@@ -30,7 +38,6 @@ function mostrarBasico(){
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
     // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
-
     var article = data.results.bindings[0].article.value;
     var categoryLabel = data.results.bindings[0].categoryLabel.value;
     var countryLabel = data.results.bindings[0].countryLabel.value;
@@ -98,12 +105,16 @@ function mostrarLibros(){
     };
 
 $.ajax( endpointUrl, settings ).then( function ( data ) {
-  console.log(data.results.bindings);
 
     if (data.results.bindings != null) {
+      console.log(data);
+      console.log(typeof(data));
+      var str = JSON.stringify(data);
+      // console.log(str);
+      dataJSON=str;
+
       for (var i in data.results.bindings) {
         document.getElementById("libros").innerHTML += "<div class='tarjeta'>";
-
         // console.log(data.results.bindings[i]);
         if (data.results.bindings[i] != null) {
           for (var j in data.results.bindings[i]) {
@@ -111,13 +122,12 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
               // console.log("elemento I: "+data.results.bindings[i]);
               // console.log("J: "+j+"Valor: "+data.results.bindings[i][j].value);
 
-
               if (j=="image" && data.results.bindings[i].image != null) {
                 document.getElementById("libros").innerHTML += "<img class='portada' src='"+data.results.bindings[i].image.value+"'>";
 
               }else if(data.results.bindings[i].image == null)  {
-                console.log("SIN IMAGEN");
-                console.log(data.results.bindings[i].bookTextLabel.value);
+                // console.log("SIN IMAGEN");
+                // console.log(data.results.bindings[i].bookTextLabel.value);
                 var portada = "img/default.png";
                 // document.getElementById("libros").innerHTML += "<img class='portada' src='"+portada+"'>";
               }
@@ -147,7 +157,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }
       }
       document.getElementById("libros").innerHTML += "</div>";
-
     }
   } );
 }
@@ -242,9 +251,10 @@ $(function() {
       }
       // MOSTRAOS INFO de los libros resultantes
       // console.log(elemento);
-
+      document.getElementById("cont").innerHTML += "<h4>Resultados <span style='font-weight:bold'>"+elemento.length+"</span></h4>";
       if (elemento.length > 0) {
         for (var i in elemento) {
+
           document.getElementById("cont").innerHTML += "<div class='tarjeta'>";
 
           // console.log("ELEMENTO i " +elemento[i]);
