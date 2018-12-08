@@ -173,6 +173,7 @@ var combo = document.getElementById("producto");
 var selected = combo.options[combo.selectedIndex].text;
 alert(selected);
 }
+
 /* BUSCADOR*/
 $(function() {
   var elemento = [];
@@ -190,7 +191,6 @@ $(function() {
     document.getElementById("cont").innerHTML = "";
     var searchTermAutor = $("#searchTermAutor").val();
     var searchTermAutorMAY= searchTermAutor.toUpperCase();
-
     var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
         "WHERE {\n" +
@@ -265,14 +265,9 @@ $(function() {
       document.getElementById("cont").innerHTML += "<h4>Resultados <span style='font-weight:bold'>"+elemento.length+"</span></h4>";
       if (elemento.length > 0) {
         for (var i in elemento) {
-
           document.getElementById("cont").innerHTML += "<div class='tarjeta'>";
-
-          // console.log("ELEMENTO i " +elemento[i]);
           for (var j in elemento[i]) {
-
-            console.log(elemento[i]);
-
+            // console.log(elemento[i]);
             if (j=="image" && elemento[i].image != null) {
               document.getElementById("cont").innerHTML += "<img class='portada' src='"+elemento[i].image.value+"'</img>";
             }else if (j=="image" && elemento[i].image.value == null) {
