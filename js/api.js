@@ -162,8 +162,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
 }
 
 /* FILTRO POR GENERO */
-function ShowSelected()
-{
+function ShowSelected(){
 /* Para obtener el valor */
 var cod = document.getElementById("producto").value;
 alert(cod);

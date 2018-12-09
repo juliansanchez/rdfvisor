@@ -12,19 +12,16 @@
 		<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-		<!-- Buscador Wikipedia -->
-		<script type="text/javascript" src="js/wikisearch.js"></script>
 		<!-- Cargar leer archivos -->
 		<!-- <script type="text/javascript" src="js/funciones.js"></script> -->
 		<!-- API -->
+		<script type="text/javascript" src="js/api.js"></script>
 		<!--ESTILOS -->
 		<link rel="stylesheet" type="text/css" href="css/estilo.css" media="screen" />
 		<!-- FAVICON -->
 		<link rel="shortcut icon" type="image/x-icon" href="img/juli.jpg" />
-
-
 	</head>
-	<body class="container">
+	<body class="container" >
 		<header>
 			<!-- <h1>Interfaz para visualización de datos XML / RDF / JSON</h1> -->
 			<nav class="navbar navbar-default navbar-static-top">
@@ -42,30 +39,41 @@
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">
 							<li><a href="index.html">HOME</a></li>
-			        <li><a href="authors.html">Autores</a></li>
-							<li><a href="books.html">Libros</a></li>
+			        <li><a href="#">Autores</a></li>
+							<li><a href="book.html">Libros</a></li>
 							<li><a href="buscador.html">Buscador</a></li>
-							<li><a href="#">Wikipedia</a></li>
+							<li><a href="wikipedia.html">Wikipedia</a></li>
 							<li><a href="lector.html">XML-JSON-RDF</a></li>
 			      </ul>
+			      <!-- <ul class="nav navbar-nav navbar-right">
+							<form class="form-inline">
+						    <input id="searchTerm" name="search" class="form-control mr-sm-2" placeholder="Buscar en Wikipedia" aria-label="Search">
+						    <button id='search' class="btn btn-outline-success my-2 my-sm-0" type="button">Wikipedia</button>
+			  			</form>
+			      </ul> -->
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 			</nav>
+
+
 		</header>
 		<!-- CONTENEDOR DE DATOS -->
 		<section id="principal">
-			<h3>Busca en <small>Wikipedia</small></h3>
-			<form class="form-inline">
-				<input id="searchTerm" name="search" class="form-control mr-sm-2" placeholder="Buscar en Wikipedia" aria-label="Search">
-				<button id='search' class="btn btn-outline-success my-2 my-sm-0" type="button">Wikipedia</button>
-			</form>
+			<h2>Siglo de Oro<small>Literatura Española</small></h2>
+			<h3>Principales Autores del <small>Siglo de Oro</small></h3>
+			<a href="#" id="link" download="contenido.json">Descargar el contenido en JSON</a>
+			<div class="embed-responsive embed-responsive-16by9">
+				<iframe class="embed-responsive-item" src="https://tinyurl.com/y9upc267" allowfullscreen></iframe>
+			</div>
+			<div class="container">
+				<div id="autores" class="row"></div>
+			</div>
 		</section>
 
 		<!-- CONTENEDOR DE DATOS -->
-		<article id="cont">
+		<!-- <article id="cont">
 			<h3>Resultados de búsqueda<small>Wikipedia</small></h3>
-		</article>
-
+		</article> -->
 	<!-- Footer -->
 	<footer class="page-footer font-small blue">
 	  <!-- Copyright -->
