@@ -19,9 +19,9 @@
 		<!--ESTILOS -->
 		<link rel="stylesheet" type="text/css" href="css/estilo.css" media="screen" />
 		<!-- FAVICON -->
-		<link rel="shortcut icon" type="image/x-icon" href="img/juli.jpg" />
+		<link rel="shortcut icon" type="image/x-icon" href="img/juli.jpg"/>
 	</head>
-	<body class="container" onload="mostrarLibros()">
+	<body class="container" >
 		<header>
 			<!-- <h1>Interfaz para visualización de datos XML / RDF / JSON</h1> -->
 			<nav class="navbar navbar-default navbar-static-top">
@@ -39,8 +39,8 @@
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">
 							<li><a href="index.html">HOME</a></li>
-			        <li><a href="authors.html">Autores</a></li>
-							<li><a href="#">Libros</a></li>
+			        <li><a href="#">Autores</a></li>
+							<li><a href="books.html">Libros</a></li>
 							<li><a href="buscador.html">Buscador</a></li>
 							<li><a href="wikipedia.html">Wikipedia</a></li>
 							<li><a href="lector.html">XML-JSON-RDF</a></li>
@@ -60,14 +60,13 @@
 		<!-- CONTENEDOR DE DATOS -->
 		<section id="principal">
 			<h2>Siglo de Oro<small>Literatura Española</small></h2>
-			<h3>Principales Libros del <small>Siglo de Oro</small></h3>
+			<h3>Principales Autores del <small>Siglo de Oro</small></h3>
 			<a href="#" id="link" download="contenido.json">Descargar el contenido en JSON</a>
-
+			<div class="embed-responsive embed-responsive-16by9">
+				<iframe class="embed-responsive-item" src="https://tinyurl.com/ybhbua5d" allowfullscreen></iframe>
+			</div>
 			<div class="container">
-				<div class="embed-responsive embed-responsive-16by9">
-					<iframe class="embed-responsive-item" src="https://tinyurl.com/ybkwgll8" allowfullscreen></iframe>
-				</div>
-				<div id="libros" class="row"></div>
+				<div id="autores" class="row"></div>
 			</div>
 		</section>
 
