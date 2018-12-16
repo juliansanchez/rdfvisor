@@ -181,13 +181,12 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
           desc=MaysPrimera(data.results.bindings[i].bookTextDescription.value);
         }
 
-        document.getElementById("libros").innerHTML +="<div class='card'><img class='portada'src='"+img+"'>";
-        document.getElementById("libros").innerHTML +="<h4><a target='_blank' href='"+titLink+"'</a>"+tit+"</h4>";
-        document.getElementById("libros").innerHTML +="<h5><a target='_blank' href='"+autLink+"'</a>"+aut+"</h5>";
-        document.getElementById("libros").innerHTML +="<p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p>";
-        document.getElementById("libros").innerHTML +="<p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>";
-        document.getElementById("libros").innerHTML +="<p>"+fec+"</p><p>"+desc+"</p></div>";
+        document.getElementById("libros").innerHTML +="<div class='col-md-4 card'><img class='portada'src='"+img+"'><h4><a target='_blank' href='"+titLink+"'</a>"+tit+"</h4><h5><a target='_blank' href='"+autLink+"'</a>"+aut+"</h5><p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p><p>"+fec+"</p><p>"+desc+"</p></div>";
+
+
       }
+
+
     }
   });
 }
