@@ -60,7 +60,7 @@ function mostrarBasico(){
 
 /* Lista todos los libros */
 function mostrarLibros(){
-
+    var elemento = [];
   var endpointUrl = 'https://query.wikidata.org/sparql',
     sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
         "WHERE {\n" +
@@ -108,69 +108,94 @@ function mostrarLibros(){
 $.ajax( endpointUrl, settings ).then( function ( data ) {
 
     if (data.results.bindings != null) {
-      console.log(data);
-      console.log(typeof(data));
+      // console.log(data);
+      // console.log(typeof(data));
       var str = JSON.stringify(data);
       // console.log(str);
       dataJSON=str;
 
       for (var i in data.results.bindings) {
-        document.getElementById("libros").innerHTML += "<div class='tarjeta'>";
         // console.log(data.results.bindings[i]);
         if (data.results.bindings[i] != null) {
-          for (var j in data.results.bindings[i]) {
-            if (data.results.bindings[i][j] != null) {
-              // console.log("elemento I: "+data.results.bindings[i]);
-              // console.log("J: "+j+"Valor: "+data.results.bindings[i][j].value);
-
-              if (j=="image" && data.results.bindings[i].image != null) {
-                document.getElementById("libros").innerHTML += "<img class='portada' src='"+data.results.bindings[i].image.value+"'>";
-
-              }else if(data.results.bindings[i].image == null)  {
-                // console.log("SIN IMAGEN");
-                // console.log(data.results.bindings[i].bookTextLabel.value);
-                var portada = "img/default.png";
-                // document.getElementById("libros").innerHTML += "<img class='portada' src='"+portada+"'>";
-              }
-
-              if (j=="bookText" && data.results.bindings[i].bookText != null) {
-                document.getElementById("libros").innerHTML += "<h4><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
-              }
-              if (j=="autor" && data.results.bindings[i].autor != null) {
-                document.getElementById("libros").innerHTML += "<h5><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h5>";
-              }
-              if (j=="genre" && data.results.bindings[i].genre != null) {
-                document.getElementById("libros").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].genre.value+"'</a>"+MaysPrimera(data.results.bindings[i].genreLabel.value)+"</p>";
-              }
-              if (j=="idioma" && data.results.bindings[i].idioma != null) {
-                document.getElementById("libros").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].idioma.value+"'</a>"+MaysPrimera(data.results.bindings[i].idiomaLabel.value)+"</p>";
-              }
-              if (j=="fechaPublicado" && data.results.bindings[i].fechaPublicado != null) {
-                var fecha = data.results.bindings[i].fechaPublicado.value.split("-")
-                document.getElementById("libros").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
-              }
-              if (j=="bookTextDescription" && data.results.bindings[i].bookTextDescription != null) {
-                document.getElementById("libros").innerHTML += "<p><small>"+MaysPrimera(data.results.bindings[i].bookTextDescription.value)+"</small></p>";
-              }
-            }
-          }
+          elemento.push(data.results.bindings[i]);
+          // for (var j in data.results.bindings[i]) {
+          //   if (data.results.bindings[i][j] != null) {
+          //     // console.log("elemento I: "+data.results.bindings[i]);
+          //     // console.log("J: "+j+"Valor: "+data.results.bindings[i][j].value);
+          //
+          //     if (j=="image" && data.results.bindings[i].image != null) {
+          //       document.getElementById("img").innerHTML += "<img class='portada' src='"+data.results.bindings[i].image.value+"'>";
+          //     }
+          //
+          //     if (j=="bookText" && data.results.bindings[i].bookText != null) {
+          //       document.getElementById("tit").innerHTML += "<h4><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
+          //     }
+          //     if (j=="autor" && data.results.bindings[i].autor != null) {
+          //       document.getElementById("aut").innerHTML += "<h5><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h5>";
+          //     }
+          //     if (j=="genre" && data.results.bindings[i].genre != null) {
+          //       document.getElementById("gen").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].genre.value+"'</a>"+MaysPrimera(data.results.bindings[i].genreLabel.value)+"</p>";
+          //     }
+          //     if (j=="idioma" && data.results.bindings[i].idioma != null) {
+          //       document.getElementById("idi").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].idioma.value+"'</a>"+MaysPrimera(data.results.bindings[i].idiomaLabel.value)+"</p>";
+          //     }
+          //     if (j=="fechaPublicado" && data.results.bindings[i].fechaPublicado != null) {
+          //       var fecha = data.results.bindings[i].fechaPublicado.value.split("-")
+          //       document.getElementById("fech").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
+          //     }
+          //     if (j=="bookTextDescription" && data.results.bindings[i].bookTextDescription != null) {
+          //       document.getElementById("desc").innerHTML += "<p><small>"+MaysPrimera(data.results.bindings[i].bookTextDescription.value)+"</small></p>";
+          //     }
+          //   }
+          // }
         }
       }
-      document.getElementById("libros").innerHTML += "</div>";
+
+      var img, tit, titLink, aut, autLink,gen,genLink, fecha, desc;
+
+      for (var i = 0; i < elemento.length; i++) {
+        document.getElementById("libros").innerHTML += "<hr/><div class='card'>";
+        // console.log(elemento[i].image.value);
+        if (elemento[i].image != null) {
+          document.getElementById("libros").innerHTML += "<img class='portada' src='"+data.results.bindings[i].image.value+"'>";
+        }
+        if (elemento[i].bookText != null) {
+          document.getElementById("libros").innerHTML += "<h4><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
+        }
+        if (elemento[i].autor != null) {
+          document.getElementById("libros").innerHTML += "<h5><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h5>";
+        }
+        if (elemento[i].genre != null) {
+          document.getElementById("libros").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].genre.value+"'</a>"+MaysPrimera(data.results.bindings[i].genreLabel.value)+"</p>";
+        }
+        if (elemento[i].idioma != null) {
+          document.getElementById("libros").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].idioma.value+"'</a>"+MaysPrimera(data.results.bindings[i].idiomaLabel.value)+"</p>";
+        }
+        if (elemento[i].fechaPublicado != null) {
+          var fecha = data.results.bindings[i].fechaPublicado.value.split("-")
+          document.getElementById("libros").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
+        }
+        if (elemento[i].bookTextDescription != null) {
+          document.getElementById("libros").innerHTML += "<p><small>"+MaysPrimera(data.results.bindings[i].bookTextDescription.value)+"</small></p>";
+        }
+        document.getElementById("libros").innerHTML += "</div><hr/>";
+
+      }
+
     }
-  } );
+  });
 }
 
 /* FILTRO POR GENERO */
 function ShowSelected(){
 /* Para obtener el valor */
 var cod = document.getElementById("producto").value;
-alert(cod);
+console.log(cod);
 
 /* Para obtener el texto */
 var combo = document.getElementById("producto");
 var selected = combo.options[combo.selectedIndex].text;
-alert(selected);
+console.log(selected);
 }
 
 /* BUSCADOR*/
@@ -310,3 +335,19 @@ $(function() {
   });
 
 });
+
+
+
+
+
+
+
+
+
+// "<div class='card'><img class='portada' src='"+data.results.bindings[i].image.value+"<h4><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h4>"
+// "<h5><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h5>";
+// "<p><a target='_blank' href='"+data.results.bindings[i].genre.value+"'</a>"+MaysPrimera(data.results.bindings[i].genreLabel.value)+"</p>";
+// "<p><a target='_blank' href='"+data.results.bindings[i].idioma.value+"'</a>"+MaysPrimera(data.results.bindings[i].idiomaLabel.value)+"</p>";
+// "<p><small>"+fecha[0]+"</small></p>";
+// "<p><small>"+MaysPrimera(data.results.bindings[i].bookTextDescription.value)+"</small></p>";
+// "</div>";
