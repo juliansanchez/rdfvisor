@@ -1,4 +1,3 @@
-
 /* Julián Sánchez. Ua 2018 TFG Visor RDF Hoja de estilos */
 
 /* PRINCIPAL */
@@ -20,20 +19,16 @@ body{
 		margin: 0;
     padding: 0;
 }
-
 header{
   margin-top: 1%;
 	border: 1px solid #688797;
   background-color: #688797;
 }
-
 nav form{
 	margin-right: 10px;
 	margin-left: 10px;
 	margin-bottom: 5px;
 }
-
-
 footer {
   bottom: 0;
   background-color: #688797;
@@ -41,23 +36,18 @@ footer {
 	font-style: italic;
 	min-height: 50px; padding: 1%; margin-top: 1%;
 }
-
 li{
 	/* font-weight: bold; */
 	font-size: 1.2em;
 }
-
 /* section{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%;}
 article{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%; position: relative;} */
-
 div{
 	margin: .7%;
 }
 input { width:40%;}
 
-
 /* HOME PAGE */
-
 #infoBasic p{
   margin: .2cm 1cm 0 .5cm;
   font-size: .9em;
@@ -66,30 +56,51 @@ input { width:40%;}
 #foto{
   max-width: 100px;
   margin-left: 0;
-
 }
 /* DISEÑO BUSCADOR  */
-
 .listBooks{
   border: 3px solid blue;
 }
 .portada{
 	width: 75px;
 	height: 100px;
+  padding: 1%;
 }
 .tarjeta{
   border: 1px solid #688797;
 }
-/* DISEÑO PPAL */
 
 /* TEXTOS */
 .textoppal { text-align: justify;  font-size: .9em;}
 
-.slider{
-  /* border: 1px solid green; */
+/* LIBROS */
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  min-height: 200px;
+  max-height: 200px;
+  overflow: hidden;
+}
+.card img{
+  width: auto;
+  height: 60px;
+  padding: 1%;
+  display: center;
+}
+.libros{
+  display: inline-block;
+  text-align: center;
+}
+.libros p{
+  font-size: .8em;
+  padding: 0;
+  margin: 0;
 }
 
-/* LIBROS */
-
+/* Add rounded corners to the top left and the top right corner of the image */
+img {
+  border-radius: 5px 5px 2px 2px;
+}
 
 /* PAGINACION WIKIPEDIA*/
