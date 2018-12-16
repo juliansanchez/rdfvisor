@@ -8,12 +8,8 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!-- POPUPS -->
-		<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-		<!-- Cargar leer archivos -->
-		<!-- <script type="text/javascript" src="js/funciones.js"></script> -->
 		<!-- API -->
 		<script type="text/javascript" src="js/api.js"></script>
 		<!--ESTILOS -->
@@ -23,10 +19,8 @@
 	</head>
 	<body class="container" onload="mostrarLibros()">
 		<header>
-			<!-- <h1>Interfaz para visualización de datos XML / RDF / JSON</h1> -->
 			<nav class="navbar navbar-default navbar-static-top">
 			  <div class="container-fluid">
-			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
 			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 			        <span class="sr-only">Toggle navigation</span>
@@ -45,33 +39,24 @@
 							<li><a href="wikipedia.html">Wikipedia</a></li>
 							<li><a href="lector.html">XML-JSON-RDF</a></li>
 			      </ul>
-			      <!-- <ul class="nav navbar-nav navbar-right">
-							<form class="form-inline">
-						    <input id="searchTerm" name="search" class="form-control mr-sm-2" placeholder="Buscar en Wikipedia" aria-label="Search">
-						    <button id='search' class="btn btn-outline-success my-2 my-sm-0" type="button">Wikipedia</button>
-			  			</form>
-			      </ul> -->
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 			</nav>
-
-
 		</header>
 		<!-- CONTENEDOR DE DATOS -->
-		<section id="principal">
+		<div class="embed-responsive embed-responsive-16by9">
+			<iframe class="embed-responsive-item" src="https://tinyurl.com/ybkwgll8" allowfullscreen></iframe>
+		</div>
+		<div class="container">
 			<h2>Principales Libros del <small>Siglo de Oro</small></h2>
-			<div class="container">
-				<!-- <div class="embed-responsive embed-responsive-16by9">
-					<iframe class="embed-responsive-item" src="https://tinyurl.com/ybkwgll8" allowfullscreen></iframe>
-				</div> -->
-				<div class="libros" id="libros"></div>
-		</section>
+			<div class="libros" id="libros"></div>
+
 		<div class="nav-btn-container">
 			<button class="btn btn-light prev-btn">Prev</button>
 			<button class="btn btn-light next-btn">Next</button>
 		</div>
-		<a href="#" id="link" download="contenido.json">Descargar el contenido en JSON</a>
-	</div>
+			<a href="#" id="link" download="contenido.json">Descargar el contenido en JSON</a>
+		</div>
 
 		<!-- CONTENEDOR DE DATOS -->
 		<!-- <article id="cont">
