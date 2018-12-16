@@ -76,6 +76,7 @@ input { width:40%;}
 .portada{
 	width: 75px;
 	height: 100px;
+  padding: 1%;
 }
 .tarjeta{
   border: 1px solid #688797;

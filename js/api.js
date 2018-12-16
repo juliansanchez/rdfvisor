@@ -151,37 +151,43 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }
       }
 
-      var img, tit, titLink, aut, autLink,gen,genLink, fecha, desc;
+      var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc;
 
       for (var i = 0; i < elemento.length; i++) {
-        document.getElementById("libros").innerHTML += "<hr/><div class='card'>";
-        // console.log(elemento[i].image.value);
         if (elemento[i].image != null) {
-          document.getElementById("libros").innerHTML += "<img class='portada' src='"+data.results.bindings[i].image.value+"'>";
+          img = data.results.bindings[i].image.value;
         }
         if (elemento[i].bookText != null) {
-          document.getElementById("libros").innerHTML += "<h4><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
+          titLink=data.results.bindings[i].bookText.value;
+          tit=data.results.bindings[i].bookTextLabel.value;
         }
         if (elemento[i].autor != null) {
-          document.getElementById("libros").innerHTML += "<h5><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h5>";
+          autLink=data.results.bindings[i].autor.value;
+          aut=data.results.bindings[i].autorLabel.value
         }
         if (elemento[i].genre != null) {
-          document.getElementById("libros").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].genre.value+"'</a>"+MaysPrimera(data.results.bindings[i].genreLabel.value)+"</p>";
+          genLink=data.results.bindings[i].genre.value;
+          gen=MaysPrimera(data.results.bindings[i].genreLabel.value);
         }
         if (elemento[i].idioma != null) {
-          document.getElementById("libros").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].idioma.value+"'</a>"+MaysPrimera(data.results.bindings[i].idiomaLabel.value)+"</p>";
+          idiLink=data.results.bindings[i].idioma.value
+          idi=MaysPrimera(data.results.bindings[i].idiomaLabel.value);
         }
         if (elemento[i].fechaPublicado != null) {
           var fecha = data.results.bindings[i].fechaPublicado.value.split("-")
-          document.getElementById("libros").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
+          fec=fecha[0];
         }
         if (elemento[i].bookTextDescription != null) {
-          document.getElementById("libros").innerHTML += "<p><small>"+MaysPrimera(data.results.bindings[i].bookTextDescription.value)+"</small></p>";
+          desc=MaysPrimera(data.results.bindings[i].bookTextDescription.value);
         }
-        document.getElementById("libros").innerHTML += "</div><hr/>";
 
+        document.getElementById("libros").innerHTML +="<div class='card'><img class='portada'src='"+img+"'>";
+        document.getElementById("libros").innerHTML +="<h4><a target='_blank' href='"+titLink+"'</a>"+tit+"</h4>";
+        document.getElementById("libros").innerHTML +="<h5><a target='_blank' href='"+autLink+"'</a>"+aut+"</h5>";
+        document.getElementById("libros").innerHTML +="<p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p>";
+        document.getElementById("libros").innerHTML +="<p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>";
+        document.getElementById("libros").innerHTML +="<p>"+fec+"</p><p>"+desc+"</p></div>";
       }
-
     }
   });
 }
@@ -335,19 +341,3 @@ $(function() {
   });
 
 });
-
-
-
-
-
-
-
-
-
-// "<div class='card'><img class='portada' src='"+data.results.bindings[i].image.value+"<h4><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h4>"
-// "<h5><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h5>";
-// "<p><a target='_blank' href='"+data.results.bindings[i].genre.value+"'</a>"+MaysPrimera(data.results.bindings[i].genreLabel.value)+"</p>";
-// "<p><a target='_blank' href='"+data.results.bindings[i].idioma.value+"'</a>"+MaysPrimera(data.results.bindings[i].idiomaLabel.value)+"</p>";
-// "<p><small>"+fecha[0]+"</small></p>";
-// "<p><small>"+MaysPrimera(data.results.bindings[i].bookTextDescription.value)+"</small></p>";
-// "</div>";
