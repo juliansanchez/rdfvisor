@@ -54,6 +54,7 @@ function mostrarBasico(){
     document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>Descripción: "+MaysPrimera(itemDescription)+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>Movimiento Literario: <a href="+movement+" target='_blank'</a>"+MaysPrimera(movementLabel)+"</p>";
+    document.getElementById("vermas").innerHTML += "<a href="+article+" target='_blank'>Leer +</a>";
 
   });
 }
