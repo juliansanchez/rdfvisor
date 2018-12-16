@@ -105,8 +105,18 @@ input { width:40%;}
   margin: 0;
 }
 /* Add rounded corners to the top left and the top right corner of the image */
-img, iframe {
+.embed-responsive-item iframe{
+
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 5px 5px 5px 5px;
+  max-height: 400px;
+
 }
 
+
+/* AUTOR */
+.desAutor {
+  font-size: .8em;
+}
 /* PAGINACION WIKIPEDIA*/
