@@ -180,7 +180,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }else {
           bvmc = "";
         }
-        document.getElementById("libros").innerHTML +="<div class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+        document.getElementById("libros").innerHTML +="<div onclick='llamaLibro();'class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
         // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
@@ -188,7 +188,9 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
     }
   });
 }
-
+function llamaLibro(){
+  alert("llamaLibro");
+}
 
 function mostrarAutores(){
     var elemento = [];

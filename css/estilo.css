@@ -104,14 +104,12 @@ input { width:40%;}
   padding: 1%;
   margin: 0;
 }
-/* Add rounded corners to the top left and the top right corner of the image */
-.embed-responsive-item iframe{
-
+/* IFRAME */
+iframe{
   margin-left: auto;
   margin-right: auto;
-  border-radius: 5px 5px 5px 5px;
-  max-height: 400px;
-
+  padding: 0;
+  margin: 0;
 }
 
 
