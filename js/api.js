@@ -185,8 +185,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
       }
-
-
     }
   });
 }
@@ -326,10 +324,9 @@ $(function() {
           }
         }
         document.getElementById("cont").innerHTML += "</div>";
-      }else {
+      }else{
         $.alert({
         title: 'No se han encontrado resultados!!!',
-        content: 'Introduce un texto!',
         });
       }
       // vaciamos el array de libros
