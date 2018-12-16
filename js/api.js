@@ -61,45 +61,38 @@ function mostrarBasico(){
 /* Lista todos los libros */
 function mostrarLibros(){
     var elemento = [];
-  var endpointUrl = 'https://query.wikidata.org/sparql',
-    sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
-        "WHERE {\n" +
-        "  \n" +
-        "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicadoLabel .  } #libro de texto\n" +
-        "   UNION\n" +
-        "    {?bookText wdt:P31 wd:Q571 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #libro impreso\n" +
-        "   UNION\n" +
-        "    {?bookText wdt:P31 wd:Q8261 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #novela\n" +
-        "   UNION\n" +
-        "    {?bookText wdt:P31 wd:Q35760 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #ensayo #idioma de la obra spaña\n" +
-        "   UNION\n" +
-        "    {?bookText wdt:P31 wd:Q37484 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #poema épico\n" +
-        "   UNION\n" +
-        "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Q5364419\n" +
-        "  UNION\n" +
-        "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q5364419 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Español moderno\n" +
-        "   UNION\n" +
-        "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #play\n" +
-        "   UNION\n" +
-        "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1088025 . ?bookText wdt:P577 ?fechaPublicado .} #play español antiguo\n" +
-        "  UNION\n" +
-        "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q397 . ?bookText wdt:P577 ?fechaPublicado .} #play latin\n" +
-        "  \n" +
-        "  OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . ?bookText wdt:P50 ?autor . \n" +
-        "            ?bookText wdt:P136 ?genre . ?bookText wdt:P407 ?idioma . } \n" +
-        "\n" +
-        "\n" +
-        "  \n" +
-        "  #fecha del primer y último libro publicado\n" +
-        "  filter (?fechaPublicado > \"1492-01-01\"^^xsd:dateTime && ?fechaPublicado < \"1681-05-26\"^^xsd:dateTime) \n" +
-        "\n" +
-        "\n" +
-        "  \n" +
-        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
-        "}\n" +
-        "\n" +
-        "ORDER BY ASC(?bookTextLabel)\n" +
-        "",
+    var endpointUrl = 'https://query.wikidata.org/sparql',
+    	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel ?bvmc\n" +
+            "WHERE {  \n" +
+            "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicadoLabel .  } #libro de texto\n" +
+            "   UNION\n" +
+            "    {?bookText wdt:P31 wd:Q571 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #libro impreso\n" +
+            "   UNION\n" +
+            "    {?bookText wdt:P31 wd:Q8261 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #novela\n" +
+            "   UNION\n" +
+            "    {?bookText wdt:P31 wd:Q35760 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #ensayo #idioma de la obra spaña\n" +
+            "   UNION\n" +
+            "    {?bookText wdt:P31 wd:Q37484 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #poema épico\n" +
+            "   UNION\n" +
+            "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Q5364419\n" +
+            "  UNION\n" +
+            "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q5364419 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Español moderno\n" +
+            "   UNION\n" +
+            "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #play\n" +
+            "   UNION\n" +
+            "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1088025 . ?bookText wdt:P577 ?fechaPublicado .} #play español antiguo\n" +
+            "  UNION\n" +
+            "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q397 . ?bookText wdt:P577 ?fechaPublicado .} #play latin\n" +
+            "  \n" +
+            "OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . \n" +
+            "          ?bookText wdt:P50 ?autor . ?bookText wdt:P136 ?genre . ?bookText wdt:P407 ?idioma . ?bookText wdt:P3976 ?bvmc}\n" +
+            "  \n" +
+            "  #fecha del primer y último libro publicado\n" +
+            "  filter (?fechaPublicado > \"1492-01-01\"^^xsd:dateTime && ?fechaPublicado < \"1681-05-26\"^^xsd:dateTime)  \n" +
+            "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
+            "}\n" +
+            "ORDER BY ASC(?bookTextLabel)\n" +
+            "";
     settings = {
         headers: { Accept: 'application/sparql-results+json' },
         data: { query: sparqlQuery }
@@ -151,12 +144,12 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }
       }
 
-      var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc;
-
+      var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
       for (var i = 0; i < elemento.length; i++) {
         if (elemento[i].image != null) {
-          console.log();
           img = elemento[i].image.value;
+        }else {
+          img="img/default.png";
         }
         if (elemento[i].bookText != null) {
           titLink=elemento[i].bookText.value;
@@ -181,9 +174,15 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         if (elemento[i].bookTextDescription != null) {
           desc=MaysPrimera(elemento[i].bookTextDescription.value);
         }
-        document.getElementById("libros").innerHTML +="<div class='col-md-2 card'><img src='"+img+"'><h5><a target='_blank' href='"+titLink+"'</a>"+tit+"</h5><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p><p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p></div>";
+        if (elemento[i].bvmc != null) {
+          bvmc=elemento[i].bvmc.value;
+        }else {
+          bvmc = "";
+        }
+        document.getElementById("libros").innerHTML +="<div class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
+        // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
       }
     }
   });
@@ -276,7 +275,6 @@ $(function() {
               for (var j in data.results.bindings[i]) {
                 if (data.results.bindings[i][j] != null) {
                   // console.log("dato "+i+" j: "+j+"...."+data.results.bindings[i][j].value);
-
                   if (j == "bookTextLabel" && data.results.bindings[i].bookTextLabel.value.toUpperCase().includes(searchTermAutorMAY)
                       || j == "autorLabel" && data.results.bindings[i].autorLabel.value.toUpperCase().includes(searchTermAutorMAY)) {
                         elemento.push(data.results.bindings[i]);
@@ -291,42 +289,82 @@ $(function() {
       // console.log(elemento);
       document.getElementById("cont").innerHTML += "<h4>Resultados <span style='font-weight:bold'>"+elemento.length+"</span></h4>";
       if (elemento.length > 0) {
-        for (var i in elemento) {
-          document.getElementById("cont").innerHTML += "<div class='tarjeta'>";
-          for (var j in elemento[i]) {
-            // console.log(elemento[i]);
-            if (j=="image" && elemento[i].image != null) {
-              document.getElementById("cont").innerHTML += "<img class='portada' src='"+elemento[i].image.value+"'</img>";
-            }else if (j=="image" && elemento[i].image.value == null) {
-              console.log("SIN IMAGEN");
-              document.getElementById("cont").innerHTML += "<img class='portada' src='img/default.png'</img>";
-            }
-            if (j=="bookText" && elemento[i].bookText != null) {
-              document.getElementById("cont").innerHTML += "<h3><a target='_blank' href='"+elemento[i].bookText.value+"'</a>"+elemento[i].bookTextLabel.value+"</h3>";
-            }
-            if (j=="autor" && elemento[i].autor != null) {
-              document.getElementById("cont").innerHTML += "<h4><a target='_blank' href='"+elemento[i].autor.value+"'</a>"+elemento[i].autorLabel.value+"</h4>";
-            }
-            if (j=="genre" && elemento[i].genre != null) {
-              document.getElementById("cont").innerHTML += "<p><a target='_blank' href='"+elemento[i].genre.value+"'</a>"+MaysPrimera(elemento[i].genreLabel.value)+"</p>";
-            }
-            if (j=="idioma" && elemento[i].idioma != null) {
-              document.getElementById("cont").innerHTML += "<p><a target='_blank' href='"+elemento[i].idioma.value+"'</a>"+MaysPrimera(elemento[i].idiomaLabel.value)+"</p>";
-            }
-            if (j=="fechaPublicado" && elemento[i].fechaPublicado != null) {
-              var fecha = elemento[i].fechaPublicado.value.split("-")
-              document.getElementById("cont").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
-            }
-            if (j=="bookTextDescription" && elemento[i].bookTextDescription != null) {
-              document.getElementById("cont").innerHTML += "<p><small>"+MaysPrimera(elemento[i].bookTextDescription.value)+"</small></p>";
-            }
-
+        // for (var i in elemento) {
+        //   document.getElementById("cont").innerHTML += "<div class='tarjeta'>";
+        //   for (var j in elemento[i]) {
+        //     // console.log(elemento[i]);
+        //     if (j=="image" && elemento[i].image != null) {
+        //       document.getElementById("cont").innerHTML += "<img class='portada' src='"+elemento[i].image.value+"'</img>";
+        //     }else if (j=="image" && elemento[i].image.value == null) {
+        //       console.log("SIN IMAGEN");
+        //       document.getElementById("cont").innerHTML += "<img class='portada' src='img/default.png'</img>";
+        //     }
+        //     if (j=="bookText" && elemento[i].bookText != null) {
+        //       document.getElementById("cont").innerHTML += "<h3><a target='_blank' href='"+elemento[i].bookText.value+"'</a>"+elemento[i].bookTextLabel.value+"</h3>";
+        //     }
+        //     if (j=="autor" && elemento[i].autor != null) {
+        //       document.getElementById("cont").innerHTML += "<h4><a target='_blank' href='"+elemento[i].autor.value+"'</a>"+elemento[i].autorLabel.value+"</h4>";
+        //     }
+        //     if (j=="genre" && elemento[i].genre != null) {
+        //       document.getElementById("cont").innerHTML += "<p><a target='_blank' href='"+elemento[i].genre.value+"'</a>"+MaysPrimera(elemento[i].genreLabel.value)+"</p>";
+        //     }
+        //     if (j=="idioma" && elemento[i].idioma != null) {
+        //       document.getElementById("cont").innerHTML += "<p><a target='_blank' href='"+elemento[i].idioma.value+"'</a>"+MaysPrimera(elemento[i].idiomaLabel.value)+"</p>";
+        //     }
+        //     if (j=="fechaPublicado" && elemento[i].fechaPublicado != null) {
+        //       var fecha = elemento[i].fechaPublicado.value.split("-")
+        //       document.getElementById("cont").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
+        //     }
+        //     if (j=="bookTextDescription" && elemento[i].bookTextDescription != null) {
+        //       document.getElementById("cont").innerHTML += "<p><small>"+MaysPrimera(elemento[i].bookTextDescription.value)+"</small></p>";
+        //     }
+        //
+        //   }
+        // }
+        var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
+        for (var i = 0; i < elemento.length; i++) {
+          if (elemento[i].image != null) {
+            img = elemento[i].image.value;
+          }else {
+            img="img/default.png";
           }
+          if (elemento[i].bookText != null) {
+            titLink=elemento[i].bookText.value;
+            tit=elemento[i].bookTextLabel.value;
+          }
+          if (elemento[i].autor != null) {
+            autLink=elemento[i].autor.value;
+            aut=elemento[i].autorLabel.value
+          }
+          if (elemento[i].genre != null) {
+            genLink=elemento[i].genre.value;
+            gen=MaysPrimera(elemento[i].genreLabel.value);
+          }
+          if (elemento[i].idioma != null) {
+            idiLink=elemento[i].idioma.value
+            idi=MaysPrimera(elemento[i].idiomaLabel.value);
+          }
+          if (elemento[i].fechaPublicado != null) {
+            var fecha = elemento[i].fechaPublicado.value.split("-")
+            fec=fecha[0];
+          }
+          if (elemento[i].bookTextDescription != null) {
+            desc=MaysPrimera(elemento[i].bookTextDescription.value);
+          }
+          if (elemento[i].bvmc != null) {
+            bvmc=elemento[i].bvmc.value;
+          }else {
+            bvmc = "";
+          }
+          document.getElementById("cont").innerHTML +="<div class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+          // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
+          // <p>"+desc+"</p>
+          // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
         }
-        document.getElementById("cont").innerHTML += "</div>";
       }else{
         $.alert({
         title: 'No se han encontrado resultados!!!',
+        content: '',
         });
       }
       // vaciamos el array de libros

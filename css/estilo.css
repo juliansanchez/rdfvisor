@@ -86,28 +86,27 @@ input { width:40%;}
   display:block;
   margin-left: auto;
   margin-right: auto;
-
 }
 .card img{
   height: 60px;
+  width: 40px;
   padding: 1%;
-  display: flex;
+  display: center;
 }
 
 .libros div{
   margin-left: auto;
   margin-right: auto;
-  display: block;
+  display: inline-block;
 }
 .libros p{
-  font-size: .8em;
+  font-size: .7em;
   padding: 1%;
   margin: 0;
 }
-
 /* Add rounded corners to the top left and the top right corner of the image */
-img {
-  border-radius: 5px 5px 2px 2px;
+img, iframe {
+  border-radius: 5px 5px 5px 5px;
 }
 
 /* PAGINACION WIKIPEDIA*/
