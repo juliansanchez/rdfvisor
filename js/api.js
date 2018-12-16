@@ -155,35 +155,35 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
 
       for (var i = 0; i < elemento.length; i++) {
         if (elemento[i].image != null) {
-          img = data.results.bindings[i].image.value;
+          console.log();
+          img = elemento[i].image.value;
         }
         if (elemento[i].bookText != null) {
-          titLink=data.results.bindings[i].bookText.value;
-          tit=data.results.bindings[i].bookTextLabel.value;
+          titLink=elemento[i].bookText.value;
+          tit=elemento[i].bookTextLabel.value;
         }
         if (elemento[i].autor != null) {
-          autLink=data.results.bindings[i].autor.value;
-          aut=data.results.bindings[i].autorLabel.value
+          autLink=elemento[i].autor.value;
+          aut=elemento[i].autorLabel.value
         }
         if (elemento[i].genre != null) {
-          genLink=data.results.bindings[i].genre.value;
-          gen=MaysPrimera(data.results.bindings[i].genreLabel.value);
+          genLink=elemento[i].genre.value;
+          gen=MaysPrimera(elemento[i].genreLabel.value);
         }
         if (elemento[i].idioma != null) {
-          idiLink=data.results.bindings[i].idioma.value
-          idi=MaysPrimera(data.results.bindings[i].idiomaLabel.value);
+          idiLink=elemento[i].idioma.value
+          idi=MaysPrimera(elemento[i].idiomaLabel.value);
         }
         if (elemento[i].fechaPublicado != null) {
-          var fecha = data.results.bindings[i].fechaPublicado.value.split("-")
+          var fecha = elemento[i].fechaPublicado.value.split("-")
           fec=fecha[0];
         }
         if (elemento[i].bookTextDescription != null) {
-          desc=MaysPrimera(data.results.bindings[i].bookTextDescription.value);
+          desc=MaysPrimera(elemento[i].bookTextDescription.value);
         }
-
-        document.getElementById("libros").innerHTML +="<div class='col-md-4 card'><img class='portada'src='"+img+"'><h4><a target='_blank' href='"+titLink+"'</a>"+tit+"</h4><h5><a target='_blank' href='"+autLink+"'</a>"+aut+"</h5><p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p><p>"+fec+"</p><p>"+desc+"</p></div>";
-
-
+        document.getElementById("libros").innerHTML +="<div class='col-md-2 card'><img src='"+img+"'><h5><a target='_blank' href='"+titLink+"'</a>"+tit+"</h5><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p><p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p></div>";
+        // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
+        // <p>"+desc+"</p>
       }
 
 
