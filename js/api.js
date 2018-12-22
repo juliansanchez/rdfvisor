@@ -1,6 +1,9 @@
 
 var portada="img/default.png";
 var dataJSON;
+// varables para LIBRO
+var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
+
 /* Primera letra en Mayusculas */
 function MaysPrimera(string){
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -107,7 +110,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
       var str = JSON.stringify(data);
       // console.log(str);
       dataJSON=str;
-
       for (var i in data.results.bindings) {
         // console.log(data.results.bindings[i]);
         if (data.results.bindings[i] != null) {
@@ -145,7 +147,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }
       }
 
-      var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
       for (var i = 0; i < elemento.length; i++) {
         if (elemento[i].image != null) {
           img = elemento[i].image.value;
@@ -180,7 +181,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }else {
           bvmc = "";
         }
-        document.getElementById("libros").innerHTML +="<div onclick='llamaLibro();'class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+        document.getElementById("libros").innerHTML +="<div onclick='llamaLibro(this);'class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' class='link' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
         // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
@@ -188,8 +189,15 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
     }
   });
 }
-function llamaLibro(){
-  alert("llamaLibro");
+function llamaLibro(tit){
+  console.log("llamaLibro");
+  var time = $(tit).find('.link').text();
+  console.log(time);
+
+
+
+
+
 }
 
 function mostrarAutores(){
@@ -279,8 +287,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
     }
   });
 }
-
-
 /* FILTRO POR GENERO */
 function ShowSelected(){
 /* Para obtener el valor */
