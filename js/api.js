@@ -1,6 +1,11 @@
 
 var portada="img/default.png";
 var dataJSON;
+// varables para LIBRO
+var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
+var page = 1;
+var pageLimit=12;
+var total;
 /* Primera letra en Mayusculas */
 function MaysPrimera(string){
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -59,11 +64,36 @@ function mostrarBasico(){
   });
 }
 
+function pageLess() {
+  page = page-12;
+  if (page = 0){
+    page = 1;
+  }
+
+  console.log(page);
+  mostrarLibros();
+}
+function pageMore(){
+  page = page+12;
+  console.log(page);
+  if (total > 0) {
+    mostrarLibros();
+  }else {
+    $.alert({
+    title: 'No hay mas resultados!',
+    content: 'Estamos ampliando nuestras referencias!',
+    });
+    page=1;
+    mostrarLibros();
+  }
+
+}
 /* Lista todos los libros */
 function mostrarLibros(){
+  document.getElementById("libros").innerHTML="";
     var elemento = [];
     var endpointUrl = 'https://query.wikidata.org/sparql',
-    	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel ?bvmc\n" +
+    	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
             "WHERE {  \n" +
             "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicadoLabel .  } #libro de texto\n" +
             "   UNION\n" +
@@ -85,19 +115,22 @@ function mostrarLibros(){
             "  UNION\n" +
             "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q397 . ?bookText wdt:P577 ?fechaPublicado .} #play latin\n" +
             "  \n" +
-            "OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . \n" +
-            "          ?bookText wdt:P50 ?autor . ?bookText wdt:P136 ?genre . ?bookText wdt:P407 ?idioma . ?bookText wdt:P3976 ?bvmc}\n" +
-            "  \n" +
+            "OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . ?bookText wdt:P50 ?autor . ?bookText wdt:P136 ?genre . ?bookText wdt:P407 ?idioma . } \n" +
             "  #fecha del primer y último libro publicado\n" +
             "  filter (?fechaPublicado > \"1492-01-01\"^^xsd:dateTime && ?fechaPublicado < \"1681-05-26\"^^xsd:dateTime)  \n" +
             "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
             "}\n" +
             "ORDER BY ASC(?bookTextLabel)\n" +
+            "OFFSET "+page+"\n" +
+            "LIMIT "+pageLimit+"\n" +
+            "\n" +
             "";
     settings = {
         headers: { Accept: 'application/sparql-results+json' },
-        data: { query: sparqlQuery }
+        data: { query: sparqlQuery},
+
     };
+
 
 $.ajax( endpointUrl, settings ).then( function ( data ) {
 
@@ -107,45 +140,15 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
       var str = JSON.stringify(data);
       // console.log(str);
       dataJSON=str;
-
       for (var i in data.results.bindings) {
         // console.log(data.results.bindings[i]);
         if (data.results.bindings[i] != null) {
           elemento.push(data.results.bindings[i]);
-          // for (var j in data.results.bindings[i]) {
-          //   if (data.results.bindings[i][j] != null) {
-          //     // console.log("elemento I: "+data.results.bindings[i]);
-          //     // console.log("J: "+j+"Valor: "+data.results.bindings[i][j].value);
-          //
-          //     if (j=="image" && data.results.bindings[i].image != null) {
-          //       document.getElementById("img").innerHTML += "<img class='portada' src='"+data.results.bindings[i].image.value+"'>";
-          //     }
-          //
-          //     if (j=="bookText" && data.results.bindings[i].bookText != null) {
-          //       document.getElementById("tit").innerHTML += "<h4><a target='_blank' href='"+data.results.bindings[i].bookText.value+"'</a>"+data.results.bindings[i].bookTextLabel.value+"</h4>";
-          //     }
-          //     if (j=="autor" && data.results.bindings[i].autor != null) {
-          //       document.getElementById("aut").innerHTML += "<h5><a target='_blank' href='"+data.results.bindings[i].autor.value+"'</a>"+data.results.bindings[i].autorLabel.value+"</h5>";
-          //     }
-          //     if (j=="genre" && data.results.bindings[i].genre != null) {
-          //       document.getElementById("gen").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].genre.value+"'</a>"+MaysPrimera(data.results.bindings[i].genreLabel.value)+"</p>";
-          //     }
-          //     if (j=="idioma" && data.results.bindings[i].idioma != null) {
-          //       document.getElementById("idi").innerHTML += "<p><a target='_blank' href='"+data.results.bindings[i].idioma.value+"'</a>"+MaysPrimera(data.results.bindings[i].idiomaLabel.value)+"</p>";
-          //     }
-          //     if (j=="fechaPublicado" && data.results.bindings[i].fechaPublicado != null) {
-          //       var fecha = data.results.bindings[i].fechaPublicado.value.split("-")
-          //       document.getElementById("fech").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
-          //     }
-          //     if (j=="bookTextDescription" && data.results.bindings[i].bookTextDescription != null) {
-          //       document.getElementById("desc").innerHTML += "<p><small>"+MaysPrimera(data.results.bindings[i].bookTextDescription.value)+"</small></p>";
-          //     }
-          //   }
-          // }
         }
       }
+      total = elemento.length;
+      console.log("total "+total);
 
-      var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
       for (var i = 0; i < elemento.length; i++) {
         if (elemento[i].image != null) {
           img = elemento[i].image.value;
@@ -180,15 +183,21 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }else {
           bvmc = "";
         }
-        document.getElementById("libros").innerHTML +="<div class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+        document.getElementById("libros").innerHTML +="<div onclick='llamaLibro(this);'class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' class='link' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
         // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
+        document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
       }
     }
   });
 }
+function llamaLibro(tit){
+  console.log("llamaLibro");
+  var time = $(tit).find('.link').text();
+  console.log(time);
 
+}
 
 function mostrarAutores(){
     var elemento = [];
@@ -277,8 +286,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
     }
   });
 }
-
-
 /* FILTRO POR GENERO */
 function ShowSelected(){
 /* Para obtener el valor */
@@ -371,38 +378,6 @@ $(function() {
       // console.log(elemento);
       document.getElementById("cont").innerHTML += "<h4>Resultados <span style='font-weight:bold'>"+elemento.length+"</span></h4>";
       if (elemento.length > 0) {
-        // for (var i in elemento) {
-        //   document.getElementById("cont").innerHTML += "<div class='tarjeta'>";
-        //   for (var j in elemento[i]) {
-        //     // console.log(elemento[i]);
-        //     if (j=="image" && elemento[i].image != null) {
-        //       document.getElementById("cont").innerHTML += "<img class='portada' src='"+elemento[i].image.value+"'</img>";
-        //     }else if (j=="image" && elemento[i].image.value == null) {
-        //       console.log("SIN IMAGEN");
-        //       document.getElementById("cont").innerHTML += "<img class='portada' src='img/default.png'</img>";
-        //     }
-        //     if (j=="bookText" && elemento[i].bookText != null) {
-        //       document.getElementById("cont").innerHTML += "<h3><a target='_blank' href='"+elemento[i].bookText.value+"'</a>"+elemento[i].bookTextLabel.value+"</h3>";
-        //     }
-        //     if (j=="autor" && elemento[i].autor != null) {
-        //       document.getElementById("cont").innerHTML += "<h4><a target='_blank' href='"+elemento[i].autor.value+"'</a>"+elemento[i].autorLabel.value+"</h4>";
-        //     }
-        //     if (j=="genre" && elemento[i].genre != null) {
-        //       document.getElementById("cont").innerHTML += "<p><a target='_blank' href='"+elemento[i].genre.value+"'</a>"+MaysPrimera(elemento[i].genreLabel.value)+"</p>";
-        //     }
-        //     if (j=="idioma" && elemento[i].idioma != null) {
-        //       document.getElementById("cont").innerHTML += "<p><a target='_blank' href='"+elemento[i].idioma.value+"'</a>"+MaysPrimera(elemento[i].idiomaLabel.value)+"</p>";
-        //     }
-        //     if (j=="fechaPublicado" && elemento[i].fechaPublicado != null) {
-        //       var fecha = elemento[i].fechaPublicado.value.split("-")
-        //       document.getElementById("cont").innerHTML += "<p><small>"+fecha[0]+"</small></p>";
-        //     }
-        //     if (j=="bookTextDescription" && elemento[i].bookTextDescription != null) {
-        //       document.getElementById("cont").innerHTML += "<p><small>"+MaysPrimera(elemento[i].bookTextDescription.value)+"</small></p>";
-        //     }
-        //
-        //   }
-        // }
         var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
         for (var i = 0; i < elemento.length; i++) {
           if (elemento[i].image != null) {
@@ -455,5 +430,4 @@ $(function() {
       }
     });
   });
-
 });

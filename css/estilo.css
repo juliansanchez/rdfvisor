@@ -82,6 +82,7 @@ input { width:40%;}
   max-height: 175px;
   overflow: hidden;
   max-width: 150px;
+  min-width: 150px;
   text-align: center;
   display:block;
   margin-left: auto;
@@ -104,19 +105,22 @@ input { width:40%;}
   padding: 1%;
   margin: 0;
 }
-/* Add rounded corners to the top left and the top right corner of the image */
-.embed-responsive-item iframe{
-
+/* IFRAME */
+iframe{
   margin-left: auto;
   margin-right: auto;
-  border-radius: 5px 5px 5px 5px;
-  max-height: 400px;
-
+  padding: 0;
+  margin: 0;
+  /* overflow: hidden; */
+  /* max-height: 450px; */
 }
-
-
 /* AUTOR */
 .desAutor {
   font-size: .8em;
+}
+.autores{
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
 }
 /* PAGINACION WIKIPEDIA*/

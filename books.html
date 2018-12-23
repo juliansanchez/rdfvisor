@@ -44,19 +44,24 @@
 			</nav>
 		</header>
 		<!-- CONTENEDOR DE DATOS -->
+		<h2>Principales Libros del <small>Siglo de Oro</small></h2>
+
 		<div class="embed-responsive embed-responsive-16by9">
-			<iframe class="embed-responsive-item" src="https://tinyurl.com/ybkwgll8" allowfullscreen></iframe>
+			<!-- <iframe class="embed-responsive-item" src="https://tinyurl.com/ybkwgll8" allowfullscreen></iframe> -->
 		</div>
 		<div class="container">
-			<h2>Principales Libros del <small>Siglo de Oro</small></h2>
+
 			<div class="libros" id="libros"></div>
 
+		</div>
+		<a href="#" id="link" download="contenido.json">Descargar JSON</a>
 		<div class="nav-btn-container">
-			<button class="btn btn-light prev-btn">Prev</button>
-			<button class="btn btn-light next-btn">Next</button>
+			<p id="pagina"></p>
+			<button onclick="pageLess();"class="btn btn-light prev-btn">Prev</button>
+			<button onclick="pageMore();" class="btn btn-light next-btn">Next</button>
+
 		</div>
-			<a href="#" id="link" download="contenido.json">Descargar JSON</a>
-		</div>
+
 
 		<!-- CONTENEDOR DE DATOS -->
 		<!-- <article id="cont">
