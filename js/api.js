@@ -69,15 +69,15 @@ function pageLess() {
   if (page = 0){
     page = 1;
   }
-
-  console.log(page);
+  console.log("resultados por page: "+page);
   mostrarLibros();
 }
 function pageMore(){
   page = page+12;
-  console.log(page);
   if (total > 0) {
     mostrarLibros();
+    console.log("resultados por pageMore: "+page);
+
   }else {
     $.alert({
     title: 'No hay mas resultados!',
@@ -196,7 +196,6 @@ function llamaLibro(tit){
   console.log("llamaLibro");
   var time = $(tit).find('.link').text();
   console.log(time);
-
 }
 
 function mostrarAutores(){
