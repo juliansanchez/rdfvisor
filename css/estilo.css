@@ -111,8 +111,8 @@ iframe{
   margin-right: auto;
   padding: 0;
   margin: 0;
-  overflow: hidden;
-  max-height: 450px;
+  /* overflow: hidden; */
+  /* max-height: 450px; */
 }
 /* AUTOR */
 .desAutor {
