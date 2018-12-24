@@ -10,7 +10,7 @@ var total=0;
 /* Primera letra en Mayusculas */
 function MaysPrimera(string){
   if (string != null) {
-    return string.charAt(0).toUpperCase() + string.slice(1);    
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
 
@@ -66,7 +66,6 @@ function mostrarBasico(){
 
   });
 }
-
 function pageLess() {
   page = page-12;
   if (page = 0){
@@ -177,7 +176,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }else {
           bvmc = "";
         }
-        document.getElementById("libros").innerHTML +="<div onclick='llamaLibro(this);'class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' class='link' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+        document.getElementById("libros").innerHTML +="<div onclick='llamaLibro(this);'class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' class='link' href='"+tit+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
         // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
@@ -190,7 +189,75 @@ function llamaLibro(tit){
   console.log("llamaLibro");
   var time = $(tit).find('.link').text();
   console.log(time);
+  buscaLibro(time);
 }
+
+function buscaLibro(name){
+      var elemento = [];
+      var endpointUrl = 'https://query.wikidata.org/sparql',
+      	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel\n" +
+              "WHERE {  \n" +
+              "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicadoLabel .  } #libro de texto\n" +
+              "   UNION\n" +
+              "    {?bookText wdt:P31 wd:Q571 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #libro impreso\n" +
+              "   UNION\n" +
+              "    {?bookText wdt:P31 wd:Q8261 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #novela\n" +
+              "   UNION\n" +
+              "    {?bookText wdt:P31 wd:Q35760 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #ensayo #idioma de la obra spaña\n" +
+              "   UNION\n" +
+              "    {?bookText wdt:P31 wd:Q37484 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #poema épico\n" +
+              "   UNION\n" +
+              "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Q5364419\n" +
+              "  UNION\n" +
+              "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q5364419 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Español moderno\n" +
+              "   UNION\n" +
+              "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #play\n" +
+              "   UNION\n" +
+              "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1088025 . ?bookText wdt:P577 ?fechaPublicado .} #play español antiguo\n" +
+              "  UNION\n" +
+              "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q397 . ?bookText wdt:P577 ?fechaPublicado .} #play latin\n" +
+              "  \n" +
+              "OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . ?bookText wdt:P50 ?autor . ?bookText wdt:P136 ?genre . ?bookText wdt:P407 ?idioma . } \n" +
+              "  #fecha del primer y último libro publicado\n" +
+              "  filter (?fechaPublicado > \"1492-01-01\"^^xsd:dateTime && ?fechaPublicado < \"1681-05-26\"^^xsd:dateTime)  \n" +
+              "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
+              "}\n" +
+              "ORDER BY ASC(?bookTextLabel)\n" +
+              "\n" +
+              "";
+      settings = {
+          headers: { Accept: 'application/sparql-results+json' },
+          data: { query: sparqlQuery},
+        };
+
+  $.ajax( endpointUrl, settings ).then( function ( data ) {
+      if (data.results.bindings != null) {
+        for (var i in data.results.bindings) {
+          if (data.results.bindings[i] != null) {
+            elemento.push(data.results.bindings[i]);
+          }
+        }
+
+        for (var i = 0; i < elemento.length; i++) {
+
+          if (elemento[i].bookTextLabel.value == name) {
+            console.log("Eureka");
+            console.log(elemento[i]);
+            $.alert({
+            title: elemento[i].bookTextLabel.value,
+            content:elemento[i].bookTextDescription.value,
+            });
+
+
+
+          }
+        }
+      }
+    });
+  }
+
+
+
 
 function pageMenos() {
   page = page-12;
@@ -334,7 +401,7 @@ $(function() {
   });
 
   $("#searchAutor").on("click", function() {
-    document.getElementById("cont").innerHTML = "";
+    document.getElementById("libros").innerHTML = "";
     var searchTermAutor = $("#searchTermAutor").val();
     var searchTermAutorMAY= searchTermAutor.toUpperCase();
     var endpointUrl = 'https://query.wikidata.org/sparql',
@@ -398,7 +465,7 @@ $(function() {
       }
       // MOSTRAOS INFO de los libros resultantes
       // console.log(elemento);
-      document.getElementById("cont").innerHTML += "<h4>Resultados <span style='font-weight:bold'>"+elemento.length+"</span></h4>";
+      document.getElementById("libros").innerHTML += "<h4>Resultados <span style='font-weight:bold'>"+elemento.length+"</span></h4>";
       if (elemento.length > 0) {
         var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
         for (var i = 0; i < elemento.length; i++) {
@@ -435,7 +502,7 @@ $(function() {
           }else {
             bvmc = "";
           }
-          document.getElementById("cont").innerHTML +="<div class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+          document.getElementById("libros").innerHTML +="<div class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
           // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
           // <p>"+desc+"</p>
           // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
@@ -445,6 +512,7 @@ $(function() {
         title: 'No se han encontrado resultados!!!',
         content: '',
         });
+        mostrarLibros()
       }
       // vaciamos el array de libros
       while (elemento.length >0) {

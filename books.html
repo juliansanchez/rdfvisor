@@ -34,7 +34,7 @@
 			      <ul class="nav navbar-nav">
 							<li><a href="index.html">HOME</a></li>
 			        <li><a href="authors.html">Autores</a></li>
-							<li><a href="#">Libros</a></li>
+							<li><a href="books.html">Libros</a></li>
 							<li><a href="buscador.html">Buscador</a></li>
 							<li><a href="wikipedia.html">Wikipedia</a></li>
 							<li><a href="lector.html">XML-JSON-RDF</a></li>
@@ -43,12 +43,26 @@
 			  </div><!-- /.container-fluid -->
 			</nav>
 		</header>
+		<!-- BUSCADOR  -->
+		<div class="row">
+			<div class="col-md-8">
+				<form class="form-inline">
+					<input id="searchTermAutor" name="search" class="form-control mr-sm-2" placeholder="Título o autor" aria-label="Search">
+					<button id='searchAutor' class="btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button>
+					<select class="form-control" id="producto" onchange="ShowSelected();" name="producto">
+						<option>Genero</option>
+						<option value="novela">Novela</option>
+						<option value="picaresca">Picaresca</option>
+						<option value="poesia">Poesía</option>
+						<option value="caballeresca">Novela Caballeresca</option>
+					</select>
+				</form>
+			</div>
+		</div>
 		<!-- CONTENEDOR DE DATOS -->
 		<h2>Principales Libros del <small>Siglo de Oro</small></h2>
-		<div class="embed-responsive embed-responsive-16by9">
-			<iframe class="embed-responsive-item" src="https://tinyurl.com/ybkwgll8" allowfullscreen></iframe>
-		</div>
 		<div class="container">
+			<div class="popUp" id="popUp"></div>
 			<div class="libros" id="libros"></div>
 		</div>
 		<a href="#" id="link" download="contenido.json">Descargar JSON</a>
@@ -56,6 +70,9 @@
 			<span id="pagina"></span>
 			<button onclick="pageLess();"class="btn btn-light prev-btn">Prev</button>
 			<button onclick="pageMore();" class="btn btn-light next-btn">Next</button>
+		</div>
+		<div class="embed-responsive embed-responsive-16by9">
+			<iframe class="embed-responsive-item" src="https://tinyurl.com/ybkwgll8" allowfullscreen></iframe>
 		</div>
 	<!-- Footer -->
 	<footer class="page-footer font-small blue">
