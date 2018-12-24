@@ -13,7 +13,6 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 		<!-- Cargar leer archivos -->
-		<!-- <script type="text/javascript" src="js/funciones.js"></script> -->
 		<!-- API -->
 		<script type="text/javascript" src="js/api.js"></script>
 		<!--ESTILOS -->
@@ -45,12 +44,6 @@
 							<li><a href="wikipedia.html">Wikipedia</a></li>
 							<li><a href="lector.html">XML-JSON-RDF</a></li>
 			      </ul>
-			      <!-- <ul class="nav navbar-nav navbar-right">
-							<form class="form-inline">
-						    <input id="searchTerm" name="search" class="form-control mr-sm-2" placeholder="Buscar en Wikipedia" aria-label="Search">
-						    <button id='search' class="btn btn-outline-success my-2 my-sm-0" type="button">Wikipedia</button>
-			  			</form>
-			      </ul> -->
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 			</nav>
@@ -60,23 +53,19 @@
 		<!-- CONTENEDOR DE DATOS -->
 		<section id="principal">
 			<h2>Principales Autores del <small>Siglo de Oro</small></h2>
-			<div class="embed-responsive embed-responsive-16by9">
-				<iframe class="embed-responsive-item" src="https://tinyurl.com/ybhbua5d" allowfullscreen></iframe>
-			</div>
 			<div class="container">
+				<span id="pagina"></span>
+				<div class="nav-btn-container">
+					<button onclick="pageMenos();" class="btn btn-light prev-btn">Prev</button>
+					<button onclick="pageMas();" class="btn btn-light next-btn">Next</button>
+				</div>
 				<div id="autores" class="autores"></div>
 			</div>
 			<a href="#" id="link" download="contenido.json">Descargar JSON</a>
-			<div class="nav-btn-container">
-				<button class="btn btn-light prev-btn">Prev</button>
-				<button class="btn btn-light next-btn">Next</button>
-			</div>
 		</section>
-
-		<!-- CONTENEDOR DE DATOS -->
-		<!-- <article id="cont">
-			<h3>Resultados de búsqueda<small>Wikipedia</small></h3>
-		</article> -->
+		<div class="embed-responsive embed-responsive-16by9">
+			<iframe class="embed-responsive-item" src="https://tinyurl.com/ybhbua5d" allowfullscreen></iframe>
+		</div>
 	<!-- Footer -->
 	<footer class="page-footer font-small blue">
 	  <!-- Copyright -->
