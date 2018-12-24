@@ -5,10 +5,13 @@ var dataJSON;
 var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
 var page = 1;
 var pageLimit=12;
-var total;
+var total=0;
+
 /* Primera letra en Mayusculas */
 function MaysPrimera(string){
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  if (string != null) {
+    return string.charAt(0).toUpperCase() + string.slice(1);    
+  }
 }
 
 // window.onload = function() {
@@ -69,7 +72,7 @@ function pageLess() {
   if (page = 0){
     page = 1;
   }
-  console.log("resultados por page: "+page);
+  console.log("pageLess: "+page);
   mostrarLibros();
 }
 function pageMore(){
@@ -77,16 +80,14 @@ function pageMore(){
   if (total > 0) {
     mostrarLibros();
     console.log("resultados por pageMore: "+page);
-
-  }else {
+    }else {
     $.alert({
     title: 'No hay mas resultados!',
     content: 'Estamos ampliando nuestras referencias!',
     });
     page=1;
     mostrarLibros();
-  }
-
+    }
 }
 /* Lista todos los libros */
 function mostrarLibros(){
@@ -128,26 +129,19 @@ function mostrarLibros(){
     settings = {
         headers: { Accept: 'application/sparql-results+json' },
         data: { query: sparqlQuery},
-
-    };
-
+      };
 
 $.ajax( endpointUrl, settings ).then( function ( data ) {
-
     if (data.results.bindings != null) {
-      // console.log(data);
-      // console.log(typeof(data));
       var str = JSON.stringify(data);
-      // console.log(str);
       dataJSON=str;
       for (var i in data.results.bindings) {
-        // console.log(data.results.bindings[i]);
         if (data.results.bindings[i] != null) {
           elemento.push(data.results.bindings[i]);
         }
       }
       total = elemento.length;
-      console.log("total "+total);
+      console.log("total libros: "+total);
 
       for (var i = 0; i < elemento.length; i++) {
         if (elemento[i].image != null) {
@@ -198,7 +192,32 @@ function llamaLibro(tit){
   console.log(time);
 }
 
+function pageMenos() {
+  page = page-12;
+  if (page = 0){
+    page = 1;
+  }
+  console.log("pageLess: "+page);
+  mostrarAutores();
+}
+
+function pageMas(){
+  page = page+12;
+  if (total > 0) {
+    mostrarAutores();
+    console.log("resultados por pageMore: "+page);
+  }else {
+    $.alert({
+    title: 'No hay mas resultados!',
+    content: 'Estamos ampliando nuestras referencias!',
+    });
+    page=1;
+    mostrarAutores();
+  }
+}
+
 function mostrarAutores(){
+  document.getElementById("autores").innerHTML="";
     var elemento = [];
     var endpointUrl = 'https://query.wikidata.org/sparql',
 	  sparqlQuery = "SELECT DISTINCT ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image\n" +
@@ -251,8 +270,9 @@ function mostrarAutores(){
         "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
         "}\n" +
         "ORDER BY ASC(?ocupacionLabel)\n" +
+        "OFFSET "+page+"\n" +
+        "LIMIT "+pageLimit+"\n" +
         "";
-
     settings = {
         headers: { Accept: 'application/sparql-results+json' },
         data: { query: sparqlQuery }
@@ -265,6 +285,8 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
           elemento.push(data.results.bindings[i]);
         }
       }
+      total = elemento.length;
+      console.log("total "+total);
       var autor, autorLabel, autorDescription, birth, birthDeath, ocupacionLabel, image;
       for (var i = 0; i < elemento.length; i++) {
         // console.log(elemento[i]);
@@ -281,6 +303,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
           autorDescription=elemento[i].autorDescription.value;
         }
         document.getElementById("autores").innerHTML +="<div class='col-md-2 card'><img src='"+image+"'><h6><a target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p></div>";
+        document.getElementById("pagina").innerHTML = "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
       }
     }
   });
