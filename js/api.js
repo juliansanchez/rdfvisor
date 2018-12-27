@@ -139,7 +139,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }
       }
       total = elemento.length;
-      console.log("total libros: "+total);
+      // console.log("total libros: "+total);
       for (var i = 0; i < elemento.length; i++) {
         if (elemento[i].image != null) {
           img = elemento[i].image.value;
