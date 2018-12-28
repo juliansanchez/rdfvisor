@@ -4,7 +4,7 @@ var dataJSON;
 // varables para LIBRO
 var img, tit, titLink, aut, autLink, gen,genLink,idi, idiLink, fec, desc, bvmc;
 var page = 1;
-var pageLimit=12;
+var pageLimit=14;
 var total=0;
 
 /* Primera letra en Mayusculas */
