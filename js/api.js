@@ -175,7 +175,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
           bvmc = "";
         }
         document.getElementById("libros").innerHTML +="<div onclick='llamaLibro(this);'class='col-md-2 card'><img src='"+
-        img+"'><h6><a target='_blank' class='link' href='"+tit+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink
+        img+"'><h6><a target='_blank' class='link' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink
         +"'</a>"+aut+"</p></div>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
@@ -186,13 +186,12 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
   });
 }
 function llamaLibro(tit){
-  console.log("llamaLibro");
-  var time = $(tit).find('.link').text();
-  console.log(time);
-  buscaLibro(time);
+  var titulo = $(tit).find('.link').text();
+  // console.log(time);
+  buscaLibro(titulo);
 }
 
-function buscaLibro(name){
+function buscaLibro(titulo){
       var elemento = [];
       var endpointUrl = 'https://query.wikidata.org/sparql',
       	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel ?bvmc\n" +
@@ -237,10 +236,8 @@ function buscaLibro(name){
             elemento.push(data.results.bindings[i]);
           }
         }
-
         for (var i = 0; i < elemento.length; i++) {
-
-          if (elemento[i].bookTextLabel.value == name) {
+          if (elemento[i].bookTextLabel.value == titulo) {
             if (elemento[i].image != null) {
               img = elemento[i].image.value;
             }else {
@@ -272,15 +269,13 @@ function buscaLibro(name){
             if (elemento[i].bvmc != null) {
               bvmc=elemento[i].bvmc.value;
             }else {
-              bvmc = "Sin Id";
+              bvmc = "No ID";
             }
 
-            console.log("Eureka");
-            console.log(elemento[i]);
             $.alert({
             title: elemento[i].bookTextLabel.value,
             content:"<p>"+desc+"</p><br/>"
-            +"<img src='"+img+"'>"
+            +"<img class='card' src='"+img+"'><br/>"
             +"<p>Autor: "+aut+"</p>"
             +"<p>Año de publicacion: "+fec+"</p>"
             +"<p>Género: "+gen+"</p>"
