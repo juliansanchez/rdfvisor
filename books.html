@@ -56,24 +56,29 @@
 						<option value="poesia">Poesía</option>
 						<option value="caballeresca">Novela Caballeresca</option>
 					</select>
+					<div class="form-check">
+				    <input type="checkbox" class="form-check-input" id="checkbvmc">
+				    <label class="form-check-label" for="checkbvmc">Recuperar datos de BVMC</label>
+				  </div>
 				</form>
 			</div>
 		</div>
 		<!-- CONTENEDOR DE DATOS -->
 		<h2>Principales Libros del <small>Siglo de Oro</small></h2>
 		<div class="container">
+			<div class="nav-btn-container">
+				<span id="pagina"></span>
+				<button onclick="pageLess();"class="btn btn-light prev-btn">Prev</button>
+				<button onclick="pageMore();" class="btn btn-light next-btn">Next</button>
+			</div>
 			<div class="popUp" id="popUp"></div>
 			<div class="libros" id="libros"></div>
 		</div>
-		<a href="#" id="link" download="contenido.json">Descargar JSON</a>
-		<div class="nav-btn-container">
-			<span id="pagina"></span>
-			<button onclick="pageLess();"class="btn btn-light prev-btn">Prev</button>
-			<button onclick="pageMore();" class="btn btn-light next-btn">Next</button>
-		</div>
+		<h3>Cronología <small>Libros del Siglo de Oro</small></h3>
 		<div class="embed-responsive embed-responsive-16by9">
 			<iframe class="embed-responsive-item" src="https://tinyurl.com/ybkwgll8" allowfullscreen></iframe>
 		</div>
+		<a href="#" id="link" download="contenido.json">Descargar JSON</a>
 	<!-- Footer -->
 	<footer class="page-footer font-small blue">
 	  <!-- Copyright -->
