@@ -129,4 +129,12 @@ iframe{
   padding: 1%;
   margin: 0;
 }
-/* PAGINACION WIKIPEDIA*/
+.firma{
+  max-width: 200px;
+  max-height: 80px;
+  padding: 1%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display:block;
+}
