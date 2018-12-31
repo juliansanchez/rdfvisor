@@ -7,8 +7,8 @@ var titLink, tit, desc,img, autLink, aut, fec, genLink, gen, idiLink, idi, bvmcl
 var autor, autorLabel, autorDescription, birth, birthDeath, ocupacionLabel, image, firma, bvmca;
 var page = 1;
 var pageLimit=20;
-var total=0;
-
+var totalLibros=0;
+var totalAutores=0;
 /* Primera letra en Mayusculas */
 function MaysPrimera(string){
   if (string != null) {
@@ -78,7 +78,7 @@ function pageLess() {
 }
 function pageMore(){
   page = page+pageLimit;
-  if (total > 0) {
+  if (totalLibros > 0) {
     mostrarLibros();
     // console.log("resultados por pageMore: "+page);
     }else {
@@ -143,7 +143,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
 
         }
       }
-      total = elemento.length;
+      totalLibros = elemento.length;
       // console.log("total libros: "+total);
       for (var i = 0; i < elemento.length; i++) {
         if (elemento[i].image != null) {
@@ -247,7 +247,6 @@ function buscaLibro(tit){
               }else {
                 autLink="#";
                 aut="Sin datos";
-
               }
               if (elemento[i].genre != null) {
                 genLink=elemento[i].genre.value;
@@ -275,8 +274,9 @@ function buscaLibro(tit){
               }
               if (elemento[i].bvmc != null) {
                 bvmcl=elemento[i].bvmc.value;
+                var urlbBvmc = "<a target='_blank' href='http://data.cervantesvirtual.com/work/"+bvmcl+"'>BVMC "+bvmcl+"</a>";
               }else {
-                bvmcl = "No ID";
+                urlabBvmc = "<p>BVMC No Id</p>";
               }
 
               $.alert({
@@ -287,7 +287,7 @@ function buscaLibro(tit){
               +"<p>Año de publicacion: "+fec+"</p>"
               +"<p>Género: "+gen+"</p>"
               +"<p>Idioma: "+idi+"</p>"
-              +"<p>BVMC: "+bvmcl+"</p>",
+              +urlbBvmc,
               });
             }
           }
@@ -388,7 +388,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
           elemento.push(data.results.bindings[i]);
         }
       }
-      total = elemento.length;
+      totalAutores = elemento.length;
 
       for (var i = 0; i < elemento.length; i++) {
         // console.log(elemento[i]);
@@ -408,7 +408,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
           ocupacionLabel =elemento[i].ocupacionLabel.value;
         }
         document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'>"+MaysPrimera(ocupacionLabel)+"</p></div>";
-        document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+" de "+elemento.length/2+"</span>";
+        document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
       }
       while (elemento>0) {
         elemento.pop();
@@ -487,7 +487,6 @@ function buscaAutor(nombre){
       //  ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc
         for (var i = 0; i < elemento.length; i++) {
           if (elemento[i].autorLabel.value && name != null && elemento[i].autorLabel.value == name) {
-            console.log(elemento[i].image);
 
             if (elemento[i].image != null) {
               image = elemento[i].image.value;
@@ -513,8 +512,9 @@ function buscaAutor(nombre){
             }
             if (elemento[i].bvmc != null) {
               bvmca=elemento[i].bvmc.value;
+              var urlaBvmc = "<a target='_blank' href='http://data.cervantesvirtual.com/person/"+bvmca+"'>BVMC "+bvmca+"</a>";
             }else {
-              bvmca = "No Id";
+              urlaBvmc = "<p>BVMC No Id</p>";
             }
             if (elemento[i].birth != null) {
               var nacimiento = elemento[i].birth.value.split("-")
@@ -539,7 +539,7 @@ function buscaAutor(nombre){
             title: "<a target='_blank' href='"+autor+"'>"+autorLabel+"</a>",
             content:"<p>"+autorDescription+"</p><br/>"
             +"<img class='card' src='"+image+"'><br/>"
-            +"<p>BVMC: "+bvmca+"</p>"
+            +urlaBvmc
             +"<p>Nacimiento: "+birth+"</p>"
             +"<p>Muerte: "+birthDeath+"</p>"
             +"<p>Ocupacion: "+ocupacionLabel+"</p>"
@@ -680,6 +680,7 @@ $(function() {
             bvmcl = "";
           }
           document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this)' class='col-md-2 card'><img src='"+img+"'><h6><a class='link' target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+          document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
           // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
           // <p>"+desc+"</p>
           // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
@@ -815,7 +816,8 @@ $(function() {
             bvmca =elemento[i].bvmc.value;
           }
           document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'>"+MaysPrimera(ocupacionLabel)+"</p></div>";
-          document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+" de "+elemento.length/2+"</span>";          // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
+          document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
+          // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
           // <p>"+desc+"</p>
           // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
         }
