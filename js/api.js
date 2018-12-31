@@ -3,7 +3,7 @@ var portada="img/default.png";
 var dataJSON;
 // varables para LIBRO
 // ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel ?bvmc
-var titLink, tit, desc,img, autLink, aut, fec, genLink, gen, idiLink, idi, bvmcl;
+var titLink, tit, desc,img, autLink, aut, fec, genLink, gen, idiLink, idi, bvmcl="";
 // variables para autor
 var autor, autorLabel, autorDescription, birth, birthDeath, ocupacionLabel, image, firma, bvmca="";
 
@@ -146,7 +146,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
       total = elementoLibro.length;
       // console.log("total libros: "+total);
       for (var i = 0; i < elementoLibro.length; i++) {
-
         if (elementoLibro[i].image != null) {
           img = elementoLibro[i].image.value;
         }else{
@@ -163,56 +162,53 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
           aut=elementoLibro[i].autorLabel.value;
         }
         document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this);'class='col-md-2 card'><img src='"+img+"'><h6><a target='_blank' class='link' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'></a>"+aut+"</p></div>";
+        document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
-        console.log(titLink);
         // <p>"+desc+"</p>
         // <p><a target='_blank' href='"+genLink+"'</a>"+gen+"</p><p>"+fec+"</p><p>BVMC "+bvmc+"</p>
-        document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
       }
     }
   });
 }
-  var titulo;
+
 function buscaLibro(tit){
-  titulo = $(tit).find('.link').text();
-
-
-      var elemento = [];
-      var endpointUrl = 'https://query.wikidata.org/sparql',
-      	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel ?bvmc\n" +
-              "WHERE {  \n" +
-              "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicadoLabel .  } #libro de texto\n" +
-              "   UNION\n" +
-              "    {?bookText wdt:P31 wd:Q571 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #libro impreso\n" +
-              "   UNION\n" +
-              "    {?bookText wdt:P31 wd:Q8261 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #novela\n" +
-              "   UNION\n" +
-              "    {?bookText wdt:P31 wd:Q35760 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #ensayo #idioma de la obra spaña\n" +
-              "   UNION\n" +
-              "    {?bookText wdt:P31 wd:Q37484 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #poema épico\n" +
-              "   UNION\n" +
-              "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Q5364419\n" +
-              "  UNION\n" +
-              "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q5364419 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Español moderno\n" +
-              "   UNION\n" +
-              "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #play\n" +
-              "   UNION\n" +
-              "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1088025 . ?bookText wdt:P577 ?fechaPublicado .} #play español antiguo\n" +
-              "  UNION\n" +
-              "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q397 . ?bookText wdt:P577 ?fechaPublicado .} #play latin\n" +
-              "  \n" +
-              "OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . ?bookText wdt:P50 ?autor . ?bookText wdt:P136 ?genre . ?bookText wdt:P407 ?idioma . ?bookText wdt:P3976 ?bvmc  } \n" +
-              "  #fecha del primer y último libro publicado\n" +
-              "  filter (?fechaPublicado > \"1492-01-01\"^^xsd:dateTime && ?fechaPublicado < \"1681-05-26\"^^xsd:dateTime)  \n" +
-              "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
-              "}\n" +
-              "ORDER BY ASC(?bookTextLabel)\n" +
-              "\n" +
-              "";
-      settings = {
-          headers: { Accept: 'application/sparql-results+json' },
-          data: { query: sparqlQuery},
-        };
+  var titulo = $(tit).find('.link').text();
+  var elemento = [];
+  var endpointUrl = 'https://query.wikidata.org/sparql',
+  	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel ?bvmc\n" +
+          "WHERE {  \n" +
+          "    {?bookText wdt:P31 wd:Q83790 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicadoLabel .  } #libro de texto\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q571 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #libro impreso\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q8261 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #novela\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q35760 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #ensayo #idioma de la obra spaña\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q37484 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #poema épico\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Q5364419\n" +
+          "  UNION\n" +
+          "    {?bookText wdt:P31 wd:Q7725634 . ?bookText wdt:P407 wd:Q5364419 . ?bookText wdt:P577 ?fechaPublicado .} #obra literaria Español moderno\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1321 . ?bookText wdt:P577 ?fechaPublicado .} #play\n" +
+          "   UNION\n" +
+          "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q1088025 . ?bookText wdt:P577 ?fechaPublicado .} #play español antiguo\n" +
+          "  UNION\n" +
+          "    {?bookText wdt:P31 wd:Q25379 . ?bookText wdt:P407 wd:Q397 . ?bookText wdt:P577 ?fechaPublicado .} #play latin\n" +
+          "  \n" +
+          "OPTIONAL {?bookText wdt:P577 ?fechaPublicado . ?bookText wdt:P18 ?image . ?bookText wdt:P50 ?autor . ?bookText wdt:P136 ?genre . ?bookText wdt:P407 ?idioma . ?bookText wdt:P3976 ?bvmc  } \n" +
+          "  #fecha del primer y último libro publicado\n" +
+          "  filter (?fechaPublicado > \"1492-01-01\"^^xsd:dateTime && ?fechaPublicado < \"1681-05-26\"^^xsd:dateTime)  \n" +
+          "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
+          "}\n" +
+          "ORDER BY ASC(?bookTextLabel)\n" +
+          "\n" +
+          "";
+  settings = {
+      headers: { Accept: 'application/sparql-results+json' },
+      data: { query: sparqlQuery},
+    };
 
   $.ajax( endpointUrl, settings ).then( function ( data ) {
       if (data.results.bindings != null) {
@@ -283,7 +279,6 @@ function pageMenos() {
   }
   mostrarAutores();
 }
-
 function pageMas(){
   page = page+pageLimit;
   if (total > 0) {
