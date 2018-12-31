@@ -5,7 +5,9 @@ var dataJSON;
 var titLink, tit, desc,img, autLink, aut, fec, genLink, gen, idiLink, idi, bvmcl;
 // variables para autor
 var autor, autorLabel, autorDescription, birth, birthDeath, ocupacionLabel, image, firma, bvmca;
-var page = 1;
+
+/* PAGINACION */
+var page = 0;
 var pageLimit=20;
 var totalLibros=0;
 var totalAutores=0;
@@ -68,28 +70,46 @@ function mostrarBasico(){
 
   });
 }
+/* PAGINACION LIBROS */
 function pageLess() {
-  page = page-pageLimit;
-  if (page = 0){
-    page = 1;
+  if (page > 0){
+    page = page-pageLimit;
+    mostrarLibros();
   }
-  // console.log("pageLess: "+page);
-  mostrarLibros();
 }
 function pageMore(){
   page = page+pageLimit;
-  if (totalLibros > 0) {
+  if (totalLibros > 0 && totalLibros == pageLimit) {
     mostrarLibros();
-    // console.log("resultados por pageMore: "+page);
-    }else {
+  }else {
     $.alert({
     title: 'No hay mas resultados!',
     content: 'Estamos ampliando nuestras referencias!',
     });
-    page=1;
-    mostrarLibros();
-    }
+  }
 }
+
+/* PAGINACION AUTORES */
+function pageMenos() {
+  if (page > 0) {
+    page = page-pageLimit;
+    mostrarAutores();
+  }
+}
+
+function pageMas(){
+  page = page+pageLimit;
+  if (totalAutores >0 && totalAutores == pageLimit) {
+    mostrarAutores();
+  }else{
+    $.alert({
+    title: 'No hay mas resultados!',
+    content: 'Estamos ampliando nuestras referencias!',
+    });
+  }
+}
+
+
 /* Lista todos los libros */
 function mostrarLibros(){
   document.getElementById("libros").innerHTML="";
@@ -276,7 +296,7 @@ function buscaLibro(tit){
                 bvmcl=elemento[i].bvmc.value;
                 var urlbBvmc = "<a target='_blank' href='http://data.cervantesvirtual.com/work/"+bvmcl+"'>BVMC "+bvmcl+"</a>";
               }else {
-                urlabBvmc = "<p>BVMC No Id</p>";
+                urlbBvmc = "<p>BVMC No Id</p>";
               }
 
               $.alert({
@@ -298,27 +318,6 @@ function buscaLibro(tit){
       }
     });
   }
-
-function pageMenos() {
-  page = page-pageLimit;
-  if (page = 0){
-    page = 1;
-  }
-  mostrarAutores();
-}
-function pageMas(){
-  page = page+pageLimit;
-  if (total > 0) {
-    mostrarAutores();
-  }else {
-    $.alert({
-    title: 'No hay mas resultados!',
-    content: 'Estamos ampliando nuestras referencias!',
-    });
-    page=1;
-    mostrarAutores();
-  }
-}
 
 function mostrarAutores(){
   document.getElementById("autores").innerHTML="";
@@ -389,7 +388,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }
       }
       totalAutores = elemento.length;
-
       for (var i = 0; i < elemento.length; i++) {
         // console.log(elemento[i]);
         if (elemento[i].image != null) {
