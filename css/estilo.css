@@ -29,6 +29,7 @@ nav form{
 	margin-left: 10px;
 	margin-bottom: 5px;
 }
+
 footer {
   bottom: 0;
   background-color: #688797;
@@ -129,4 +130,12 @@ iframe{
   padding: 1%;
   margin: 0;
 }
-/* PAGINACION WIKIPEDIA*/
+.firma{
+  max-width: 200px;
+  max-height: 80px;
+  padding: 1%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display:block;
+}
