@@ -71,13 +71,15 @@ function mostrarBasico(){
   });
 }
 
+
+
 /* PAGINACION LIBROS */
 function pageLess() {
   if (page > 0){
     page = page-pageLimit;
     mostrarLibros();
   }
-}
+  }
 function pageMore(){
   page = page+pageLimit;
   if (totalLibros > 0 && totalLibros == pageLimit) {
@@ -90,7 +92,6 @@ function pageMore(){
     page = page-pageLimit;
   }
 }
-
 /* PAGINACION AUTORES */
 function pageMenos() {
   if (page > 0) {
@@ -98,7 +99,6 @@ function pageMenos() {
     mostrarAutores();
   }
 }
-
 function pageMas(){
   page = page+pageLimit;
   if (totalAutores >0 && totalAutores == pageLimit) {
@@ -538,13 +538,14 @@ function buscaAutor(nombre){
 
             $.alert({
             title: "<a target='_blank' href='"+autor+"'>"+autorLabel+"</a>",
-            content:"<p>"+autorDescription+"</p><br/>"
+            columnClass: 'small',
+            content:"<div class='alert'<p>"+autorDescription+"</p><br/>"
             +"<img class='card' src='"+image+"'><br/>"
             +urlaBvmc
             +"<p>Nacimiento: "+birth+"</p>"
             +"<p>Muerte: "+birthDeath+"</p>"
             +"<p>Ocupacion: "+ocupacionLabel+"</p>"
-            +"<img class='firma' src='"+firma+"'><br/>"
+            +"<img class='firma' src='"+firma+"'></div>"
             ,
             });
           }

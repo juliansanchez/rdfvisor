@@ -62,11 +62,11 @@ div{
 .listBooks{
   border: 3px solid blue;
 }
-.portada{
+/* .portada{
 	width: 75px;
 	height: 100px;
   padding: 1%;
-}
+} */
 .tarjeta{
   border: 1px solid #688797;
 }
@@ -131,9 +131,10 @@ iframe{
   margin: 0;
 }
 .firma{
-  max-width: 200px;
-  max-height: 80px;
-  padding: 1%;
+  max-width: auto;
+  max-height: 75px;
+  margin: 0;
+  padding: 0;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
