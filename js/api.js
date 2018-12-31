@@ -18,6 +18,7 @@ function MaysPrimera(string){
   }
 }
 
+// FUNCION JSON EXPORT - NO FUNCIONA
 // window.onload = function() {
 //       var txt = dataJSON;
 // 	   document.getElementById('link').onclick = function(dataJSON) {
@@ -113,6 +114,7 @@ function pageMas(){
 }
 
 
+
 /* Lista todos los libros */
 function mostrarLibros(){
   document.getElementById("libros").innerHTML="";
@@ -200,7 +202,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
     }
   });
 }
-
 function buscaLibro(tit){
   var titulo = $(tit).find('.link').text();
   console.log(titulo);
@@ -322,6 +323,7 @@ function buscaLibro(tit){
     });
   }
 
+  /* Lista todos los Autores */
 function mostrarAutores(){
   document.getElementById("autores").innerHTML="";
     var elemento = [];
@@ -556,6 +558,8 @@ function buscaAutor(nombre){
       }
     });
   }
+
+
 /* FILTRO POR GENERO */
 function ShowSelected(){
   /* Para obtener el valor */
