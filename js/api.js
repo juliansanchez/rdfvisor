@@ -70,6 +70,7 @@ function mostrarBasico(){
 
   });
 }
+
 /* PAGINACION LIBROS */
 function pageLess() {
   if (page > 0){
@@ -86,6 +87,7 @@ function pageMore(){
     title: 'No hay mas resultados!',
     content: 'Estamos ampliando nuestras referencias!',
     });
+    page = page-pageLimit;
   }
 }
 
@@ -106,6 +108,7 @@ function pageMas(){
     title: 'No hay mas resultados!',
     content: 'Estamos ampliando nuestras referencias!',
     });
+    page = page-pageLimit;
   }
 }
 
