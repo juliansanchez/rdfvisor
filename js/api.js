@@ -328,7 +328,7 @@ function mostrarAutores(){
   document.getElementById("autores").innerHTML="";
     var elemento = [];
     var endpointUrl = 'https://query.wikidata.org/sparql',
-	  sparqlQuery = "SELECT DISTINCT ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc\n" +
+	sparqlQuery = "SELECT DISTINCT ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc\n" +
         "WHERE{\n" +
         "    {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
@@ -337,8 +337,9 @@ function mostrarAutores(){
         "  ?autor wdt:P106 wd:Q36180 . #Escritor  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion.\n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
+        "\n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -346,8 +347,8 @@ function mostrarAutores(){
         "  ?autor wdt:P106 wd:Q49757  . #Poeta  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion .  \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -355,8 +356,8 @@ function mostrarAutores(){
         "  ?autor wdt:P106 wd:Q6625963 . #Novelista  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion  . \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        "\n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -364,8 +365,17 @@ function mostrarAutores(){
         "  ?autor wdt:P106 wd:Q487596 . #Dramaturgo  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion  . \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        "\n" +
+        "  } UNION  {\n" +
+        "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
+        "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
+        "  ?autor wdt:P27 wd:Q29 . #pais de procedencia\n" +
+        "  ?autor wdt:P106 wd:Q482980 . #Autor  \n" +
+        "  ?autor wdt:P569 ?birth.   \n" +
+        "  ?autor wdt:P570 ?birthDeath. \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
         "  } \n" +
         "\n" +
         "    #nacimiento de garcilaso y calderon de la barca y muerte de calderon\n" +
@@ -373,8 +383,8 @@ function mostrarAutores(){
         "    filter (?birthDeath > \"1540-01-01\"^^xsd:dateTime && ?birthDeath < \"1681-05-26\"^^xsd:dateTime) \n" +
         "       #filter (?birthDeath < \"1681-05-26\"^^xsd:dateTime) #muerte de calderon de la barca\n" +
         "  \n" +
-        "  OPTIONAL{?autor wdt:P106 ?ocupacion  . ?autor wdt:P373 ?category. ?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc}\n" +
-        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
+        "  OPTIONAL{?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc .}\n" +
+        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
         "}\n" +
         "ORDER BY ASC(?autorLabel)\n" +
         "OFFSET "+page+"\n" +
@@ -395,6 +405,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
       totalAutores = elemento.length;
       for (var i = 0; i < elemento.length; i++) {
         // console.log(elemento[i]);
+        console.log(elemento[i].image);
         if (elemento[i].image != null) {
           image = elemento[i].image.value;
         }else {
@@ -424,7 +435,7 @@ function buscaAutor(nombre){
       // console.log("name: "+name);
       var elemento = [];
       var endpointUrl = 'https://query.wikidata.org/sparql',
-	        sparqlQuery = "SELECT DISTINCT ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc\n" +
+	sparqlQuery = "SELECT DISTINCT ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc\n" +
         "WHERE{\n" +
         "    {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
@@ -433,8 +444,9 @@ function buscaAutor(nombre){
         "  ?autor wdt:P106 wd:Q36180 . #Escritor  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion.\n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
+        "\n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -442,8 +454,8 @@ function buscaAutor(nombre){
         "  ?autor wdt:P106 wd:Q49757  . #Poeta  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion .  \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -451,8 +463,8 @@ function buscaAutor(nombre){
         "  ?autor wdt:P106 wd:Q6625963 . #Novelista  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion  . \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        "\n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -460,8 +472,17 @@ function buscaAutor(nombre){
         "  ?autor wdt:P106 wd:Q487596 . #Dramaturgo  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion  . \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        "\n" +
+        "  } UNION  {\n" +
+        "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
+        "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
+        "  ?autor wdt:P27 wd:Q29 . #pais de procedencia\n" +
+        "  ?autor wdt:P106 wd:Q482980 . #Autor  \n" +
+        "  ?autor wdt:P569 ?birth.   \n" +
+        "  ?autor wdt:P570 ?birthDeath. \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
         "  } \n" +
         "\n" +
         "    #nacimiento de garcilaso y calderon de la barca y muerte de calderon\n" +
@@ -469,8 +490,8 @@ function buscaAutor(nombre){
         "    filter (?birthDeath > \"1540-01-01\"^^xsd:dateTime && ?birthDeath < \"1681-05-26\"^^xsd:dateTime) \n" +
         "       #filter (?birthDeath < \"1681-05-26\"^^xsd:dateTime) #muerte de calderon de la barca\n" +
         "  \n" +
-        "  OPTIONAL{?autor wdt:P106 ?ocupacion  . ?autor wdt:P373 ?category. ?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc}\n" +
-        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es, en\". }\n" +
+        "  OPTIONAL{?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc .}\n" +
+        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
         "}\n" +
         "ORDER BY ASC(?autorLabel)\n" +
               "\n" +
@@ -732,8 +753,9 @@ $(function() {
         "  ?autor wdt:P106 wd:Q36180 . #Escritor  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion.\n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
+        "\n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -741,8 +763,8 @@ $(function() {
         "  ?autor wdt:P106 wd:Q49757  . #Poeta  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion .  \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -750,8 +772,8 @@ $(function() {
         "  ?autor wdt:P106 wd:Q6625963 . #Novelista  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion  . \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        "\n" +
         "  }   UNION  {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
         "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
@@ -759,8 +781,17 @@ $(function() {
         "  ?autor wdt:P106 wd:Q487596 . #Dramaturgo  \n" +
         "  ?autor wdt:P569 ?birth.   \n" +
         "  ?autor wdt:P570 ?birthDeath. \n" +
-        "  ?autor wdt:P373 ?category .\n" +
-        "  ?autor wdt:P106 ?ocupacion  . \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        "\n" +
+        "  } UNION  {\n" +
+        "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
+        "  ?autor wdt:P1412 wd:Q1321 . #lenguas escritas o habladas en español\n" +
+        "  ?autor wdt:P27 wd:Q29 . #pais de procedencia\n" +
+        "  ?autor wdt:P106 wd:Q482980 . #Autor  \n" +
+        "  ?autor wdt:P569 ?birth.   \n" +
+        "  ?autor wdt:P570 ?birthDeath. \n" +
+        "      ?autor wdt:P18 ?image\n" +
+        " \n" +
         "  } \n" +
         "\n" +
         "    #nacimiento de garcilaso y calderon de la barca y muerte de calderon\n" +
@@ -768,7 +799,7 @@ $(function() {
         "    filter (?birthDeath > \"1540-01-01\"^^xsd:dateTime && ?birthDeath < \"1681-05-26\"^^xsd:dateTime) \n" +
         "       #filter (?birthDeath < \"1681-05-26\"^^xsd:dateTime) #muerte de calderon de la barca\n" +
         "  \n" +
-        "  OPTIONAL{?autor wdt:P106 ?ocupacion  . ?autor wdt:P373 ?category. ?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc}\n" +
+        "  OPTIONAL{?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc .}\n" +
         "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
         "}\n" +
         "ORDER BY ASC(?autorLabel)\n" +
