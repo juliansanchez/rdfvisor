@@ -13,7 +13,7 @@ var autorBvmc; // enlace a autor de la BVMC
 var obra; // texto de la obra en la BVMC
 var enlaceObra; // enlace la la BVMC
 var meteLibros; // lista de libros por autor en HTML
-var contLibros = "<div id='librosAutorBvmc'>HOLA</div>"; // contenador para lista de libros BVMC
+var contLibros = "<div id='librosAutorBvmc'></div>"; // contenador para lista de libros BVMC
 
 /* PAGINACION */
 var page = 0;
@@ -85,7 +85,6 @@ function pintoAutores() {
   // }
   // console.log("LinkAutor BVMC: "+autorBvmc);
   for (var i = 0; i < arrayLibrosPorAutorBvmc.length; i++) {
-console.log(arrayLibrosPorAutorBvmc[i]);
     if (arrayLibrosPorAutorBvmc[i].workLabel.value != undefined) {
       obra=arrayLibrosPorAutorBvmc[i].workLabel.value
     }else {
@@ -507,6 +506,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
   });
 }
 function buscaAutor(nombre){
+      contLibros = "<div id='librosAutorBvmc'></div>";
       var name = $(nombre).find('.link').text();
       var dato = $(nombre).find('.link');
       var enlace = dato[0].href;
@@ -514,6 +514,7 @@ function buscaAutor(nombre){
       var bvmcAutor = enlaceSplit[4];
       recuperaBVMC=document.getElementById("recuBvmc").checked;
       console.log(recuperaBVMC);
+      // CHECKBOX
       if (recuperaBVMC == true) {
         federadas(bvmcAutor);
       }
@@ -597,7 +598,6 @@ function buscaAutor(nombre){
       //  ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc
         for (var i = 0; i < elemento.length; i++) {
           if (elemento[i].autorLabel.value && name != null && elemento[i].autorLabel.value == name) {
-            contLibros = "<div id='librosAutorBvmc'></div>";
             if (elemento[i].image != null) {
               image = elemento[i].image.value;
             }else {
@@ -625,7 +625,7 @@ function buscaAutor(nombre){
               bvmca=elemento[i].bvmc.value;
               var urlaBvmc = "<a target='_blank' href='http://data.cervantesvirtual.com/person/"+bvmca+"'>BVMC "+bvmca+"</a>";
             }else {
-              urlaBvmc = "<p>BVMC No Id</p>";
+              urlaBvmc="<p>BVMC No Id</p>";
             }
             if (elemento[i].birth != null) {
               var nacimiento = elemento[i].birth.value.split("-")
@@ -656,7 +656,7 @@ function buscaAutor(nombre){
             +"<p>Muerte: "+birthDeath+"</p>"
             +"<p>Ocupacion: "+ocupacionLabel+"</p>"
             + firma
-            + contLibros
+            + "<div id='librosAutorBvmc'></div>"
             + "</div>"
             ,
             });
