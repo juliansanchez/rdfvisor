@@ -13,6 +13,8 @@ var autorBvmc; // enlace a autor de la BVMC
 var obra; // texto de la obra en la BVMC
 var enlaceObra; // enlace la la BVMC
 var meteLibros; // lista de libros por autor en HTML
+var contLibros = "<div id='librosAutorBvmc'>HOLA</div>"; // contenador para lista de libros BVMC
+
 /* PAGINACION */
 var page = 0;
 var pageLimit=20;
@@ -76,16 +78,14 @@ function federadas(bvmcAutor) {
 
 function pintoAutores() {
   console.log("Pinto BVMC");
-  if (arrayLibrosPorAutorBvmc[0].bvmcID.value != null) {
-    autorBvmc = arrayLibrosPorAutorBvmc[0].bvmcID.value;
-  }else {
-    autorBvmc ="";
-  }
-  console.log("LinkAutor BVMC: "+autorBvmc);
+  // if (arrayLibrosPorAutorBvmc[0].bvmcID.value != null) {
+  //   autorBvmc = arrayLibrosPorAutorBvmc[0].bvmcID.value;
+  // }else {
+  //   autorBvmc ="";
+  // }
+  // console.log("LinkAutor BVMC: "+autorBvmc);
   for (var i = 0; i < arrayLibrosPorAutorBvmc.length; i++) {
-    // console.log("ID: "+arrayLibrosPorAutorBvmc[i].id.value);
-    // console.log("Enlace a la obra: "+arrayLibrosPorAutorBvmc[i].work.value);
-    // console.log("Obra literaria: "+arrayLibrosPorAutorBvmc[i].workLabel.value);
+console.log(arrayLibrosPorAutorBvmc[i]);
     if (arrayLibrosPorAutorBvmc[i].workLabel.value != undefined) {
       obra=arrayLibrosPorAutorBvmc[i].workLabel.value
     }else {
@@ -94,14 +94,13 @@ function pintoAutores() {
     if (arrayLibrosPorAutorBvmc[i].work.value != undefined) {
       enlaceObra=arrayLibrosPorAutorBvmc[i].work.value;
     }else {
-      enlaceObra="";
+      enlaceObra="#";
     }
     console.log("OBRA ----> "+obra);
     console.log("Enlace OBRA -----> "+enlaceObra);
-
-    document.getElementById('librosAutoresBvmc').innerHTML += "<p>Obra BVMC <a target='_blank' href='"+enlaceObra+"'>"+obra+"</a><br/>";
-    console.log("meteLibros "+meteLibros);
+    document.getElementById("librosAutorBvmc").innerHTML += "<p>Obra BVMC <a target='_blank' href='"+enlaceObra+"' >"+obra+"</a><p>";
   }
+
 }
 
 
@@ -508,13 +507,11 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
   });
 }
 function buscaAutor(nombre){
-      meteLibros = "";
       var name = $(nombre).find('.link').text();
       var dato = $(nombre).find('.link');
       var enlace = dato[0].href;
       var enlaceSplit = dato[0].href.split("/");
       var bvmcAutor = enlaceSplit[4];
-
       recuperaBVMC=document.getElementById("recuBvmc").checked;
       console.log(recuperaBVMC);
       if (recuperaBVMC == true) {
@@ -596,9 +593,11 @@ function buscaAutor(nombre){
             elemento.push(data.results.bindings[i]);
           }
         }
+
       //  ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc
         for (var i = 0; i < elemento.length; i++) {
           if (elemento[i].autorLabel.value && name != null && elemento[i].autorLabel.value == name) {
+            contLibros = "<div id='librosAutorBvmc'></div>";
             if (elemento[i].image != null) {
               image = elemento[i].image.value;
             }else {
@@ -618,8 +617,9 @@ function buscaAutor(nombre){
             }
             if (elemento[i].firma != null) {
               firma=elemento[i].firma.value;
+              firma = "<img class='firma' src='"+firma+"'>";
             }else {
-              firma="img/firma.png";
+              firma="";
             }
             if (elemento[i].bvmc != null) {
               bvmca=elemento[i].bvmc.value;
@@ -655,12 +655,11 @@ function buscaAutor(nombre){
             +"<p>Nacimiento: "+birth+"</p>"
             +"<p>Muerte: "+birthDeath+"</p>"
             +"<p>Ocupacion: "+ocupacionLabel+"</p>"
-            +"<img class='firma' src='"+firma+"'>"
-            + "<div id='librosAutoresBvmc'></div>"
+            + firma
+            + contLibros
             + "</div>"
             ,
             });
-
           }
         }
         while (elemento>0) {
