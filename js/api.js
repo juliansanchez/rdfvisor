@@ -118,7 +118,7 @@ function mostrarBasico(){
         "  \n" +
         " ?article schema:isPartOf <https://en.wikipedia.org/>.	\n" +
         "\n" +
-        " SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }    \n" +
+        " SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }    \n" +
         "}",
       settings = {
           headers: { Accept: 'application/sparql-results+json' },
@@ -459,7 +459,7 @@ function mostrarAutores(){
         "       #filter (?birthDeath < \"1681-05-26\"^^xsd:dateTime) #muerte de calderon de la barca\n" +
         "  \n" +
         "  OPTIONAL{?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc .}\n" +
-        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
+        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
         "}\n" +
         "ORDER BY ASC(?autorLabel)\n" +
         "OFFSET "+page+"\n" +
@@ -492,11 +492,13 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }
         if (elemento[i].autorDescription != null) {
           autorDescription=elemento[i].autorDescription.value;
+        }else {
+          autorDescription="Sin datos";
         }
         if (elemento[i].ocupacionLabel != null) {
           ocupacionLabel =elemento[i].ocupacionLabel.value;
         }
-        document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'>"+MaysPrimera(ocupacionLabel)+"</p></div>";
+        document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'></p></div>";
         document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
       }
       while (elemento>0) {
@@ -506,7 +508,6 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
   });
 }
 function buscaAutor(nombre){
-      contLibros = "<div id='librosAutorBvmc'></div>";
       var name = $(nombre).find('.link').text();
       var dato = $(nombre).find('.link');
       var enlace = dato[0].href;
@@ -577,7 +578,7 @@ function buscaAutor(nombre){
         "       #filter (?birthDeath < \"1681-05-26\"^^xsd:dateTime) #muerte de calderon de la barca\n" +
         "  \n" +
         "  OPTIONAL{?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc .}\n" +
-        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
+        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
         "}\n" +
         "ORDER BY ASC(?autorLabel)\n" +
               "\n" +
@@ -662,8 +663,12 @@ function buscaAutor(nombre){
             });
           }
         }
-        while (elemento>0) {
+        while (elemento.length>0) {
           elemento.pop();
+        }
+        while (arrayLibrosPorAutorBvmc.length>0) {
+          arrayLibrosPorAutorBvmc.pop();
+          console.log("Limpio array");
         }
       }
     });
@@ -889,7 +894,7 @@ $(function() {
         "       #filter (?birthDeath < \"1681-05-26\"^^xsd:dateTime) #muerte de calderon de la barca\n" +
         "  \n" +
         "  OPTIONAL{?autor wdt:P18 ?image . ?autor wdt:P109 ?firma . ?autor wdt:P2799 ?bvmc .}\n" +
-        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }\n" +
+        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }\n" +
         "}\n" +
         "ORDER BY ASC(?autorLabel)\n" +
             "";
