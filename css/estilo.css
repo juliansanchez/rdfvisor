@@ -29,6 +29,7 @@ nav form{
 	margin-left: 10px;
 	margin-bottom: 5px;
 }
+
 footer {
   bottom: 0;
   background-color: #688797;
@@ -61,11 +62,11 @@ div{
 .listBooks{
   border: 3px solid blue;
 }
-.portada{
+/* .portada{
 	width: 75px;
 	height: 100px;
   padding: 1%;
-}
+} */
 .tarjeta{
   border: 1px solid #688797;
 }
@@ -129,4 +130,13 @@ iframe{
   padding: 1%;
   margin: 0;
 }
-/* PAGINACION WIKIPEDIA*/
+.firma{
+  max-width: auto;
+  max-height: 50px;
+  margin: 0;
+  padding-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display:block;
+}
