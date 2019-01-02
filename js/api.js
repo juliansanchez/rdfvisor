@@ -6,6 +6,13 @@ var titLink, tit, desc,img, autLink, aut, fec, genLink, gen, idiLink, idi, bvmcl
 // variables para autor
 var autor, autorLabel, autorDescription, birth, birthDeath, ocupacionLabel, image, firma, bvmca;
 
+// Variables Info Libros BVMC
+var recuperaBVMC; // booleano para el checkbox
+var arrayLibrosPorAutorBvmc = []; // lista de libros por autor de la BVMC
+var autorBvmc; // enlace a autor de la BVMC
+var obra; // texto de la obra en la BVMC
+var enlaceObra; // enlace la la BVMC
+var meteLibros; // lista de libros por autor en HTML
 /* PAGINACION */
 var page = 0;
 var pageLimit=20;
@@ -26,6 +33,77 @@ function MaysPrimera(string){
 //           + encodeURIComponent(dataJSON.value);
 //       };
 //     };
+
+
+
+// FEDERADAS. Recupera Info de libros de autores de la BVMC
+function federadas(bvmcAutor) {
+  function makeSPARQLQuery( endpointUrl, sparqlQuery, doneCallback ) {
+  	var settings = {
+  		headers: { Accept: 'application/sparql-results+json' },
+  		data: { query: sparqlQuery }
+  	};
+  	return $.ajax( endpointUrl, settings ).then( doneCallback );
+  }
+  var endpointUrl = 'https://query.wikidata.org/sparql',
+  	sparqlQuery = "SELECT  distinct * WHERE {\n" +
+          " wd:"+bvmcAutor+" wdt:P2799 ?id \n" +
+          " BIND(uri(concat(\"http://data.cervantesvirtual.com/person/\", ?id)) as ?bvmcID)\n" +
+          " SERVICE <http://data.cervantesvirtual.com/openrdf-sesame/repositories/data> {\n" +
+          " ?bvmcID <http://rdaregistry.info/Elements/a/authorOf> ?work .\n" +
+          " ?work rdfs:label ?workLabel \n" +
+          " }\n" +
+          "}";
+
+  makeSPARQLQuery( endpointUrl, sparqlQuery, function( data ) {
+  		// $( 'body' ).append( $( '<pre>' ).text( JSON.stringify( data ) ) );
+  		// console.log( data );
+      if (data != null) {
+        if (data.results != null) {
+          if (data.results.bindings != null) {
+            for (var i in data.results.bindings) {
+              if (data.results.bindings[i] != null) {
+                arrayLibrosPorAutorBvmc.push(data.results.bindings[i]);
+              }
+            }
+            pintoAutores();
+          }
+        }
+      }
+  	}
+  );
+}
+
+function pintoAutores() {
+  console.log("Pinto BVMC");
+  if (arrayLibrosPorAutorBvmc[0].bvmcID.value != null) {
+    autorBvmc = arrayLibrosPorAutorBvmc[0].bvmcID.value;
+  }else {
+    autorBvmc ="";
+  }
+  console.log("LinkAutor BVMC: "+autorBvmc);
+  for (var i = 0; i < arrayLibrosPorAutorBvmc.length; i++) {
+    // console.log("ID: "+arrayLibrosPorAutorBvmc[i].id.value);
+    // console.log("Enlace a la obra: "+arrayLibrosPorAutorBvmc[i].work.value);
+    // console.log("Obra literaria: "+arrayLibrosPorAutorBvmc[i].workLabel.value);
+    if (arrayLibrosPorAutorBvmc[i].workLabel.value != undefined) {
+      obra=arrayLibrosPorAutorBvmc[i].workLabel.value
+    }else {
+      obra="";
+    }
+    if (arrayLibrosPorAutorBvmc[i].work.value != undefined) {
+      enlaceObra=arrayLibrosPorAutorBvmc[i].work.value;
+    }else {
+      enlaceObra="";
+    }
+    console.log("OBRA ----> "+obra);
+    console.log("Enlace OBRA -----> "+enlaceObra);
+
+    document.getElementById('librosAutoresBvmc').innerHTML += "<p>Obra BVMC <a target='_blank' href='"+enlaceObra+"'>"+obra+"</a><br/>";
+    console.log("meteLibros "+meteLibros);
+  }
+}
+
 
 /* INFO HOME PAGE */
 function mostrarBasico(){
@@ -71,7 +149,6 @@ function mostrarBasico(){
 
   });
 }
-
 
 
 /* PAGINACION LIBROS */
@@ -405,7 +482,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
       totalAutores = elemento.length;
       for (var i = 0; i < elemento.length; i++) {
         // console.log(elemento[i]);
-        console.log(elemento[i].image);
+        // console.log(elemento[i].image);
         if (elemento[i].image != null) {
           image = elemento[i].image.value;
         }else {
@@ -431,11 +508,22 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
   });
 }
 function buscaAutor(nombre){
+      meteLibros = "";
       var name = $(nombre).find('.link').text();
-      // console.log("name: "+name);
+      var dato = $(nombre).find('.link');
+      var enlace = dato[0].href;
+      var enlaceSplit = dato[0].href.split("/");
+      var bvmcAutor = enlaceSplit[4];
+
+      recuperaBVMC=document.getElementById("recuBvmc").checked;
+      console.log(recuperaBVMC);
+      if (recuperaBVMC == true) {
+        federadas(bvmcAutor);
+      }
+
       var elemento = [];
       var endpointUrl = 'https://query.wikidata.org/sparql',
-	sparqlQuery = "SELECT DISTINCT ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc\n" +
+	        sparqlQuery = "SELECT DISTINCT ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc\n" +
         "WHERE{\n" +
         "    {\n" +
         "  ?autor wdt:P31 wd:Q5 . # todas las instancias de humanos\n" +
@@ -511,7 +599,6 @@ function buscaAutor(nombre){
       //  ?autor ?autorLabel ?autorDescription ?birth ?birthDeath ?ocupacionLabel ?image ?firma ?bvmc
         for (var i = 0; i < elemento.length; i++) {
           if (elemento[i].autorLabel.value && name != null && elemento[i].autorLabel.value == name) {
-
             if (elemento[i].image != null) {
               image = elemento[i].image.value;
             }else {
@@ -564,13 +651,16 @@ function buscaAutor(nombre){
             columnClass: 'small',
             content:"<div class='alert'<p>"+autorDescription+"</p><br/>"
             +"<img class='card' src='"+image+"'><br/>"
-            +urlaBvmc
+            + urlaBvmc
             +"<p>Nacimiento: "+birth+"</p>"
             +"<p>Muerte: "+birthDeath+"</p>"
             +"<p>Ocupacion: "+ocupacionLabel+"</p>"
-            +"<img class='firma' src='"+firma+"'></div>"
+            +"<img class='firma' src='"+firma+"'>"
+            + "<div id='librosAutoresBvmc'></div>"
+            + "</div>"
             ,
             });
+
           }
         }
         while (elemento>0) {
