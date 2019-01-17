@@ -137,7 +137,7 @@ function mostrarBasico(){
     var movement = data.results.bindings[0].movement.value;
     var movementLabel = data.results.bindings[0].movementLabel.value;
 
-    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' src="+image+">";
+    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' alt='"+categoryLabel+"' src="+image+">";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Wikipedia</p>";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+item+" target='_blank'</a>"+categoryLabel+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
@@ -265,7 +265,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }else {
           aut="Sin datos";
         }
-        document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this);'class='col-md-2 card'><img src='"+img+"'><h6 class='link'><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p>"+aut+"</p></div>";
+        document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this);'class='col-md-2 card'><img alt='"+desc+"' src='"+img+"'><h6 class='link'><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p>"+aut+"</p></div>";
         document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
@@ -380,8 +380,8 @@ function buscaLibro(tit){
 
               $.alert({
               title: "<a target='_blank' href='"+titLink+"'>"+tit+"</a>",
-              content:"<p>"+desc+"</p><br/>"
-              +"<img class='card' src='"+img+"'><br/>"
+              content:"<p>"+tit+"</p><br/>"
+              +"<img alt='"+tit+"' class='card' src='"+img+"'><br/>"
               +"<p>Autor: "+aut+"</p>"
               +"<p>Año de publicacion: "+fec+"</p>"
               +"<p>Género: "+gen+"</p>"
@@ -498,7 +498,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         if (elemento[i].ocupacionLabel != null) {
           ocupacionLabel =elemento[i].ocupacionLabel.value;
         }
-        document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'></p></div>";
+        document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img alt='"+autorLabel+"' src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'></p></div>";
         document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
       }
       while (elemento>0) {
@@ -618,7 +618,7 @@ function buscaAutor(nombre){
             }
             if (elemento[i].firma != null) {
               firma=elemento[i].firma.value;
-              firma = "<img class='firma' src='"+firma+"'>";
+              firma = "<img alt='Firma de "+autorLabel+"' class='firma' src='"+firma+"'>";
             }else {
               firma="";
             }
@@ -651,7 +651,7 @@ function buscaAutor(nombre){
             title: "<a target='_blank' href='"+autor+"'>"+autorLabel+"</a>",
             columnClass: 'small',
             content:"<div class='alert'<p>"+autorDescription+"</p><br/>"
-            +"<img class='card' src='"+image+"'><br/>"
+            +"<img alt='"+autorLabel+"' class='card' src='"+image+"'><br/>"
             + urlaBvmc
             +"<p>Nacimiento: "+birth+"</p>"
             +"<p>Muerte: "+birthDeath+"</p>"
@@ -800,7 +800,7 @@ $(function() {
           }else {
             bvmcl = "";
           }
-          document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this)' class='col-md-2 card'><img src='"+img+"'><h6><a class='link' target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+          document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this)' class='col-md-2 card'><img alt='"+tit+"' src='"+img+"'><h6><a class='link' target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
           document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
           // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
           // <p>"+desc+"</p>
@@ -946,7 +946,7 @@ $(function() {
           if (elemento[i].bvmc != null) {
             bvmca =elemento[i].bvmc.value;
           }
-          document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'>"+MaysPrimera(ocupacionLabel)+"</p></div>";
+          document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img alt'"+autorLabel+"' src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'>"+MaysPrimera(ocupacionLabel)+"</p></div>";
           document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
           // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
           // <p>"+desc+"</p>
