@@ -26,7 +26,7 @@ $(function() {
     $("#searchTerm").keypress(function(e){
     	if(e.keyCode===13){
     		var searchTerm = $("#searchTerm").val();
-        var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&limit=1000&format=json&callback=?";
+        var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&limit=200&format=json&callback=?";
 		    $.ajax({
 			url: url,
 			type: 'GET',
@@ -54,7 +54,7 @@ $(function() {
       content: 'Introduce un texto!',
       });
     }
-    var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&limit=1000&format=json&callback=?";
+    var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&limit=200&format=json&callback=?";
     $.ajax({
       url: url,
       type: 'GET',
