@@ -8,26 +8,18 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!-- POPUPS -->
-		<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-		<!-- Buscador Wikipedia -->
-		<script type="text/javascript" src="js/wikisearch.js"></script>
-		<!-- Cargar leer archivos -->
-		<!-- <script type="text/javascript" src="js/funciones.js"></script> -->
-		<!-- API -->
 		<!--ESTILOS -->
 		<link rel="stylesheet" type="text/css" href="css/estilo.css" media="screen" />
 		<!-- FAVICON -->
-		<link rel="shortcut icon" type="image/x-icon" href="img/juli.jpg" />
+		<link rel="shortcut icon" type="image/x-icon" href="img/juli.png" />
 	</head>
 	<body class="container">
 		<header>
 			<!-- <h1>Interfaz para visualización de datos XML / RDF / JSON</h1> -->
 			<nav class="navbar navbar-default navbar-static-top">
 			  <div class="container-fluid">
-			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
 			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 			        <span class="sr-only">Toggle navigation</span>
@@ -36,7 +28,6 @@
 			        <span class="icon-bar"></span>
 			      </button>
 			    </div>
-			    <!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">
 							<li><a href="index.html">HOME</a></li>
@@ -51,31 +42,64 @@
 			</nav>
 		</header>
 		<!-- CONTENEDOR DE DATOS -->
-		<section id="principal">
-			<h1>Trabajo Fin de Grado<small> Ingenieria Multimedia </small>2019</h1>
-		</section>
-
+		<h1 class="tith1">Trabajo Fin de Grado<small> Ingenieria Multimedia </small>2018</h1>
 		<!-- CONTENEDOR DE DATOS -->
-		<article>
-			<div class="container row">
-
-				<div class="col-md-4 juli">
-					<img class="fotoJuli" src="img/juli.jpg" alt="Julián Sánchez García">
-
+		<div class="row container">
+			<div class="col-md-4 datosJuli">
+				<img class="fotoJuli" src="img/juli.png" title="Julián Sánchez García" alt="Foto Julián Sánchez García">
+				<div class="julidata">
+					<p>Julián Sánchez García</p>
+					<p>Ingeniero Multimedia</p>
+					<p><small>Universidad de Alicante 2013-2018</small></p>
 				</div>
-				<div class="col-md-4 sobremi">
-					Acerca de mi .....
-
+				<div class="asignaturas">
+					<h3>Relación de asignaturas</h3>
+					<p>Programación Hipermedia</p>
+					<p>Fundamentos de Bases de Datos</p>
+					<p>Análisis y Especificación de Sistemas Multimedia</p>
+					<p>Programación I y II</p>
+					<p>Sistemas de Difusión Multimedia</p>
+					<p>Usabilidad y Accesibilidad</p>
+					<p>Proyectos Multimedia</p>
+					<p>Sistemas Multimedia Avanzados</p>
+					<p>Gestión de Contenidos Multimedia</p>
+					<p>Diseño de Sistemas Multimedia</p>
 				</div>
-
 			</div>
-			<div class="container row">
-				<h2>Análisis e implementación de una interfaz para visualización de un repositorio RDF</h2>
-				<p>lkasjdlkajsldkjlaksjdlkasjdlkajslkdjalskdlkjlkjlk</p>
+			<div class="col-md-8 datosTfg">
+
+				<h2 class="tituloAcerca">Análisis e implementación de una interfaz para visualización de un repositorio RDF</h2>
+				<p>El presente TFG consiste en el análisis de las tecnologías actuales y el estado	de los
+					principales repositorios que ofrecen datos abiertos enlazados en formato RDF para la
+					implementación de un prototipo de visor de datos RDF que permita recolectar y visualizar
+					datos abiertos de la base de conocimiento colaborativa Wikidata.
+				<p>Los datos pertenecen al dominio de Wikidata, en concreto al
+					Siglo de Oro de la Literatura Española. Se pretende recuperar toda la información
+					de este periodo literario. Para ello se recurre a otras fuentes, como la <a href="http://data.cervantesvirtual.com/">
+					BVMC</a>, que ofrece su catágolo también en RDF y además están federados en Wikidata.
+					Esto quiere decir que Wikidata incluye en su catálogo todos los datos expresados en RDF
+					que ofrece la BVMC, de forma que accediendo a Wikidata, podemos recuperar también
+					información de la BVMC.
+				</p>
+				<p>El principal problema se encuentra en la dificultad para leer y visualizar datos expresados
+					en RDF así como la inconsistencia de las bases de conocimiento colaboraativas.
+				</p>
+				<p>Para tratar de dar solución a este problema, se ha implementado un prototipo para visualizar datos
+					RDF. Este se ha realizado en HTML, con CSS y jQuery. El proceso consta de las siguientes fases:
+					<ul>
+						<li>Recolección de datos de Wikidata mediante Consultas SPARQL</li>
+						<li>Conexión AJAX para recueprar la información de los repositorios en JSON</li>
+						<li>Implementación de consultas federadas</li>
+						<li>Recuperación, lectura y visualización de los datos</li>
+					</ul>
+				</p>
+				<p>El diseño es responsive y se adapta a la mayoría de navegadores y dispositivos móviles
+				</p>
+				<p>Este proyecto es un prototipo y continúa en fase de desarrollo. Se ha diseñado para explicar
+					las posibilidades en la actualidad para la recuperación y visualización de Datos abiertos y enlazados.
+				</p>
 			</div>
-		</article>
-
-
+		</div>
 	<!-- Footer -->
 	<footer class="page-footer font-small blue">
 	  <!-- Copyright -->
