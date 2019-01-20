@@ -76,7 +76,7 @@ function federadas(bvmcAutor) {
 }
 
 function pintoAutores() {
-  console.log("Pinto BVMC");
+  // console.log("Pinto BVMC");
   // if (arrayLibrosPorAutorBvmc[0].bvmcID.value != null) {
   //   autorBvmc = arrayLibrosPorAutorBvmc[0].bvmcID.value;
   // }else {
@@ -94,8 +94,8 @@ function pintoAutores() {
     }else {
       enlaceObra="#";
     }
-    console.log("OBRA ----> "+obra);
-    console.log("Enlace OBRA -----> "+enlaceObra);
+    // console.log("OBRA ----> "+obra);
+    // console.log("Enlace OBRA -----> "+enlaceObra);
     document.getElementById("librosAutorBvmc").innerHTML += "<p>Obra BVMC <a target='_blank' href='"+enlaceObra+"' >"+obra+"</a><p>";
   }
 
@@ -278,7 +278,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
 }
 function buscaLibro(tit){
   var titulo = $(tit).find('.link').text();
-  console.log(titulo);
+  // console.log(titulo);
   var elemento = [];
   var endpointUrl = 'https://query.wikidata.org/sparql',
 	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel ?bvmc\n" +
@@ -513,7 +513,7 @@ function buscaAutor(nombre){
       var enlaceSplit = dato[0].href.split("/");
       var bvmcAutor = enlaceSplit[4];
       recuperaBVMC=document.getElementById("recuBvmc").checked;
-      console.log(recuperaBVMC);
+      // console.log(recuperaBVMC);
       // CHECKBOX
       if (recuperaBVMC == true) {
         federadas(bvmcAutor);
@@ -667,7 +667,7 @@ function buscaAutor(nombre){
         }
         while (arrayLibrosPorAutorBvmc.length>0) {
           arrayLibrosPorAutorBvmc.pop();
-          console.log("Limpio array");
+          // console.log("Limpio array");
         }
       }
     });
@@ -682,7 +682,7 @@ function ShowSelected(){
   /* Para obtener el texto */
   var combo = document.getElementById("producto");
   var selected = combo.options[combo.selectedIndex].text;
-  console.log(selected);
+  // console.log(selected);
 }
 /* BUSCADOR LIBROS */
 $(function() {
