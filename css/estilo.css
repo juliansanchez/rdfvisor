@@ -1,14 +1,6 @@
 /* Julián Sánchez. Ua 2018 TFG Visor RDF Hoja de estilos */
-
 /* PRINCIPAL */
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
-
-/* QUITAR Borde menu hamb */
-* {
-  border-radius: 0 !important;
-  -moz-border-radius: 0 !important;
-}
-
 html {
   min-height: 100%;
   position: relative;
@@ -21,7 +13,7 @@ body{
 }
 header{
   margin-top: 1%;
-	border: 1px solid #688797;
+	border: 1px solid #688798;
   background-color: #688797;
 }
 nav form{
@@ -29,7 +21,6 @@ nav form{
 	margin-left: 10px;
 	margin-bottom: 5px;
 }
-
 footer {
   bottom: 0;
   background-color: #688797;
@@ -41,13 +32,10 @@ li{
 	/* font-weight: bold; */
 	font-size: 1.2em;
 }
-/* section{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%;}
-article{border: 2px solid #339966; min-height: 100px; padding: 1%; margin-top: 1%; position: relative;} */
 div{
 	margin: .7%;
 }
 /* input { width:40%;} */
-
 /* HOME PAGE */
 #infoBasic p{
   margin: .2cm 1cm 0 .5cm;
@@ -62,18 +50,11 @@ div{
 .listBooks{
   border: 3px solid blue;
 }
-/* .portada{
-	width: 75px;
-	height: 100px;
-  padding: 1%;
-} */
 .tarjeta{
   border: 1px solid #688797;
 }
-
 /* TEXTOS */
 .textoppal { text-align: justify;  font-size: .9em;}
-
 /* LIBROS */
 .card {
   /* Add shadows to create the "card" effect */
@@ -93,9 +74,7 @@ div{
   height: 60px;
   width: 40px;
   padding: 1%;
-  display: center;
 }
-
 .libros div{
   margin-left: auto;
   margin-right: auto;
@@ -124,15 +103,13 @@ iframe{
   margin-right: auto;
   display: inline-block;
 }
-
 .autores p{
   font-size: .7em;
   padding: 1%;
   margin: 0;
 }
 .firma{
-  max-width: auto;
-  max-height: 50px;
+  max-height: 60px;
   margin: 0;
   padding-top: 3%;
   margin-left: auto;
@@ -141,18 +118,50 @@ iframe{
   display:block;
 }
 /* ACERCA */
+.tith1{
+    background-color: #688797;
+    text-align: justify;
+    padding: 1%;
+}
+.datosJuli{
+  background-color: #688797;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.datosTfg{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: justify;
+}
 .fotoJuli{
-  width:100px;
-  height:100px;
-  border-radius:25px;
+  width: 250px;
+  height: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding: 2%;
 }
-.sobremi{
-  font-size: 2em;
-  max-width: 60%;
-
-  border: 1px solid red;
+.julidata p {
+  margin-top:0;
+  margin-bottom:0;
+  font-size: 1.2em;
+  text-align: center;
 }
-.juli{
-  max-width: 40%;
-  border: 1px solid blue;
+.asignaturas p {
+  margin-top:0;
+  margin-bottom:0;
+  font-size: 0.9em;
+  text-align: center;
+}
+.asignaturas h3{
+  text-align: center;
+}
+.tituloAcerca{
+  margin: 0;
+}
+.valida div{
+  display: inline-flex;
+  max-width: 100px;
 }

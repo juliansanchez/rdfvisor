@@ -29,12 +29,11 @@ function MaysPrimera(string){
 
 // FUNCION JSON EXPORT - NO FUNCIONA
 // window.onload = function() {
-//       var txt = dataJSON;
-// 	   document.getElementById('link').onclick = function(dataJSON) {
-//         this.href = 'data:dataJSON,'
-//           + encodeURIComponent(dataJSON.value);
-//       };
-//     };
+// var txt = dataJSON;
+// document.getElementById('link').onclick = function(dataJSON) {
+//   this.href = 'data:dataJSON,'+ encodeURIComponent(dataJSON.value);
+//   };
+// };
 
 
 
@@ -77,7 +76,7 @@ function federadas(bvmcAutor) {
 }
 
 function pintoAutores() {
-  console.log("Pinto BVMC");
+  // console.log("Pinto BVMC");
   // if (arrayLibrosPorAutorBvmc[0].bvmcID.value != null) {
   //   autorBvmc = arrayLibrosPorAutorBvmc[0].bvmcID.value;
   // }else {
@@ -95,8 +94,8 @@ function pintoAutores() {
     }else {
       enlaceObra="#";
     }
-    console.log("OBRA ----> "+obra);
-    console.log("Enlace OBRA -----> "+enlaceObra);
+    // console.log("OBRA ----> "+obra);
+    // console.log("Enlace OBRA -----> "+enlaceObra);
     document.getElementById("librosAutorBvmc").innerHTML += "<p>Obra BVMC <a target='_blank' href='"+enlaceObra+"' >"+obra+"</a><p>";
   }
 
@@ -137,7 +136,7 @@ function mostrarBasico(){
     var movement = data.results.bindings[0].movement.value;
     var movementLabel = data.results.bindings[0].movementLabel.value;
 
-    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' alt='"+categoryLabel+"' src="+image+">";
+    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' title='"+categoryLabel+"' alt='"+categoryLabel+"' src="+image+">";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Wikipedia</p>";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+item+" target='_blank'</a>"+categoryLabel+"</p>";
     document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
@@ -265,7 +264,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         }else {
           aut="Sin datos";
         }
-        document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this);'class='col-md-2 card'><img alt='"+desc+"' src='"+img+"'><h6 class='link'><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p>"+aut+"</p></div>";
+        document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this);'class='col-md-2 card'><img title='"+desc+"' alt='"+tit+"' src='"+img+"'><h6 class='link'><a target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p>"+aut+"</p></div>";
         document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
         // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
         // <p>"+desc+"</p>
@@ -279,7 +278,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
 }
 function buscaLibro(tit){
   var titulo = $(tit).find('.link').text();
-  console.log(titulo);
+  // console.log(titulo);
   var elemento = [];
   var endpointUrl = 'https://query.wikidata.org/sparql',
 	sparqlQuery = "SELECT DISTINCT ?bookText ?bookTextLabel ?bookTextDescription ?image ?autor ?autorLabel ?fechaPublicado ?genre ?genreLabel ?idioma ?idiomaLabel ?bvmc\n" +
@@ -381,7 +380,7 @@ function buscaLibro(tit){
               $.alert({
               title: "<a target='_blank' href='"+titLink+"'>"+tit+"</a>",
               content:"<p>"+tit+"</p><br/>"
-              +"<img alt='"+tit+"' class='card' src='"+img+"'><br/>"
+              +"<img title='"+tit+"' alt='"+tit+"' class='card' src='"+img+"'><br/>"
               +"<p>Autor: "+aut+"</p>"
               +"<p>Año de publicacion: "+fec+"</p>"
               +"<p>Género: "+gen+"</p>"
@@ -498,7 +497,7 @@ $.ajax( endpointUrl, settings ).then( function ( data ) {
         if (elemento[i].ocupacionLabel != null) {
           ocupacionLabel =elemento[i].ocupacionLabel.value;
         }
-        document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img alt='"+autorLabel+"' src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'></p></div>";
+        document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img title='"+autorLabel+"' alt='"+autorLabel+"' src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'></p></div>";
         document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
       }
       while (elemento>0) {
@@ -514,7 +513,7 @@ function buscaAutor(nombre){
       var enlaceSplit = dato[0].href.split("/");
       var bvmcAutor = enlaceSplit[4];
       recuperaBVMC=document.getElementById("recuBvmc").checked;
-      console.log(recuperaBVMC);
+      // console.log(recuperaBVMC);
       // CHECKBOX
       if (recuperaBVMC == true) {
         federadas(bvmcAutor);
@@ -618,7 +617,7 @@ function buscaAutor(nombre){
             }
             if (elemento[i].firma != null) {
               firma=elemento[i].firma.value;
-              firma = "<img alt='Firma de "+autorLabel+"' class='firma' src='"+firma+"'>";
+              firma = "<img title='Firma de "+autorLabel+"' alt='Firma de "+autorLabel+"' class='firma' src='"+firma+"'>";
             }else {
               firma="";
             }
@@ -651,7 +650,7 @@ function buscaAutor(nombre){
             title: "<a target='_blank' href='"+autor+"'>"+autorLabel+"</a>",
             columnClass: 'small',
             content:"<div class='alert'<p>"+autorDescription+"</p><br/>"
-            +"<img alt='"+autorLabel+"' class='card' src='"+image+"'><br/>"
+            +"<img title='"+autorLabel+"' alt='"+autorLabel+"' class='card' src='"+image+"'><br/>"
             + urlaBvmc
             +"<p>Nacimiento: "+birth+"</p>"
             +"<p>Muerte: "+birthDeath+"</p>"
@@ -668,7 +667,7 @@ function buscaAutor(nombre){
         }
         while (arrayLibrosPorAutorBvmc.length>0) {
           arrayLibrosPorAutorBvmc.pop();
-          console.log("Limpio array");
+          // console.log("Limpio array");
         }
       }
     });
@@ -683,7 +682,7 @@ function ShowSelected(){
   /* Para obtener el texto */
   var combo = document.getElementById("producto");
   var selected = combo.options[combo.selectedIndex].text;
-  console.log(selected);
+  // console.log(selected);
 }
 /* BUSCADOR LIBROS */
 $(function() {
@@ -800,7 +799,7 @@ $(function() {
           }else {
             bvmcl = "";
           }
-          document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this)' class='col-md-2 card'><img alt='"+tit+"' src='"+img+"'><h6><a class='link' target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
+          document.getElementById("libros").innerHTML +="<div onclick='buscaLibro(this)' class='col-md-2 card'><img title='"+tit+"' alt='"+tit+"' src='"+img+"'><h6><a class='link' target='_blank' href='"+titLink+"'</a>"+tit+"</h6><p><a target='_blank' href='"+autLink+"'</a>"+aut+"</p></div>";
           document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
           // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
           // <p>"+desc+"</p>
@@ -946,7 +945,7 @@ $(function() {
           if (elemento[i].bvmc != null) {
             bvmca =elemento[i].bvmc.value;
           }
-          document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img alt'"+autorLabel+"' src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'>"+MaysPrimera(ocupacionLabel)+"</p></div>";
+          document.getElementById("autores").innerHTML +="<div onclick='buscaAutor(this);' class='col-md-2 card'><img title='"+autorLabel+"' alt'"+autorLabel+"' src='"+image+"'><h6><a class='link' target='_blank' href='"+autor+"'>"+autorLabel+"</a></h6><p class='desAutor'>"+MaysPrimera(autorDescription)+"</p><p class='desAutor'>"+MaysPrimera(ocupacionLabel)+"</p></div>";
           document.getElementById("pagina").innerHTML= "<span>Pagina "+Math.trunc(page/pageLimit)+"</span>";
           // <p><a target='_blank' href='"+idiLink+"'</a>"+idi+"</p>
           // <p>"+desc+"</p>
