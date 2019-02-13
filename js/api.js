@@ -17,7 +17,7 @@ var contLibros = "<div id='librosAutorBvmc'></div>"; // contenador para lista de
 
 /* PAGINACION */
 var page = 0;
-var pageLimit=20;
+var pageLimit=21;
 var totalLibros=0;
 var totalAutores=0;
 /* Primera letra en Mayusculas */
