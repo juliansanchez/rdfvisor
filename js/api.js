@@ -1,11 +1,12 @@
 /* TFG JULIAN SANCHEZ GARCIA ING Multimedia UA 2018 */
 var portada="img/default.png";
 var dataJSON;
+var sqlAutores="";
+var sqlLibros="";
 // varables para LIBRO
 var titLink, tit, desc,img, autLink, aut, fec, genLink, gen, idiLink, idi, bvmcl;
 // variables para autor
 var autor, autorLabel, autorDescription, birth, birthDeath, ocupacionLabel, image, firma, bvmca;
-
 // Variables Info Libros BVMC
 var recuperaBVMC; // booleano para el checkbox
 var arrayLibrosPorAutorBvmc = []; // lista de libros por autor de la BVMC
@@ -14,7 +15,6 @@ var obra; // texto de la obra en la BVMC
 var enlaceObra; // enlace la la BVMC
 var meteLibros; // lista de libros por autor en HTML
 var contLibros = "<div id='librosAutorBvmc'></div>"; // contenador para lista de libros BVMC
-
 /* PAGINACION */
 var page = 0;
 var pageLimit=21;
@@ -26,7 +26,6 @@ function MaysPrimera(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
-
 // FUNCION JSON EXPORT - NO FUNCIONA
 // window.onload = function() {
 // var txt = dataJSON;
@@ -34,8 +33,6 @@ function MaysPrimera(string){
 //   this.href = 'data:dataJSON,'+ encodeURIComponent(dataJSON.value);
 //   };
 // };
-
-
 
 // FEDERADAS. Recupera Info de libros de autores de la BVMC
 function federadas(bvmcAutor) {
@@ -98,34 +95,30 @@ function pintoAutores() {
     // console.log("Enlace OBRA -----> "+enlaceObra);
     document.getElementById("librosAutorBvmc").innerHTML += "<p>Obra BVMC <a target='_blank' href='"+enlaceObra+"' >"+obra+"</a><p>";
   }
-
 }
 
 
 /* INFO HOME PAGE */
 function mostrarBasico(){
   var endpointUrl = 'https://query.wikidata.org/sparql',
-    sparqlQuery = "SELECT distinct ?item ?itemLabel ?itemDescription ?article ?image ?countryLabel ?categoryLabel ?movementLabel ?movement WHERE{\n" +
-        "\n" +
-        " ?item ?label \"Spanish Golden Age\"@en.  \n" +
-        " ?article schema:about ?item .\n" +
-        " ?article schema:inLanguage \"en\" .\n" +
-        " ?item wdt:P18 ?image .\n" +
-        " ?item wdt:P17 ?country .\n" +
-        " ?item wdt:P373 ?category .\n" +
-        " ?item wdt:P31 ?movement .\n" +
-        "  \n" +
-        " ?article schema:isPartOf <https://en.wikipedia.org/>.	\n" +
-        "\n" +
-        " SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es,en\". }    \n" +
-        "}",
+  sparqlQuery = "SELECT distinct ?item ?itemLabel ?itemDescription ?article ?image ?countryLabel ?categoryLabel WHERE{ \n" +
+          " ?item ?label \"Spanish Golden Age\" .\n" +
+          " ?article schema:about ?item . \n" +
+          " ?article schema:inLanguage \"en\" . \n" +
+          " ?item wdt:P18 ?image . \n" +
+          " ?item wdt:P17 ?country . \n" +
+          " ?item wdt:P373 ?category . \n" +
+          " ?item wdt:P31 ?Movement . \n" +
+          " ?article schema:isPartOf <https://en.wikipedia.org/>.  \n" +
+          " SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],es\". }     \n" +
+          "}";
       settings = {
           headers: { Accept: 'application/sparql-results+json' },
           data: { query: sparqlQuery }
       };
-
   $.ajax( endpointUrl, settings ).then( function ( data ) {
-    // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
+      // $( 'body' ).append( ( $('<pre>').text( JSON.stringify( data) ) ) );
+    console.log(data.results.bindings);
     var article = data.results.bindings[0].article.value;
     var categoryLabel = data.results.bindings[0].categoryLabel.value;
     var countryLabel = data.results.bindings[0].countryLabel.value;
@@ -133,20 +126,13 @@ function mostrarBasico(){
     var item = data.results.bindings[0].item.value;
     var itemLabel = data.results.bindings[0].itemLabel.value;
     var itemDescription = data.results.bindings[0].itemDescription.value;
-    var movement = data.results.bindings[0].movement.value;
-    var movementLabel = data.results.bindings[0].movementLabel.value;
 
-    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' title='"+categoryLabel+"' alt='"+categoryLabel+"' src="+image+">";
-    document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Wikipedia</p>";
+    document.getElementById("foto").innerHTML += "<img width='auto' height='150px' title='Siglo de Oro' alt='Siglo de Oro' src="+image+">";
+    document.getElementById("infoBasic").innerHTML += "<p><a href="+article+" target='_blank'</a>Fuente Wikipedia</p>";
     document.getElementById("infoBasic").innerHTML += "<p><a href="+item+" target='_blank'</a>"+categoryLabel+"</p>";
-    document.getElementById("infoBasic").innerHTML += "<p>"+countryLabel+"</p>";
-    document.getElementById("infoBasic").innerHTML += "<p>Descripción: "+MaysPrimera(itemDescription)+"</p>";
-    document.getElementById("infoBasic").innerHTML += "<p>Movimiento Literario: <a href="+movement+" target='_blank'</a>"+MaysPrimera(movementLabel)+"</p>";
-    document.getElementById("vermas").innerHTML += "<a href="+article+" target='_blank'>Leer +</a>";
-
+    document.getElementById("infoBasic").innerHTML += "<p>"+MaysPrimera(itemDescription)+" RDF</p>";
   });
 }
-
 
 /* PAGINACION LIBROS */
 function pageLess() {
@@ -154,7 +140,7 @@ function pageLess() {
     page = page-pageLimit;
     mostrarLibros();
   }
-  }
+}
 function pageMore(){
   page = page+pageLimit;
   if (totalLibros > 0 && totalLibros == pageLimit) {
@@ -186,8 +172,6 @@ function pageMas(){
     page = page-pageLimit;
   }
 }
-
-
 
 /* Lista todos los libros */
 function mostrarLibros(){
@@ -672,7 +656,6 @@ function buscaAutor(nombre){
       }
     });
   }
-
 
 /* FILTRO POR GENERO */
 function ShowSelected(){
